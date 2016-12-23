@@ -1,0 +1,95 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+    Version="10.0"
+    VendorName="SlickEdit"
+    TemplateName="(Other)"
+    WorkingDir=".">
+    <Config
+        Name="Release"
+        OutputFile=""
+        CompilerConfigName="">
+        <Menu>
+            <Target
+                Name="Compile"
+                MenuCaption="&amp;Compile"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveCurrent"
+                RunFromDir="%rw">
+                <Exec/>
+            </Target>
+            <Target
+                Name="Build"
+                MenuCaption="&amp;Build"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec/>
+            </Target>
+            <Target
+                Name="Rebuild"
+                MenuCaption="&amp;Rebuild"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec/>
+            </Target>
+            <Target
+                Name="Debug"
+                MenuCaption="&amp;Debug"
+                SaveOption="SaveNone"
+                RunFromDir="%rw">
+                <Exec/>
+            </Target>
+            <Target
+                Name="Execute"
+                MenuCaption="E&amp;xecute"
+                SaveOption="SaveNone"
+                RunFromDir="%rw">
+                <Exec CmdLine='".exe"'/>
+            </Target>
+        </Menu>
+    </Config>
+    <Files>
+        <Folder
+            Name="Source Files"
+            Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go">
+            <F N="AboutDialog.pas"/>
+            <F N="AscciToSchem.pas"/>
+            <F N="AsyToSymbols.pas"/>
+            <F N="DataModule.pas"/>
+            <F N="DisplayHideAttr.pas"/>
+            <F N="FilesToCopy.pas"/>
+            <F N="HtmlHelp.pas"/>
+            <F N="LTCSim.dpr"/>
+            <F N="LTCSimArchive.pas"/>
+            <F N="LTCSimUtilities.pas"/>
+            <F N="Main.pas"/>
+            <F N="NewRev.pas"/>
+            <F N="NewRevision.pas"/>
+            <F N="NewRevisionForm.pas"/>
+            <F N="NewRevWithoutProcessCode.pas"/>
+            <F N="ProcessDialog.pas"/>
+            <F N="rename.pas"/>
+            <F N="SchemToAscii.pas"/>
+            <F N="StimDlg.pas"/>
+            <F N="SymToAsy.pas"/>
+            <F N="UpdateSchematics.pas"/>
+            <F N="UpdateWarning.pas"/>
+            <F N="UseHTMLHelp.pas"/>
+        </Folder>
+        <Folder
+            Name="Header Files"
+            Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.inc;*.sh;*.cpy;*.if"/>
+        <Folder
+            Name="Resource Files"
+            Filters="*.ico;*.cur;*.dlg"/>
+        <Folder
+            Name="Bitmaps"
+            Filters="*.bmp"/>
+        <Folder
+            Name="Other Files"
+            Filters="">
+            <F N="test"/>
+        </Folder>
+    </Files>
+</Project>

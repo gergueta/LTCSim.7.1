@@ -1,0 +1,39 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = LTCSim.exe LTCSimCirMenu.dll LTCSimEdit.exe LTCSimNetlist.exe \
+  LTCSimSchMenu.dll LTCSimSimulate.exe LTCSimSpMenu.dll
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+LTCSim.exe: LTCSim.dpr
+  $(DCC)
+
+LTCSimCirMenu.dll: ..\LTCSimCirMenu\LTCSimCirMenu.dpr
+  $(DCC)
+
+LTCSimEdit.exe: ..\LTCSimEdit\LTCSimEdit.dpr
+  $(DCC)
+
+LTCSimNetlist.exe: ..\LTCSimNetlist\LTCSimNetlist.dpr
+  $(DCC)
+
+LTCSimSchMenu.dll: ..\LTCSimSchMenu\LTCSimSchMenu.dpr
+  $(DCC)
+
+LTCSimSimulate.exe: ..\LTCSimSimulate\LTCSimSimulate.dpr
+  $(DCC)
+
+LTCSimSpMenu.dll: ..\LTCSimSpMenu\LTCSimSpMenu.dpr
+  $(DCC)
+
+

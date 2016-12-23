@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="sources\spiccepat.cpp">
+      <Filter>Souce files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\spicdlg.cpp">
+      <Filter>Souce files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\spice.cpp">
+      <Filter>Souce files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\netlistsub.cpp">
+      <Filter>Souce files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\Dataout.cpp">
+      <Filter>Souce files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\spicprim.cpp">
+      <Filter>Souce files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\LTCXmlUtils.cpp">
+      <Filter>Souce files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\LTCUtils.cpp">
+      <Filter>Souce files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\stdafx.cpp">
+      <Filter>Souce files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="headder\dataout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headder\pikproc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headder\spice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headder\spicprim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tclInclude\tclDecls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tclInclude\tclInt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tclInclude\tk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tclInclude\tkDecls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tclInclude\tkIntXlibDecls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tclInclude\tkPlatDecls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tclInclude\tclIntDecls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tclInclude\tclPlatDecls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headder\attr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tclInclude\tcl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headder\netlistsub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headder\LTCXmlUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headder\LTCUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headder\pikfuncs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headder\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Libraries\nttapkp.lib">
+      <Filter>Lib Files</Filter>
+    </Library>
+    <Library Include="tclLib\tcl84.lib">
+      <Filter>Lib Files</Filter>
+    </Library>
+    <Library Include="tclLib\tk84.lib">
+      <Filter>Lib Files</Filter>
+    </Library>
+    <Library Include="tclLib\tk84d.lib">
+      <Filter>Lib Files</Filter>
+    </Library>
+    <Library Include="tclLib\tcl84d.lib">
+      <Filter>Lib Files</Filter>
+    </Library>
+    <Library Include="tclLib\tclstub84.lib">
+      <Filter>Lib Files</Filter>
+    </Library>
+    <Library Include="tclLib\tkstub84.lib">
+      <Filter>Lib Files</Filter>
+    </Library>
+    <Library Include="Libraries\pik.lib">
+      <Filter>Lib Files</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\netlistnt.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Souce files">
+      <UniqueIdentifier>{f6a5f7d0-93e9-4c1f-9847-f3dd05f512fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{02daf9d4-a177-4eaf-a45f-0963a496c02e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib Files">
+      <UniqueIdentifier>{e754f518-7975-4e87-9a2c-e2a249d3cbf4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

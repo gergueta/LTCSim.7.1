@@ -1,0 +1,105 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+    Version="10.0"
+    VendorName="SlickEdit"
+    TemplateName="(Other)"
+    WorkingDir="."
+    VCSProject="Git:">
+    <Config
+        Name="Release"
+        OutputFile=""
+        CompilerConfigName="">
+        <Menu>
+            <Target
+                Name="Compile"
+                MenuCaption="&amp;Compile"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveCurrent"
+                RunFromDir="%rw">
+                <Exec/>
+            </Target>
+            <Target
+                Name="Build"
+                MenuCaption="&amp;Build"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec/>
+            </Target>
+            <Target
+                Name="Rebuild"
+                MenuCaption="&amp;Rebuild"
+                CaptureOutputWith="ProcessBuffer"
+                SaveOption="SaveWorkspaceFiles"
+                RunFromDir="%rw">
+                <Exec/>
+            </Target>
+            <Target
+                Name="Debug"
+                MenuCaption="&amp;Debug"
+                SaveOption="SaveNone"
+                RunFromDir="%rw">
+                <Exec/>
+            </Target>
+            <Target
+                Name="Execute"
+                MenuCaption="E&amp;xecute"
+                SaveOption="SaveNone"
+                RunFromDir="%rw">
+                <Exec CmdLine='"LTCSim 7.exe"'/>
+            </Target>
+        </Menu>
+    </Config>
+    <Files>
+        <Folder
+            Name="Source Files"
+            Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go"
+            GUID="{8481D553-6DC9-4984-96B8-D05148EE8784}">
+            <F N="AboutDialog.pas"/>
+            <F N="AscciToSchem.pas"/>
+            <F N="AsyToSymbols.pas"/>
+            <F N="DataModule.pas"/>
+            <F N="DisplayHideAttr.pas"/>
+            <F N="FilesToCopy.pas"/>
+            <F N="HtmlHelp.pas"/>
+            <F N="IconModuleUnit.pas"/>
+            <F N="LTCSim.dpr"/>
+            <F N="LTCSim64.dpr"/>
+            <F N="LTCSimArchive.pas"/>
+            <F N="LTCSimUtilities.pas"/>
+            <F N="Main.pas"/>
+            <F N="NewRev.pas"/>
+            <F N="NewRevision.pas"/>
+            <F N="NewRevisionForm.pas"/>
+            <F N="NewRevWithoutProcessCode.pas"/>
+            <F N="ProcessDialog.pas"/>
+            <F N="rename.pas"/>
+            <F N="SchemToAscii.pas"/>
+            <F N="StimDlg.pas"/>
+            <F N="SymToAsy.pas"/>
+            <F N="UpdateSchematics.pas"/>
+            <F N="UpdateWarning.pas"/>
+        </Folder>
+        <Folder
+            Name="Header Files"
+            Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.h++;*.inc;*.sh;*.cpy;*.if"
+            GUID="{CCA09998-1EC5-495C-536E-2DB00F0A30BB}"/>
+        <Folder
+            Name="Resource Files"
+            Filters="*.ico;*.cur;*.dlg"
+            GUID="{E60EF851-C80C-43E3-CED8-35A3B762E0A8}"/>
+        <Folder
+            Name="Bitmaps"
+            Filters="*.bmp"
+            GUID="{C2C974E2-F8FA-4591-253A-EEF464ACC8BD}"/>
+        <Folder
+            Name="Other Files"
+            Filters=""
+            GUID="{34988C35-D95D-484B-F680-CB8E8F8C629D}">
+            <F N="LTCSim.dproj"/>
+            <F N="../Cohesion.7.Debug/Designer6/bin/LTCSim.xml"/>
+            <F N="LTCSim64.dproj"/>
+            <F N="../Cohesion.7.Debug/Designer6/bin/LTCSimSites.xml"/>
+        </Folder>
+    </Files>
+</Project>

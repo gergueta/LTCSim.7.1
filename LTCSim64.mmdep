@@ -1,0 +1,15 @@
+﻿
+[Project]
+DefaultNamespace=Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;Data.Win
+LDPFile=
+NamespacePrefixes=System;System.Win;WinApi;Vcl;Vcl.Imaging;Data;Data.Win
+RootFile=C:\LTCSim\LTCSim7\LTCSim64.dpr
+SearchPath=
+UnitAliases=
+
+[Compiler]
+CompilerSwitches={$A8,B-,C+,D+,E-,F-,G+,H+,I+,J-,K-,L+,M-,N+,O-,P+,Q-,R-,S-,T-,U-,V+,W+,X+,YD,Z1}
+CompilerVersion=dcmpDelphiXE9Win32
+Defines=DEBUG
+IfExpressions=
+

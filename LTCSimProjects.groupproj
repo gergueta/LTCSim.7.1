@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{6E6020C7-6B3E-4F6A-938B-01D80ED089C2}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="LTCSim.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="LTCSim">
+        <MSBuild Projects="LTCSim.dproj"/>
+    </Target>
+    <Target Name="LTCSim:Clean">
+        <MSBuild Projects="LTCSim.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LTCSim:Make">
+        <MSBuild Projects="LTCSim.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="LTCSim"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="LTCSim:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="LTCSim:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

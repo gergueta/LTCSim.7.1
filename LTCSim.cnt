@@ -1,0 +1,32 @@
+; This contents file was created with HelpScribble 5.4.2
+; Registered to: German A. Ergueta
+
+:BASE LTCSim.hlp
+:TITLE LTCSim
+1 LTCSim
+2 LTCSim=Scribble10
+1 Project
+2 Project=Scribble1110
+2 New (Project)=Scribble1112
+2 Open (Project)=Scribble1122
+2 Save (Project)=Scribble1132
+2 New rev (Project)=Scribble1142
+2 Reopen... (Project)=Scribble1152
+2 Archive (Project)=Scribble1162
+2 Initialize (Project)=Scribble1172
+1 Schematics
+2 Schematics=Scribble1200
+2 New (Schematics)=Scribble1210
+2 Open (Schematics)=Scribble1220
+1 Synario
+2 Synario=Scribble1300
+2 INI editor (Synario)=Scribble1310
+1 Library
+2 Library=Scribble1400
+2 Initialize (Library)=Scribble1410
+1 Utilities
+2 Utilities=Scribble1500
+2 Utilities (new schematics)=Scribble1510
+2 Utilities (old schematics)=Scribble1520
+1 Versions
+2 1.1.1.23=Scribble9000

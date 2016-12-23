@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<iasettings>
+  <projectproperties>
+    <manufacturer>german</manufacturer>
+    <productname>LTCSimNetlist</productname>
+    <productversion>1.0.0</productversion>
+    <productcode>{a66f453a-6d23-428e-931c-2eb329c583bc}</productcode>
+    <upgradecode>{ae6f4d7d-23dc-4bb3-bb4c-960e06162ea6}</upgradecode>
+    <language>0</language>
+    <languagename>English</languagename>
+  </projectproperties>
+  <summary>
+    <title>LTCSimNetlist</title>
+    <subject>LTCSimNetlist</subject>
+    <author>german</author>
+    <summarycomments>LTCSimNetlist</summarycomments>
+    <revisioncode>{a031972e-3489-4ce2-8536-4744105f18b0}</revisioncode>
+    <uacelevation>asInvoker</uacelevation>
+  </summary>
+  <addremove>
+    <publishername>german</publishername>
+    <contactname>german</contactname>
+    <helplink>http://www.mywebsite.com</helplink>
+    <productupdatelink>http://www.mywebsite.com</productupdatelink>
+    <addremovecomments>All Rights Reserved</addremovecomments>
+    <iconfile />
+  </addremove>
+  <codegen>
+    <generateincludefiles>1</generateincludefiles>
+    <generatefeatures>0</generatefeatures>
+    <refreshscript>0</refreshscript>
+  </codegen>
+  <compilervariables>
+    <variables />
+  </compilervariables>
+  <build>
+    <buildtype>0</buildtype>
+  </build>
+  <files>
+    <filedetails filename="E:\CohesionDev\Designer6\bin\LTCSimNetlist.exe" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="1" runprogram="1" installfilecommand="1" />
+  </files>
+  <dependencies />
+  <dialogtheme>
+    <themename>Official</themename>
+  </dialogtheme>
+  <authenticode>
+    <sign>0</sign>
+    <certificatefile />
+    <keyfile />
+    <productinfourl />
+    <authpassword />
+    <timestampurl />
+  </authenticode>
+  <compression>
+    <compressiontype>4</compressiontype>
+    <encrypt>0</encrypt>
+    <compressionpassword />
+  </compression>
+  <output>
+    <outputtype>0</outputtype>
+    <location />
+    <filename />
+    <calculatefilehash>0</calculatefilehash>
+    <refreshrevisioncode>1</refreshrevisioncode>
+  </output>
+</iasettings>

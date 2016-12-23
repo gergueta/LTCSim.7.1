@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899/12/30 00:00:00.000.382,=C:\LTCSim\LTCSim7\ModelSupport_LTCSim64\LTCSim64\default.txaPackage</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.392,=C:\LTCSim\LTCSim7\ModelSupport_LTCSim64\MAIN\default.txaPackage</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.403,=C:\LTCSim\LTCSim7\ModelSupport_LTCSim64\default.txaPackage</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.498,C:\LTCSim\LTCSim7\IconModuleUnit.pas=</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.525,=C:\LTCSim\LTCSim7\ModelSupport_LTCSim64\LTCSim64\default.txvpck</Transaction>
+    <Transaction>2016/10/05 14:12:40.000.900,=C:\LTCSim\LTCSim.7\LTCSim7.1\Unit1.pas</Transaction>
+    <Transaction>2016/10/05 14:13:37.000.081,C:\LTCSim\LTCSim.7\LTCSim7.1\Unit1.pas=C:\LTCSim\LTCSim.7\LTCSim7.1\AppIcons.pas</Transaction>
+    <Transaction>2016/10/05 14:15:33.000.528,=C:\LTCSim\LTCSim.7\LTCSim7.1\Unit1.pas</Transaction>
+    <Transaction>2016/10/05 14:15:53.000.189,C:\LTCSim\LTCSim.7\LTCSim7.1\AppIcons.pas=</Transaction>
+    <Transaction>2016/10/05 14:16:13.000.166,C:\LTCSim\LTCSim.7\LTCSim7.1\Unit1.pas=C:\LTCSim\LTCSim.7\LTCSim7.1\AppIcons.pas</Transaction>
+    <Transaction>2016/10/05 14:17:00.000.193,C:\LTCSim\LTCSim.7\LTCSim7.1\AppIcons.pas=</Transaction>
+    <Transaction>2016/10/05 14:24:17.000.231,=C:\LTCSim\LTCSim.7\LTCSim7.1\Unit1.pas</Transaction>
+    <Transaction>2016/10/05 14:24:36.000.300,C:\LTCSim\LTCSim.7\LTCSim7.1\AppIcons.dfm=C:\LTCSim\LTCSim.7\LTCSim7.1\Unit1.dfm</Transaction>
+    <Transaction>2016/10/05 14:24:36.000.300,C:\LTCSim\LTCSim.7\LTCSim7.1\AppIcons.pas=C:\LTCSim\LTCSim.7\LTCSim7.1\Unit1.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="ModelSupport_LTCSim64"/>
+    <File Path="ModelSupport_LTCSim64\LTCSim64"/>
+    <File Path="ModelSupport_LTCSim64\LTCSim64\default.txaPackage"/>
+    <File Path="ModelSupport_LTCSim64\LTCSim64\default.txvpck"/>
+    <File Path="ModelSupport_LTCSim64\MAIN"/>
+    <File Path="ModelSupport_LTCSim64\MAIN\default.txaPackage"/>
+    <File Path="ModelSupport_LTCSim64\default.txaPackage"/>
+    <File Path="AboutDialog.pas"/>
+    <File Path="AboutDialog.dfm"/>
+    <File Path="AscciToSchem.pas"/>
+    <File Path="AscciToSchem.dfm"/>
+    <File Path="AsyToSymbols.pas"/>
+    <File Path="AsyToSymbols.dfm"/>
+    <File Path="DataModule.pas"/>
+    <File Path="DataModule.dfm"/>
+    <File Path="DisplayHideAttr.pas"/>
+    <File Path="DisplayHideAttr.dfm"/>
+    <File Path="LTCSimArchive.pas"/>
+    <File Path="LTCSimArchive.dfm"/>
+    <File Path="Main.pas"/>
+    <File Path="Main.dfm"/>
+    <File Path="NewRevWithoutProcessCode.pas"/>
+    <File Path="NewRevWithoutProcessCode.dfm"/>
+    <File Path="ProcessDialog.pas"/>
+    <File Path="ProcessDialog.dfm"/>
+    <File Path="SchemToAscii.pas"/>
+    <File Path="SchemToAscii.dfm"/>
+    <File Path="StimDlg.pas"/>
+    <File Path="StimDlg.dfm"/>
+    <File Path="SymToAsy.pas"/>
+    <File Path="SymToAsy.dfm"/>
+    <File Path="UpdateSchematics.pas"/>
+    <File Path="UpdateSchematics.dfm"/>
+    <File Path="UpdateWarning.pas"/>
+    <File Path="UpdateWarning.dfm"/>
+    <File Path="AppIcons.pas"/>
+    <File Path="AppIcons.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>
