@@ -47,7 +47,6 @@ uses
   Vcl.PlatformDefaultStyleActnCtrls, LMDShLink, LMDShList, LMDShTree,
   LMDShFolder;
 
-
 type
   TMainForm = class(TForm)
     PopupMenuStim: TPopupMenu;
@@ -368,7 +367,6 @@ type
     ToolButton2: TToolButton;
     LMDShellLink1: TLMDShellLink;
 
-
     { &About... }
     procedure FormCreate(Sender: TObject);
     procedure CreateDirectories;
@@ -481,9 +479,9 @@ type
     procedure LTCSimArchiveNetlist(sSchematics: string);
     procedure LTCSimArchiveSnapshot(sSchematics: string);
     procedure OpenProjectRevClick(Sender: TObject);
-    procedure ReadXMLFile(sXMLFile: String);
-    procedure SaveXMLFile;
-    procedure ReadOldXMLFile(sXMLFile: String);
+    procedure ReadXMLFile71;
+    procedure SaveXMLFile71;
+    procedure ReadXMLFileSetup6;
     procedure UpdateFormComponents;
     procedure ReadOldLTCSimOptions;
     procedure ReadLTCSimOptions(sLTCSimOptionsFile: String);
@@ -506,6 +504,8 @@ type
     procedure ActionSchematicsToAPTExecute(Sender: TObject);
     procedure ActionSchematicsSnapshotExecute(Sender: TObject);
     procedure ActionSnapshotViewerExecute(Sender: TObject);
+    procedure ReadProjectSetupFile;
+    procedure ReadSetupFile6;
 
   private
     { private declarations }
@@ -521,8 +521,8 @@ type
     Dir: string;
     LibDir: string;
     SetupFile: string;
-    XMLFile: String;
-    XMLSetupFile: string;
+    XMLSetupFile6: string;
+    XMLSetupFile71: String;
     XSDFile: string;
     oldSetupFile: string;
     RevDir: string;
@@ -657,7 +657,7 @@ type
     localProjectsDir: string;
     localSiteProjectsDir: string;
     librariesServer: string;
-    shellLicenseStarted: boolean;
+    shellLicenseStarted: Boolean;
 
   end;
 
@@ -737,7 +737,7 @@ begin
     eTextEditor.Path := Node.Text;
   // Node := RootNode.ChildNodes.FindNode('localProjectsDir');
   // if Assigned(Node) then
-  //  LTCSim.localProjectsDir := Node.Text;
+  // LTCSim.localProjectsDir := Node.Text;
   // if (LTCSim.localProjectsDir = '') then
   LTCSim.localProjectsDir := Trim(GetEnvironmentVariable('PROJECTS'));
   Node := RootNode.ChildNodes.FindNode('rbAssuraToLayout');
@@ -1238,7 +1238,8 @@ begin
     RevDir := IncludeTrailingPathDelimiter(Project.Dir) + Project.Rev;
     LibDir := IncludeTrailingPathDelimiter(Project.RevDir) + 'lib';
     SetupFile := IncludeTrailingPathDelimiter(Project.RevDir) + 'setup.ini';
-    XMLFile := IncludeTrailingPathDelimiter(Project.RevDir) + 'project.xml';
+    Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.RevDir) +
+      'project.xml';
     LTspiceIniFileName := IncludeTrailingPathDelimiter(Project.RevDir) +
       'ltspice.ini.';
     SchemDir := IncludeTrailingPathDelimiter(Project.RevDir) + 'schem';
@@ -1415,7 +1416,7 @@ begin
     Execute;
     HDSShellHandle := Process;
   end;
-  LTCSim.shellLicenseStarted := True;
+  LTCSim.shellLicenseStarted := true;
   CodeSite.ExitMethod(Self, 'StartSCSShell');
 end;
 
@@ -1493,7 +1494,8 @@ begin
     if (RecordCount > 0) then
     begin
       sTemp := '';
-      AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+      AppIcons.IconModule.JamFileOperation.Options :=
+        [soFilesOnly, soNoConfirmation];
       AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
       AppIcons.IconModule.JamFileOperation.Operation := otCopy;
       sDestination := IncludeTrailingPathDelimiter(Project.Dir) +
@@ -1640,11 +1642,13 @@ begin
     begin
       { Transfer PSpice netlists }
       First;
-      AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+      AppIcons.IconModule.JamFileOperation.Options :=
+        [soFilesOnly, soNoConfirmation];
       AppIcons.IconModule.JamFileOperation.Operation := otCopy;
       AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir)
-        + IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\analog\netlists';
+      AppIcons.IconModule.JamFileOperation.Destination :=
+        IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+        (Project.Rev) + 'lib\ecs\analog\netlists';
       while not Eof do
       begin
         sName := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -1682,11 +1686,13 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+      AppIcons.IconModule.JamFileOperation.Options :=
+        [soFilesOnly, soNoConfirmation];
       AppIcons.IconModule.JamFileOperation.Operation := otCopy;
       AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir)
-        + IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\analog\netlists';
+      AppIcons.IconModule.JamFileOperation.Destination :=
+        IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+        (Project.Rev) + 'lib\ecs\analog\netlists';
       while not Eof do
       begin
         sName := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -1723,11 +1729,13 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+      AppIcons.IconModule.JamFileOperation.Options :=
+        [soFilesOnly, soNoConfirmation];
       AppIcons.IconModule.JamFileOperation.Operation := otCopy;
       AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir)
-        + IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\digital\symbols';
+      AppIcons.IconModule.JamFileOperation.Destination :=
+        IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+        (Project.Rev) + 'lib\ecs\digital\symbols';
       while not Eof do
       begin
         sName := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -1757,11 +1765,13 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+      AppIcons.IconModule.JamFileOperation.Options :=
+        [soFilesOnly, soNoConfirmation];
       AppIcons.IconModule.JamFileOperation.Operation := otCopy;
       AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir)
-        + IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\digital\symbols';
+      AppIcons.IconModule.JamFileOperation.Destination :=
+        IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+        (Project.Rev) + 'lib\ecs\digital\symbols';
       while not Eof do
       begin
         sName := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -1792,12 +1802,13 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+      AppIcons.IconModule.JamFileOperation.Options :=
+        [soFilesOnly, soNoConfirmation];
       AppIcons.IconModule.JamFileOperation.Operation := otCopy;
       AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir)
-        + IncludeTrailingPathDelimiter(Project.Rev) +
-        'lib\ecs\digital\schematics';
+      AppIcons.IconModule.JamFileOperation.Destination :=
+        IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+        (Project.Rev) + 'lib\ecs\digital\schematics';
       while not Eof do
       begin
         sName := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -1828,12 +1839,13 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+      AppIcons.IconModule.JamFileOperation.Options :=
+        [soFilesOnly, soNoConfirmation];
       AppIcons.IconModule.JamFileOperation.Operation := otCopy;
       AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir)
-        + IncludeTrailingPathDelimiter(Project.Rev) +
-        'lib\ecs\digital\schematics';
+      AppIcons.IconModule.JamFileOperation.Destination :=
+        IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+        (Project.Rev) + 'lib\ecs\digital\schematics';
       while not Eof do
       begin
         sName := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -1864,12 +1876,13 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+      AppIcons.IconModule.JamFileOperation.Options :=
+        [soFilesOnly, soNoConfirmation];
       AppIcons.IconModule.JamFileOperation.Operation := otCopy;
       AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir)
-        + IncludeTrailingPathDelimiter(Project.Rev) +
-        'lib\ecs\digital\netlists';
+      AppIcons.IconModule.JamFileOperation.Destination :=
+        IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+        (Project.Rev) + 'lib\ecs\digital\netlists';
       while not Eof do
       begin
         sName := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -1901,12 +1914,13 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+      AppIcons.IconModule.JamFileOperation.Options :=
+        [soFilesOnly, soNoConfirmation];
       AppIcons.IconModule.JamFileOperation.Operation := otCopy;
       AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir)
-        + IncludeTrailingPathDelimiter(Project.Rev) +
-        'lib\ecs\digital\netlists';
+      AppIcons.IconModule.JamFileOperation.Destination :=
+        IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+        (Project.Rev) + 'lib\ecs\digital\netlists';
       while not Eof do
       begin
         sName := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -2213,11 +2227,13 @@ begin
     (Process.Rev) + 'ledit\' + Process.Name + '.tdb';
   if FileExists(sTemp) then
   begin
-    AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+    AppIcons.IconModule.JamFileOperation.Options :=
+      [soFilesOnly, soNoConfirmation];
     AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
     AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-    AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir) +
-      IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ledit';
+    AppIcons.IconModule.JamFileOperation.Destination :=
+      IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+      (Project.Rev) + 'lib\ledit';
     AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
     if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
       MessageDlg('Error transferring generic symbols.', mtError, [mbOK], 0);
@@ -2320,12 +2336,14 @@ begin
       (Process.Rev) + 'drac\' + Process.Name + '.lvh';
   if FileExists(sTemp) then
   begin
-    AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+    AppIcons.IconModule.JamFileOperation.Options :=
+      [soFilesOnly, soNoConfirmation];
     AppIcons.IconModule.JamFileOperation.Operation := otCopy;
     AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
     AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
-    AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir) +
-      IncludeTrailingPathDelimiter(Project.Rev) + 'lib\dracula';
+    AppIcons.IconModule.JamFileOperation.Destination :=
+      IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+      (Project.Rev) + 'lib\dracula';
     if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
       MessageDlg('Error transferring dracula header file.', mtError, [mbOK], 0);
   end;
@@ -2336,12 +2354,14 @@ begin
     (Process.Rev) + 'assura\' + Process.Name + '.alvh';
   if FileExists(sTemp) then
   begin
-    AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+    AppIcons.IconModule.JamFileOperation.Options :=
+      [soFilesOnly, soNoConfirmation];
     AppIcons.IconModule.JamFileOperation.Operation := otCopy;
     AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
     AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
-    AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir) +
-      IncludeTrailingPathDelimiter(Project.Rev) + 'lib\assura';
+    AppIcons.IconModule.JamFileOperation.Destination :=
+      IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+      (Project.Rev) + 'lib\assura';
     if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
       MessageDlg('Error transferring assura header file.', mtError, [mbOK], 0);
   end;
@@ -2353,11 +2373,13 @@ begin
   if FileExists(sTemp) then
   begin
     AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-    AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+    AppIcons.IconModule.JamFileOperation.Options :=
+      [soFilesOnly, soNoConfirmation];
     AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
     AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
-    AppIcons.IconModule.JamFileOperation.Destination := IncludeTrailingPathDelimiter(Project.Dir) +
-      IncludeTrailingPathDelimiter(Project.Rev) + 'lib\doc';
+    AppIcons.IconModule.JamFileOperation.Destination :=
+      IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
+      (Project.Rev) + 'lib\doc';
     if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
       MessageDlg('Error transferring documentation file.', mtError, [mbOK], 0);
   end;
@@ -2755,7 +2777,7 @@ begin
     MessageDlg('"Projects directory "' + LTCSim.localProjectsDir +
       '" not found!', mtError, [mbOK], 0);
     Screen.Cursor := crDefault;
-    //Close;
+    // Close;
     Application.Terminate;
   end
   else
@@ -2786,7 +2808,8 @@ begin
 
   { Erasing analog symbols }
   AppIcons.IconModule.JamFileOperation.Operation := otDelete;
-  AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+  AppIcons.IconModule.JamFileOperation.Options :=
+    [soFilesOnly, soNoConfirmation];
   AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\analog\netlists\*.*';
@@ -2905,8 +2928,8 @@ begin
 
   sOldLibDir := IncludeTrailingPathDelimiter(sOldRevDir) + 'lib';
   AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-  AppIcons.IconModule.JamFileOperation.Options := [soNoConfirmMkDir, soSimpleProgress,
-    soNoConfirmation];
+  AppIcons.IconModule.JamFileOperation.Options :=
+    [soNoConfirmMkDir, soSimpleProgress, soNoConfirmation];
   AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
   AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sOldLibDir);
   AppIcons.IconModule.JamFileOperation.Destination := sNewRevDir;
@@ -3090,10 +3113,10 @@ begin
       Project.SimulationDir := Project.newSchemDir;
       AppIcons.IconModule.LMDMRUList.Add(Project.newRevDir);
       SetDirectoryBrowsers(Project.SimulationDir);
-      Project.XMLSetupFile := IncludeTrailingPathDelimiter(Project.newRevDir) +
+      Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.newRevDir) +
         'setup.xml';
-      Project.XMLFile := IncludeTrailingPathDelimiter(Project.newRevDir) +
-        'project.xml';
+      Project.XMLSetupFile71 := IncludeTrailingPathDelimiter(Project.newRevDir)
+        + 'project.xml';
       SaveActiveProjectInformation;
       StartSCSShell;
     end;
@@ -3107,26 +3130,26 @@ end;
 procedure TMainForm.ProjectArchive(sZipFileName: string);
 var
   sTopSchematics: string;
-  sLayoutDirectory, sLayoutSchematicsDirectory, sRevDir,
-    sCommand, sOptions, sArgument, sWorkingDir, sLVSTopNetlist: string;
+  sLayoutDirectory, sLayoutSchematicsDirectory, sRevDir, sCommand, sOptions,
+    sArgument, sWorkingDir, sLVSTopNetlist: string;
   SearchRec: TSearchRec;
   NumberZipped: Integer;
 begin
   CodeSite.EnterMethod(Self, 'ProjectArchive');
 
   if ValidProject then
-    begin
-      Project.zipFileName := sZipFileName;
-      if ValidateSearchPath() then
-          LTCSimArchiveForm.ShowModal
-      else
-        MessageDlg( 'Your project includes a directory outside the selected project. The archive would not be complete!.',
-              mtError, [mbOK], 0);
-      end  { Valid search path }
+  begin
+    Project.zipFileName := sZipFileName;
+    if ValidateSearchPath() then
+      LTCSimArchiveForm.ShowModal
     else
-        MessageDlg('You  need to have a valid project loaded.',
-          mtError, [mbOK], 0);
-    Screen.Cursor := crDefault;
+      MessageDlg
+        ('Your project includes a directory outside the selected project. The archive would not be complete!.',
+        mtError, [mbOK], 0);
+  end { Valid search path }
+  else
+    MessageDlg('You  need to have a valid project loaded.', mtError, [mbOK], 0);
+  Screen.Cursor := crDefault;
 
   CodeSite.ExitMethod(Self, 'ProjectArchive');
 end;
@@ -4120,7 +4143,7 @@ begin
       (ExtractFilePath(IncludeTrailingPathDelimiter(Project.SchemDir) + sTemp));
     Project.xmlSimulationDir :=
       RightStr(sTemp, (Length(sTemp) - Length(Project.SchemDir) - 1));
-    SaveXMLFile;
+    SaveXMLFile71;
     SaveLTspiceIniFile;
     SaveActiveProjectToReg;
   end
@@ -4174,17 +4197,35 @@ begin
   CodeSite.ExitMethod(Self, 'CheckCurrrentProcessVersion');
 end;
 
-procedure TMainForm.ReadOldXMLFile(sXMLFile: String);
+procedure TMainForm.ReadSetupFile6;
+begin
+  {
+    OvcIniFileStoreProject.IniFileName := Project.SetupFile;
+    OvcIniFileStoreProject.Open;
+    OvcComponentStateProject.RestoreState;
+    LMDStorXMLVaultProject.FileName := Project.XMLSetupFile;
+    LMDStorPropertiesStorageProject.Enabled := True;
+    LMDStorPropertiesStorageProject.Save;
+    LMDStorPropertiesStorageProject.Enabled := False;
+    OvcIniFileStoreProject.Close
+  }
+  MessageDlg
+    ('This project seems to be from original version not supported. Please CAD support to resolve it.',
+    mtError, [mbOK], 0);
+  Abort
+end;
+
+procedure TMainForm.ReadXMLFileSetup6;
 Var
   XDoc: IXMLDocument;
   RootNode, Node, CNode: IXMLNode;
   I: Integer;
 begin
-  CodeSite.EnterMethod(Self, 'ReadOldXMLFile');
+  CodeSite.EnterMethod(Self, 'ReadXMLFileSetup6');
 
   XDoc := TXMLDocument.Create(nil);
   XDoc.Active := true;
-  XDoc := LoadXMLDocument(sXMLFile);
+  XDoc := LoadXMLDocument(Project.XMLSetupFile6);
 
   RootNode := XDoc.DocumentElement.ChildNodes.FindNode('Project', '');
   Node := RootNode.ChildNodes.FindNode('eProjectName', '');
@@ -4512,10 +4553,10 @@ begin
   XDoc.Active := False;
   XDoc := nil;
 
-  CodeSite.ExitMethod(Self, 'ReadOldXMLFile');
+  CodeSite.ExitMethod(Self, 'ReadXMLFileSetup6');
 end;
 
-procedure TMainForm.ReadXMLFile(sXMLFile: String);
+procedure TMainForm.ReadXMLFile71;
 Var
   XDoc: IXMLDocument;
   Node, CNode: IXMLNode;
@@ -4525,7 +4566,7 @@ begin
 
   XDoc := TXMLDocument.Create(nil);
   XDoc.Active := true;
-  XDoc := LoadXMLDocument(sXMLFile);
+  XDoc := LoadXMLDocument(Project.XMLSetupFile71);
 
   Node := XDoc.DocumentElement.ChildNodes.FindNode('Project');
   if Assigned(Node) then
@@ -4879,7 +4920,7 @@ begin
   CodeSite.ExitMethod(Self, 'ReadXMLFile');
 end;
 
-procedure TMainForm.SaveXMLFile;
+procedure TMainForm.SaveXMLFile71;
 var
   XDoc: IXMLDocument;
   RootNode, Node, CNode: IXMLNode;
@@ -5094,7 +5135,7 @@ begin
       Node.AddChild('Text').Text := cbStim.Items.Strings[I];
     end;
 
-    XDoc.SaveToFile(Project.XMLFile);
+    XDoc.SaveToFile(Project.XMLSetupFile71);
     XDoc.Active := False;
   finally
     XDoc := nil;
@@ -5103,111 +5144,25 @@ begin
   CodeSite.ExitMethod(Self, 'SaveXMLFile');
 end;
 
-procedure TMainForm.LTCSimProjectOpen;
+procedure TMainForm.ReadProjectSetupFile;
 var
-  sIsDir, sShouldDir: string;
+  sIsDir, sShouldDir: String;
 begin
-  CodeSite.EnterMethod(Self, 'LTCSimProjectOpen');
+  CodeSite.EnterMethod(Self, 'ReadProjectSetupFile');
 
   Project.SetupFile := IncludeTrailingPathDelimiter(Project.RevDir) +
     'setup.ini';
-  Project.XMLSetupFile := IncludeTrailingPathDelimiter(Project.RevDir) +
+  Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.RevDir) +
     'setup.xml';
-  Project.XMLFile := IncludeTrailingPathDelimiter(Project.RevDir) +
-    'project.xml';
+  Project.XMLSetupFile71 := IncludeTrailingPathDelimiter(Project.RevDir) +
+    'setup71.xml';
   Project.LTspiceIniFileName := IncludeTrailingPathDelimiter(Project.RevDir) +
     'ltspice.ini';
-  if (FileExists(Project.SetupFile) or FileExists(Project.XMLSetupFile) or
-    FileExists(Project.XMLFile)) then
+  if (FileExists(Project.XMLSetupFile71)) then
   begin
     InitializeForm;
-    StopSCSShell;
-    if (FileExists(Project.XMLSetupFile) and not(FileExists(Project.XMLFile)))
-    then
-    begin
-      ReadOldXMLFile(Project.XMLSetupFile);
-      UpdateFormComponents;
-      SaveXMLFile;
-    end
-    else
-    begin
-      ReadXMLFile(Project.XMLFile);
-      UpdateFormComponents;
-    end;
-    { Read Project.XMLFile }
-    if ((Project.Name = '') or (Project.Rev = '')) then
-      if MessageDlg('Invalid process information. Do you want to continue?',
-        mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-        Abort;
-    if (eProcessOpt.Text <> '') and (ePromis.Text = '') then
-    begin
-      ePromis.Text := 'N/A';
-      eOption1Name.Text := 'N/A';
-      eOption1Code.Text := 'N/A';
-      eOption1.Text := 'N/A';
-      eOption2Name.Text := 'N/A';
-      eOption2Code.Text := 'N/A';
-      eOption2.Text := 'N/A';
-      eGenericVer.Text := '1.0';
-    end;
-    if ((ePromis.Text = '') or (ePromis.Text = 'N/A')) then
-    begin
-      ePromis.Text := 'N/A';
-      eOption1Name.Text := 'N/A';
-      eOption1Code.Text := 'N/A';
-      eOption1.Text := 'N/A';
-      eOption2Name.Text := 'N/A';
-      eOption2Code.Text := 'N/A';
-      eOption2.Text := 'N/A';
-      eGenericVer.Text := '1.0';
-    end;
-    if ((eOption1.Text = '') or (eOption1.Text = 'N/A')) then
-    begin
-      eOption1Name.Text := 'N/A';
-      eOption1Code.Text := 'N/A';
-      eOption1.Text := 'N/A';
-      eOption2Name.Text := 'N/A';
-      eOption2Code.Text := 'N/A';
-      eOption2.Text := 'N/A';
-      eGenericVer.Text := '1.0';
-    end;
-    if ((eOption2.Text = '') or (eOption2.Text = 'N/A')) then
-    begin
-      eOption2Name.Text := 'N/A';
-      eOption2Code.Text := 'N/A';
-      eOption2.Text := 'N/A';
-      eGenericVer.Text := '1.0';
-    end;
-    if (eOption1Code.Text = '') then
-    begin
-      if ((UpperCase(eOption1.Text) = '1K') or (UpperCase(eOption1.Text) = '3K')
-        or (UpperCase(eOption1.Text) = '2.5K') or
-        (UpperCase(eOption1.Text) = '30K') or (UpperCase(eOption1.Text) = '10K'))
-      then
-      begin
-        eOption1Code.Text := 'TF';
-      end
-    end;
-    if (eOption2Code.Text = '') then
-    begin
-      eOption2Code.Text := 'N/A';
-    end;
-    if (eGenericVer.Text = '') then
-    begin
-      eGenericVer.Text := '1.0';
-    end;
-    UpdateProjectVariables;
-    if (AppIcons.IconModule.LMDMRUList.Items.IndexOf(Project.RevDir) < 0) then
-    begin
-      if (AppIcons.IconModule.LMDMRUList.Items.Count > 5) then
-      begin
-        AppIcons.IconModule.LMDMRUList.Items.Delete(5);
-        AppIcons.IconModule.LMDMRUList.Add(Project.RevDir);
-      end
-      else
-        AppIcons.IconModule.LMDMRUList.Add(Project.RevDir);
-    end;
-    sIsDir := ExtractFileDir(Project.XMLFile);
+    ReadXMLFile71;
+    sIsDir := ExtractFileDir(Project.XMLSetupFile71);
     sShouldDir := IncludeTrailingPathDelimiter(Project.Dir) + Project.Rev;
     if (not(StrComp(StrUpper(PChar(sIsDir)), StrUpper(PChar(sShouldDir))) = 0))
     then
@@ -5216,27 +5171,160 @@ begin
         ('This project does not meet the conventional directory structure.',
         mtError, [mbOK], 0);
       Abort
-    end;
-    SetDirectoryBrowsers(Project.SchemDir);
-    SetCurrentDirectory(PChar(Project.SchemDir));
-    SaveActiveProjectInformation;
-    MainForm.Caption := 'LTCSim (Project:' + Project.Name + ' Rev:' +
-      Project.Rev + ')';
-    if (not(ValidateSearchPath())) then
-      if (MessageDlg
-        ('You have ilegal directories in use( outside the local project directory). Modify now?',
-        mtError, [mbYes, mbNo], 0) = mrYes) then
-        StartECSIniEditor();
-    StartSCSShell;
-    if eAssuraLVS_Short.Text = '' then
-      eAssuraLVS_Short.Text := '0.001';
-    if eDraculaLVS_Short.Text = '' then
-      eDraculaLVS_Short.Text := '0.001';
+    end
+    else
+      LTCSimProjectOpen;
   end
   else
-    MessageDlg('Invalid project revision!', mtError, [mbOK], 0);
+  begin
+    if (FileExists(Project.XMLSetupFile6)) then
+    begin
+      // Migrate to 7.1
+      InitializeForm;
+      ReadXMLFileSetup6;
+      sIsDir := ExtractFileDir(Project.XMLSetupFile6);
+      sShouldDir := IncludeTrailingPathDelimiter(Project.Dir) + Project.Rev;
+      if (not(StrComp(StrUpper(PChar(sIsDir)), StrUpper(PChar(sShouldDir))) = 0))
+      then
+      begin
+        MessageDlg
+          ('This project does not meet the conventional directory structure.',
+          mtError, [mbOK], 0);
+        Abort
+      end
+      else
+      begin
+        SaveXMLFile71;
+        UpdateFormComponents;
+        LTCSimProjectOpen
+      end;
+    end
+    else
+    begin
+      if FileExists(Project.SetupFile) then
+      begin
+        // Migrate to version 7.1
+        InitializeForm;
+        ReadSetupFile6;
+        sIsDir := ExtractFileDir(Project.SetupFile);
+        sShouldDir := IncludeTrailingPathDelimiter(Project.Dir) + Project.Rev;
+        if (not(StrComp(StrUpper(PChar(sIsDir)), StrUpper(PChar(sShouldDir)))
+          = 0)) then
+        begin
+          MessageDlg
+            ('This project does not meet the conventional directory structure.',
+            mtError, [mbOK], 0);
+          Abort
+        end
+        else
+        begin
+          SaveXMLFile71;
+          UpdateFormComponents;
+          LTCSimProjectOpen
+        end;
+      end
+    end
+  end
+end;
+
+procedure TMainForm.LTCSimProjectOpen;
+var
+  sIsDir, sShouldDir: string;
+begin
+  CodeSite.EnterMethod(Self, 'LTCSimProjectOpen');
+
+  StopSCSShell;
+  if ((Project.Name = '') or (Project.Rev = '')) then
+    if MessageDlg('Invalid process information. Do you want to continue?',
+      mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+      Abort;
+  if (eProcessOpt.Text <> '') and (ePromis.Text = '') then
+  begin
+    ePromis.Text := 'N/A';
+    eOption1Name.Text := 'N/A';
+    eOption1Code.Text := 'N/A';
+    eOption1.Text := 'N/A';
+    eOption2Name.Text := 'N/A';
+    eOption2Code.Text := 'N/A';
+    eOption2.Text := 'N/A';
+    eGenericVer.Text := '1.0';
+  end;
+  if ((ePromis.Text = '') or (ePromis.Text = 'N/A')) then
+  begin
+    ePromis.Text := 'N/A';
+    eOption1Name.Text := 'N/A';
+    eOption1Code.Text := 'N/A';
+    eOption1.Text := 'N/A';
+    eOption2Name.Text := 'N/A';
+    eOption2Code.Text := 'N/A';
+    eOption2.Text := 'N/A';
+    eGenericVer.Text := '1.0';
+  end;
+  if ((eOption1.Text = '') or (eOption1.Text = 'N/A')) then
+  begin
+    eOption1Name.Text := 'N/A';
+    eOption1Code.Text := 'N/A';
+    eOption1.Text := 'N/A';
+    eOption2Name.Text := 'N/A';
+    eOption2Code.Text := 'N/A';
+    eOption2.Text := 'N/A';
+    eGenericVer.Text := '1.0';
+  end;
+  if ((eOption2.Text = '') or (eOption2.Text = 'N/A')) then
+  begin
+    eOption2Name.Text := 'N/A';
+    eOption2Code.Text := 'N/A';
+    eOption2.Text := 'N/A';
+    eGenericVer.Text := '1.0';
+  end;
+  if (eOption1Code.Text = '') then
+  begin
+    if ((UpperCase(eOption1.Text) = '1K') or (UpperCase(eOption1.Text) = '3K')
+      or (UpperCase(eOption1.Text) = '2.5K') or
+      (UpperCase(eOption1.Text) = '30K') or (UpperCase(eOption1.Text) = '10K'))
+    then
+    begin
+      eOption1Code.Text := 'TF';
+    end
+  end;
+  if (eOption2Code.Text = '') then
+  begin
+    eOption2Code.Text := 'N/A';
+  end;
+  if (eGenericVer.Text = '') then
+  begin
+    eGenericVer.Text := '1.0';
+  end;
+  UpdateProjectVariables;
+
+  if (AppIcons.IconModule.LMDMRUList.Items.IndexOf(Project.RevDir) < 0) then
+  begin
+    if (AppIcons.IconModule.LMDMRUList.Items.Count > 5) then
+    begin
+      AppIcons.IconModule.LMDMRUList.Items.Delete(5);
+      AppIcons.IconModule.LMDMRUList.Add(Project.RevDir);
+    end
+    else
+      AppIcons.IconModule.LMDMRUList.Add(Project.RevDir);
+  end;
+  SetDirectoryBrowsers(Project.SchemDir);
+  SetCurrentDirectory(PChar(Project.SchemDir));
+  SaveActiveProjectInformation;
+  MainForm.Caption := 'LTCSim (Project:' + Project.Name + ' Rev:' +
+    Project.Rev + ')';
+  if (not(ValidateSearchPath())) then
+    if (MessageDlg
+      ('You have ilegal directories in use( outside the local project directory). Modify now?',
+      mtError, [mbYes, mbNo], 0) = mrYes) then
+      StartECSIniEditor();
+  StartSCSShell;
+  if eAssuraLVS_Short.Text = '' then
+    eAssuraLVS_Short.Text := '0.001';
+  if eDraculaLVS_Short.Text = '' then
+    eDraculaLVS_Short.Text := '0.001';
 
   CodeSite.ExitMethod(Self, 'LTCSimProjectOpen');
+
 end;
 
 procedure TMainForm.LTCSimNewProject;
@@ -5293,7 +5381,7 @@ begin
         TransferSymbols;
         AppIcons.IconModule.LMDMRUList.Add(Project.RevDir);
         SetDirectoryBrowsers(Project.SimulationDir);
-        Project.XMLSetupFile := IncludeTrailingPathDelimiter(Project.RevDir) +
+        Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.RevDir) +
           'setup.xml';
         SaveActiveProjectInformation;
         SetDirectoryBrowsers(Project.SchemDir);
@@ -5349,7 +5437,8 @@ var
 begin
   CodeSite.EnterMethod(Self, 'TransferFileList');
 
-  AppIcons.IconModule.JamFileOperation.Options := [soFilesOnly, soNoConfirmation];
+  AppIcons.IconModule.JamFileOperation.Options :=
+    [soFilesOnly, soNoConfirmation];
   AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
   AppIcons.IconModule.JamFileOperation.Operation := otCopy;
   AppIcons.IconModule.JamFileOperation.Destination := DirectoryDest;
@@ -5369,9 +5458,9 @@ end;
 
 function TMainForm.NetworkAvailable: Boolean;
 var
- objICMP:Icmp;
- i:integer;
- strHost:string;
+  objICMP: Icmp;
+  I: Integer;
+  strHost: string;
 
 begin
   CodeSite.EnterMethod(Self, 'NetworkAvailable');
@@ -5379,11 +5468,11 @@ begin
   CoInitialize(nil);
   objICMP := COIcmp.Create();
   strHost := LTCSim.dbServer;
-  objIcmp.Ping(strHost, 5000 );  // 5000: timeout in msecs
-	if( objIcmp.LastError <> 0 )then
-   Result := False
-	else
-    Result := True;
+  objICMP.Ping(strHost, 5000); // 5000: timeout in msecs
+  if (objICMP.LastError <> 0) then
+    Result := False
+  else
+    Result := true;
 
   CodeSite.ExitMethod(Self, 'NetworkAvailable');
 end;
@@ -6105,7 +6194,7 @@ begin
   if not(cbLTspiceSchematics.checked) then
   begin
     bContinue := False;
-    ParamString := ' -p=' + Project.XMLFile;
+    ParamString := ' -p=' + Project.XMLSetupFile71;
     ParamString := ParamString + ' ' + sSchematicsFile;
     sWindowTitle := 'Hierarchy Navigator';
     TheWindow := FindWindow(PChar(sWindowTitle), nil);
@@ -6867,7 +6956,8 @@ begin
     CreateDir(sArchiveDir)
   else
   begin
-    AppIcons.IconModule.JamFileOperationArchive.Options := [soFilesOnly, soNoConfirmation];
+    AppIcons.IconModule.JamFileOperationArchive.Options :=
+      [soFilesOnly, soNoConfirmation];
     AppIcons.IconModule.JamFileOperationArchive.Operation := otDelete;
     AppIcons.IconModule.JamFileOperationArchive.SourceFiles.Clear;
     AppIcons.IconModule.JamFileOperationArchive.SourceFiles.Add
@@ -7507,7 +7597,8 @@ begin
               CreateSynarioFiles;
               TransferSymbols;
               UpdateProjectVariables;
-              AppIcons.IconModule.LMDMRUList.Add(ExtractFileDir(Project.SetupFile));
+              AppIcons.IconModule.LMDMRUList.Add
+                (ExtractFileDir(Project.SetupFile));
               SetDirectoryBrowsers(Project.SimulationDir);
               SaveActiveProjectInformation;
               StartSCSShell;
@@ -7574,19 +7665,22 @@ procedure TMainForm.ActionProjectOpenExecute(Sender: TObject);
 begin
   CodeSite.EnterMethod(Self, 'ActionProjectOpenExecute');
 
-  AppIcons.IconModule.JamBrowseForFolder.RootedAtFileSystemFolder := LTCSim.localProjectsDir;
-  AppIcons.IconModule.JamBrowseForFolder.Title := 'Select a valid revision directory';
-  AppIcons.IconModule.JamBrowseForFolder.WindowTitle := 'LTCSim - Projects directory';
+  AppIcons.IconModule.JamBrowseForFolder.RootedAtFileSystemFolder :=
+    LTCSim.localProjectsDir;
+  AppIcons.IconModule.JamBrowseForFolder.Title :=
+    'Select a valid revision directory';
+  AppIcons.IconModule.JamBrowseForFolder.WindowTitle :=
+    'LTCSim - Projects directory';
   if AppIcons.IconModule.JamBrowseForFolder.Execute then
   begin
     Project.RevDir := AppIcons.IconModule.JamBrowseForFolder.Path;
     Project.Dir := ExcludeTrailingPathDelimiter
       (ExtractFilePath(Project.RevDir));
-    LTCSimProjectOpen;
+    ReadProjectSetupFile;
   end;
   if (not(ValidateSearchPath())) then
     if (MessageDlg
-      ('You have ilegal directories in use( outside the local project directory). Modify now?',
+      ('You have ilegal directories in use( outside the local project directory). Issue with archiving. Please move directories if needed inside local project',
       mtError, [mbYes, mbNo], 0) = mrYes) then
       StartECSIniEditor();
 
