@@ -675,9 +675,6 @@ Coordinates=1145,164,70,36
 [LMDButtonAlvh]
 Coordinates=47,240,104,58
 
-[ProjectArchive2]
-Coordinates=1742,111,105,36
-
 [ActionSynIniEditor]
 Coordinates=1870,551,120,36
 
@@ -857,4 +854,7 @@ Coordinates=1742,606,110,36
 
 [SchematicsToAPT]
 Coordinates=2095,56,161,36
+
+[ProjectArchiveMain]
+Coordinates=1742,111,105,36
 

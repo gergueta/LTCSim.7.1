@@ -2,8 +2,8 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
   Left = 1043
   Top = 216
   BorderStyle = bsDialog
-  Caption = 'Archive exclusions'
-  ClientHeight = 617
+  Caption = 'LTCSim archive utility'
+  ClientHeight = 161
   ClientWidth = 606
   Color = clBtnFace
   ParentFont = True
@@ -12,32 +12,29 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object OKBtn: TButton
-    Left = 374
-    Top = 576
-    Width = 75
-    Height = 25
-    Caption = 'OK'
-    Default = True
-    ModalResult = 1
-    TabOrder = 0
+  object LabelFileArchiving: TLabel
+    Left = 16
+    Top = 88
+    Width = 3
+    Height = 13
   end
   object CancelBtn: TButton
-    Left = 479
-    Top = 576
+    Left = 515
+    Top = 114
     Width = 75
     Height = 25
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
-    TabOrder = 1
+    TabOrder = 0
+    OnClick = CancelBtnClick
   end
   object ProgressBar: TProgressBar
-    Left = 374
-    Top = 547
-    Width = 180
+    Left = 8
+    Top = 122
+    Width = 385
     Height = 17
-    TabOrder = 2
+    TabOrder = 1
   end
   object LMDLabeledFileOpenEditTopSchematics: TLMDLabeledFileOpenEdit
     Left = 8
@@ -47,7 +44,7 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
     Hint = ''
     Bevel.Mode = bmWindows
     Caret.BlinkRate = 530
-    TabOrder = 3
+    TabOrder = 2
     CustomButtons = <
       item
         Glyph.Data = {
@@ -72,24 +69,26 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
         UsePngGlyph = False
       end>
     CustomButtonWidth = 18
-    FilenameOnly = False
+    Filter = 'Schematics|*.sch'
+    DefaultExt = 'net'
+    FilenameOnly = True
     EditLabel.Width = 79
     EditLabel.Height = 15
     EditLabel.Caption = 'Top schematics:'
   end
   object LMDButton1: TLMDButton
-    Left = 414
-    Top = 496
+    Left = 410
+    Top = 114
     Width = 75
     Height = 25
     Hint = ''
     Caption = 'Archive'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = LMDButton1Click
   end
   object LMDDockManagerArchive: TLMDDockManager
-    Left = 280
-    Top = 528
+    Left = 564
+    Top = 56
   end
   object ZipForgeArchive: TZipForge
     ExtractCorruptedFiles = False
@@ -104,18 +103,20 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
     Options.FlushBuffers = True
     Options.OEMFileNames = True
     InMemory = False
+    OnFileProgress = ZipForgeArchiveFileProgress
+    OnOverallProgress = ZipForgeArchiveOverallProgress
     Zip64Mode = zmDisabled
     UnicodeFilenames = False
     EncryptionMethod = caPkzipClassic
-    Left = 184
-    Top = 528
+    Left = 460
+    Top = 56
   end
   object LMDFileOpenDialogArchive: TLMDFileOpenDialog
     FavoriteLinks = <>
     FileTypes = <>
     FileTypeIndex = 0
     Options = []
-    Left = 80
-    Top = 528
+    Left = 380
+    Top = 56
   end
 end

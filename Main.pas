@@ -302,7 +302,7 @@ type
     ProjectSave: TAction;
     ProjectNewRev: TAction;
     SchematicsToAPT: TAction;
-    ProjectArchive2: TAction;
+    ProjectArchiveMain: TAction;
     ProjectInitialize2: TAction;
     SchematicsSnapshot: TAction;
     SnapshotViewer: TAction;
@@ -3136,19 +3136,13 @@ var
 begin
   CodeSite.EnterMethod(Self, 'ProjectArchive');
 
-  if ValidProject then
-  begin
-    Project.zipFileName := sZipFileName;
-    if ValidateSearchPath() then
-      LTCSimArchiveForm.ShowModal
-    else
-      MessageDlg
-        ('Your project includes a directory outside the selected project. The archive would not be complete!.',
-        mtError, [mbOK], 0);
-  end { Valid search path }
+  Project.zipFileName := sZipFileName;
+  if ValidateSearchPath() then
+    LTCSimArchiveForm.ShowModal
   else
-    MessageDlg('You  need to have a valid project loaded.', mtError, [mbOK], 0);
-  Screen.Cursor := crDefault;
+    MessageDlg
+      ('Your project includes a directory outside the selected project. The archive would not be complete!.',
+        mtError, [mbOK], 0);
 
   CodeSite.ExitMethod(Self, 'ProjectArchive');
 end;
@@ -7563,23 +7557,16 @@ var
 begin
   CodeSite.EnterMethod(Self, 'ProjectArchive2Execute');
 
-  sZipFileName := IncludeTrailingPathDelimiter(LTCSim.localProjectsDir) +
+  if ValidProject then
+  begin
+    sZipFileName := IncludeTrailingPathDelimiter(LTCSim.localProjectsDir) +
     IncludeTrailingPathDelimiter(Project.Name) + Project.Name + '_' +
     Project.Rev + '_archive.zip';
-  if FileExists(sZipFileName) then
-  begin
-    if MessageDlg('Do you really want to delete ' +
-      ExtractFileName(sZipFileName) + '?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
-    then
-    begin
-      SysUtils.DeleteFile(sZipFileName);
-      ProjectArchive(sZipFileName);
-    end
+    ProjectArchive(sZipFileName);
   end
   else
-  begin
-    ProjectArchive(sZipFileName);
-  end;
+    MessageDlg('You need to have a valid project loaded first!', mtError,
+      [mbOK], 0);
 
   CodeSite.ExitMethod(Self, 'ProjectArchive2Execute');
 end;
