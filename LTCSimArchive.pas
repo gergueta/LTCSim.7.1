@@ -20,7 +20,6 @@ type
     ZipForgeArchive: TZipForge;
     LMDFileOpenDialogArchive: TLMDFileOpenDialog;
     LMDLabeledFileOpenEditTopSchematics: TLMDLabeledFileOpenEdit;
-    LMDCheckListBox1: TLMDCheckListBox;
     LMDButton1: TLMDButton;
 
     procedure ArchiverOverallProgress(Sender: TObject; Progress: Double;
@@ -90,15 +89,36 @@ begin
         FileMasks.Add(IncludeTrailingPathDelimiter(LTCSim.localProjectsDir) +
           IncludeTrailingPathDelimiter(Project.Name) +
           IncludeTrailingPathDelimiter(Project.Rev) + '*.*');
-          AddFiles();
-          CloseArchive();
+        // ExclusionMasks.Add('*.dat');
+        FileMasks.Add('*.sch');
+        FileMasks.Add('*.sym');
+        FileMasks.Add('*.asc');
+        FileMasks.Add('*.asy');
+        FileMasks.Add('*.spi');
+        FileMasks.Add('*.v');
+        FileMasks.Add('*.cdl');
+        FileMasks.Add('*.lvs');
+        FileMasks.Add('*.apt');
+        FileMasks.Add('*.lvh');
+        FileMasks.Add('*.alvh');
+        FileMasks.Add('*.edf');
+        FileMasks.Add('*.sp');
+        FileMasks.Add('*.cir');
+        FileMasks.Add('*.netz');
+        FileMasks.Add('*.net');
+        FileMasks.Add('*.sch');
+        FileMasks.Add('*.sch');
+        FileMasks.Add('*.sch');
+        FileMasks.Add('*.sch');
+        AddFiles();
+        CloseArchive();
       end;
-        except on E:
-          Exception do
-            begin
-              Writeln('Exception: ', E.Message);
-              Readln;
-            end;
+  except
+    on E: Exception do
+      begin
+        Writeln('Exception: ', E.Message);
+        Readln;
+      end;
   end;
 
 end;

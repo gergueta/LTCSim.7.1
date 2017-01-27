@@ -3,7 +3,7 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
   Top = 216
   BorderStyle = bsDialog
   Caption = 'Archive exclusions'
-  ClientHeight = 510
+  ClientHeight = 617
   ClientWidth = 606
   Color = clBtnFace
   ParentFont = True
@@ -13,8 +13,8 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
   PixelsPerInch = 96
   TextHeight = 13
   object OKBtn: TButton
-    Left = 350
-    Top = 472
+    Left = 374
+    Top = 576
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -23,8 +23,8 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
     TabOrder = 0
   end
   object CancelBtn: TButton
-    Left = 455
-    Top = 472
+    Left = 479
+    Top = 576
     Width = 75
     Height = 25
     Cancel = True
@@ -33,9 +33,9 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
     TabOrder = 1
   end
   object ProgressBar: TProgressBar
-    Left = 350
-    Top = 427
-    Width = 150
+    Left = 374
+    Top = 547
+    Width = 180
     Height = 17
     TabOrder = 2
   end
@@ -77,47 +77,19 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
     EditLabel.Height = 15
     EditLabel.Caption = 'Top schematics:'
   end
-  object LMDCheckListBox1: TLMDCheckListBox
-    Left = 8
-    Top = 64
-    Width = 401
-    Height = 281
-    TabOrder = 4
-    Items.Strings = (
-      '*.sym'
-      '*.sch'
-      '*.asc'
-      '*.asy'
-      '*.spi'
-      '*.v'
-      '*.cdl'
-      '*.lvs'
-      '*.apt'
-      '*.apt'
-      '*.edf'
-      '*.sp'
-      '*.cir'
-      '*.lvh'
-      '*.alvh'
-      '*.netz'
-      '*.net')
-    Value = 0
-    ItemIndex = -1
-    Layout.Alignment = agTopLeft
-  end
   object LMDButton1: TLMDButton
-    Left = 350
-    Top = 368
+    Left = 414
+    Top = 496
     Width = 75
     Height = 25
     Hint = ''
     Caption = 'Archive'
-    TabOrder = 5
+    TabOrder = 4
     OnClick = LMDButton1Click
   end
   object LMDDockManagerArchive: TLMDDockManager
-    Left = 264
-    Top = 368
+    Left = 280
+    Top = 528
   end
   object ZipForgeArchive: TZipForge
     ExtractCorruptedFiles = False
@@ -135,15 +107,15 @@ object LTCSimArchiveForm: TLTCSimArchiveForm
     Zip64Mode = zmDisabled
     UnicodeFilenames = False
     EncryptionMethod = caPkzipClassic
-    Left = 168
-    Top = 368
+    Left = 184
+    Top = 528
   end
   object LMDFileOpenDialogArchive: TLMDFileOpenDialog
     FavoriteLinks = <>
     FileTypes = <>
     FileTypeIndex = 0
     Options = []
-    Left = 64
-    Top = 368
+    Left = 80
+    Top = 528
   end
 end

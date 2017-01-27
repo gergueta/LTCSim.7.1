@@ -39,9 +39,7 @@ uses
   LMDDockButton, LMDShDlg, LMDShActions,
   LMDCustomStatusBar, LMDStatusBar, LMDBaseLabel, LMDInformationLabel,
   ElXPThemedControl, ElStatBar, LMDDckSite, LMDCustomListBox,
-  LMDCustomImageListBox, LMDCustomCheckListBox, LMDCheckListBox, Vcl.Ribbon,
-  Vcl.RibbonLunaStyleActnCtrls, Vcl.RibbonActnMenus, Vcl.RibbonActnCtrls,
-  Vcl.StdActns, Vcl.RibbonSilverStyleActnCtrls, CodeSiteLogging, AppIcons,
+  LMDCustomImageListBox, LMDCustomCheckListBox, LMDCheckListBox, CodeSiteLogging, AppIcons,
   ActiveX,
   AxNetwork_TLB, ZipForge, LMDCustomExtCombo, LMDComboBoxExt,
   Vcl.PlatformDefaultStyleActnCtrls, LMDShLink, LMDShList, LMDShTree,
@@ -366,6 +364,7 @@ type
     ToolButton1: TToolButton;
     ToolButton2: TToolButton;
     LMDShellLink1: TLMDShellLink;
+    LMDMRUListMain: TLMDMRUList;
 
     { &About... }
     procedure FormCreate(Sender: TObject);
@@ -5296,6 +5295,16 @@ begin
     eGenericVer.Text := '1.0';
   end;
   UpdateProjectVariables;
+  if (LMDMRUListMain.Items.IndexOf(Project.RevDir) < 0 ) then
+    begin
+      if ( LMDMRUListMain.Items.Count > 5 ) then
+        begin
+          LMDMRUListMain.Items.Delete(5);
+          LMDMRUListMain.Add(Project.RevDir);
+        end
+      else
+        LMDMRUListMain.Add(Project.RevDir);
+    end;
 
   if (AppIcons.IconModule.LMDMRUList.Items.IndexOf(Project.RevDir) < 0) then
   begin
@@ -5379,6 +5388,7 @@ begin
         CreateDirectories;
         CreateSynarioFiles;
         TransferSymbols;
+        LMDMRUListMain.Add(Project.RevDir);
         AppIcons.IconModule.LMDMRUList.Add(Project.RevDir);
         SetDirectoryBrowsers(Project.SimulationDir);
         Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.RevDir) +
@@ -6982,7 +6992,7 @@ begin
 
   Project.RevDir := aValue;
   Project.Dir := ExtractFileDir(Project.RevDir);
-  LTCSimProjectOpen;
+  ReadProjectSetupFile;
 
   CodeSite.ExitMethod(Self, 'LMDMRUListClick');
 end;
