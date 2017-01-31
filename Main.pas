@@ -329,9 +329,6 @@ type
     N9: TMenuItem;
     Initialize1: TMenuItem;
     N10: TMenuItem;
-    Snapshot1: TMenuItem;
-    Snapshotviewer1: TMenuItem;
-    N11: TMenuItem;
     Exit1: TMenuItem;
     Sxchematics1: TMenuItem;
     New2: TMenuItem;
@@ -371,6 +368,10 @@ type
     LMDTaskDialogMain: TLMDTaskDialog;
     JSDialogMain: TJSDialog;
     LMDButton2: TLMDButton;
+    LMDButton3: TLMDButton;
+    N8: TMenuItem;
+    Snapshot2: TMenuItem;
+    Snapshotviewer2: TMenuItem;
 
     { &About... }
     procedure FormCreate(Sender: TObject);
@@ -5601,115 +5602,112 @@ var
     sTime, sTemp: string;
   sCommand, sArgument, sWorkingDir, sZipFileName, sAPTNetlistFileName,
     sTreFileName: string;
-  // archiver: TZipForge;
+  archiver: TZipForge;
 begin
   CodeSite.EnterMethod(Self, 'LTCSimArchiveNetlist');
-
-  {
-    sSchemFileName := ExtractFileName(sSchematics);
-    sSchemDirectory := ExtractFilePath(sSchematics);
-    sSchemZipDirectory := IncludeTrailingPathDelimiter
+  sSchemFileName := ExtractFileName(sSchematics);
+  sSchemDirectory := ExtractFilePath(sSchematics);
+  sSchemZipDirectory := IncludeTrailingPathDelimiter
     (ExtractFilePath(sSchematics) + ChangeFileExt(sSchemFileName, '.dir'));
-    sNetlistFileName := ChangeFileExt(sSchematics, '.net');
-    sAPTNetlistFileName := ChangeFileExt(sSchematics, '.apt');
-    sTreFileName := ChangeFileExt(sSchematics, '.tre');
-    if not(FileExists(sTreFileName)) then
-    begin
+  sNetlistFileName := ChangeFileExt(sSchematics, '.net');
+  sAPTNetlistFileName := ChangeFileExt(sSchematics, '.apt');
+  sTreFileName := ChangeFileExt(sSchematics, '.tre');
+  if not(FileExists(sTreFileName)) then
+  begin
     MessageDlg('File ' + sTreFileName + ' not found!', mtError, [mbOK], 0);
     Abort;
-    end;
-    if not(FileExists(sNetlistFileName)) then
-    begin
+  end;
+  if not(FileExists(sNetlistFileName)) then
+  begin
     MessageDlg('File ' + sNetlistFileName + ' not found!', mtError, [mbOK], 0);
     Abort;
-    end;
-    if not(FileExists(sAPTNetlistFileName)) then
-    begin
+  end;
+  if not(FileExists(sAPTNetlistFileName)) then
+  begin
     MessageDlg('File ' + sAPTNetlistFileName + ' not found!', mtError,
-    [mbOK], 0);
+      [mbOK], 0);
     Abort;
-    end;
-    if DirectoryExists(sSchemZipDirectory) then
-    begin
+  end;
+  if DirectoryExists(sSchemZipDirectory) then
+  begin
     JamFileOperationArchive.Options := [soFilesOnly, soNoConfirmation];
     JamFileOperationArchive.Operation := otDelete;
     JamFileOperationArchive.SourceFiles.Clear;
     JamFileOperationArchive.SourceFiles.Add
-    (IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
+      (IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
     JamFileOperationArchive.Execute;
     RemoveDir(sSchemZipDirectory)
-    end
-    else
-    begin
+  end
+  else
+  begin
     CreateDir(sSchemZipDirectory);
-    end;
-    sCommand := IncludeTrailingPathDelimiter(LTCSim.Dir) + 'archive.exe ';
-    sArgument := ' -save=' + sSchemZipDirectory + ' ' + sSchematics;
-    sWorkingDir := sSchemDirectory;
-    with LMDStartArchive do
-    begin
+  end;
+  sCommand := IncludeTrailingPathDelimiter(LTCSim.Dir) + 'archive.exe ';
+  sArgument := ' -save=' + sSchemZipDirectory + ' ' + sSchematics;
+  sWorkingDir := sSchemDirectory;
+  with IconModule.LMDStartArchive do
+  begin
     Wait := true;
     Command := sCommand;
     DefaultDir := sWorkingDir;
     Parameters := sArgument;
     Execute;
-    end; // with
-    // Copy APT netlist inside
-    sTemp := IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+  end; // with
+  // Copy APT netlist inside
+  sTemp := IncludeTrailingPathDelimiter(sSchemZipDirectory) +
     ChangeFileExt(sSchemFileName, '.apt');
-    CopyFile(PChar(sAPTNetlistFileName), PChar(sTemp), true);
-    // Copy Assura/Dracula inside
-    sTemp := IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+  CopyFile(PChar(sAPTNetlistFileName), PChar(sTemp), true);
+  // Copy Assura/Dracula inside
+  sTemp := IncludeTrailingPathDelimiter(sSchemZipDirectory) +
     ChangeFileExt(sSchemFileName, '.net');
-    CopyFile(PChar(sNetlistFileName), PChar(sTemp), true);
-    // Copy Navigator file inside
-    sTemp := IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+  CopyFile(PChar(sNetlistFileName), PChar(sTemp), true);
+  // Copy Navigator file inside
+  sTemp := IncludeTrailingPathDelimiter(sSchemZipDirectory) +
     ChangeFileExt(sSchemFileName, '.tre');
-    CopyFile(PChar(sTreFileName), PChar(sTemp), true);
+  CopyFile(PChar(sTreFileName), PChar(sTemp), true);
 
-    DateTimeToString(sDate, 'mmdd', Now);
-    DateTimeToString(sTime, 'hhnn', Now);
-    // sDate := DateToStr( Date);
-    // sTime := TimeToStr( Now );
-    sZipFileName := IncludeTrailingPathDelimiter(sSchemDirectory) +
+  DateTimeToString(sDate, 'mmdd', Now);
+  DateTimeToString(sTime, 'hhnn', Now);
+  // sDate := DateToStr( Date);
+  // sTime := TimeToStr( Now );
+  sZipFileName := IncludeTrailingPathDelimiter(sSchemDirectory) +
     ChangeFileExt(sSchemFileName, '.netz');
-    // Copy zip file to location of schematics
-    if FileExists(sZipFileName) then
-    begin
+  // Copy zip file to location of schematics
+  if FileExists(sZipFileName) then
+  begin
     DeleteFile(PChar(sZipFileName))
-    end;
-    try
+  end;
+  try
     archiver := TZipForge.Create(nil);
     with archiver do
     begin
-    FileName := sZipFileName;
-    OpenArchive(fmCreate);
-    BaseDir := sSchemDirectory;
-    Comment := Format('LTCSim files for: %s ,Date: %s, Time:%s',
-    [ExtractFileName(sSchematics), sDate, sTime]);
-    CompressionLevel := clNone;
-    AddFiles(IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
-    CloseArchive();
+      FileName := sZipFileName;
+      OpenArchive(fmCreate);
+      BaseDir := sSchemDirectory;
+      Comment := Format('LTCSim files for: %s ,Date: %s, Time:%s',
+        [ExtractFileName(sSchematics), sDate, sTime]);
+      CompressionLevel := clNone;
+      AddFiles(IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
+      CloseArchive();
     end;
-    except
+  except
     on E: Exception do
     begin
-    Writeln('Exception: ', E.Message);
-    Readln;
+      Writeln('Exception: ', E.Message);
+      Readln;
     end;
-    end;
-    // Remove old directory
-    if DirectoryExists(sSchemZipDirectory) then
-    begin
+  end;
+  // Remove old directory
+  if DirectoryExists(sSchemZipDirectory) then
+  begin
     JamFileOperationArchive.Options := [soFilesOnly, soNoConfirmation];
     JamFileOperationArchive.Operation := otDelete;
     JamFileOperationArchive.SourceFiles.Clear;
     JamFileOperationArchive.SourceFiles.Add
-    (IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
+      (IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
     JamFileOperationArchive.Execute;
     RemoveDir(sSchemZipDirectory);
-    end
-  }
+  end;
 
   CodeSite.ExitMethod(Self, 'LTCSimArchiveNetlist');
 end;
@@ -7371,122 +7369,128 @@ var
   sCommand, sArgument, sWorkingDir,sZipFileName, sHierNavFileName: string;
   sTreFile: string;
   archiver :TZipForge;
+begin
+  sSchemFileName := ExtractFileName(sSchematics);
+  sSchemDirectory := ExtractFilePath(sSchematics);
+  sSchemZipDirectory := IncludeTrailingPathDelimiter
+    (ExtractFilePath(sSchematics) + ChangeFileExt(sSchemFileName, '.dir'));
+  sTreFile := ChangeFileExt(sSchematics, '.tre');
+  if FileExists(sTreFile) then
   begin
-    sSchemFileName := ExtractFileName( sSchematics );
-    sSchemDirectory := ExtractFilePath( sSchematics );
-    sSchemZipDirectory := IncludeTrailingPathDelimiter( ExtractFilePath( sSchematics )
-      + ChangeFileExt( sSchemFileName, '.dir' )  );
-    sTreFile := ChangeFileExt( sSchematics, '.tre' );
-    if FileExists( sTreFile ) then
-      begin
-        if DirectoryExists( sSchemZipDirectory ) then
-          begin
-            JamFileOperationArchive.Options := [soFilesOnly, soNoConfirmation];
-            JamFileOperationArchive.Operation := otDelete;
-            JamFileOperationArchive.SourceFiles.Clear;
-            JamFileOperationArchive.SourceFiles.Add(IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
-            JamFileOperationArchive.Execute;
-            RemoveDir( sSchemZipDirectory )
-          end
-         else
-          begin
-            CreateDir( sSchemZipDirectory );
-          end;
-        sCommand := IncludeTrailingPathDelimiter(LTCSim.Dir) +
-          'archive.exe ';
-        sArgument := ' -save=' + sSchemZipDirectory +
-          ' ' + sSchematics;
-        sWorkingDir := sSchemDirectory;
-        { Copy HierNav and support files to same directory }
-        CopyFile( PChar( IncludeTrailingPathDelimiter( LTCSim.Dir ) + 'HierNav.exe' ),
-          PChar( IncludeTrailingPathDelimiter( sSchemZipDirectory ) + 'HierNav.exe' ),
-          False) ;
-        CopyFile( PChar( IncludeTrailingPathDelimiter( LTCSim.Dir ) + 'tcl84.dll' ),
-          PChar( IncludeTrailingPathDelimiter( sSchemZipDirectory ) + 'tcl84.dll' ),
-          False) ;
-        CopyFile( PChar( IncludeTrailingPathDelimiter( LTCSim.Dir ) + 'tk84.dll' ),
-          PChar( IncludeTrailingPathDelimiter( sSchemZipDirectory ) + 'tk84.dll' ),
-          False) ;
-        CopyFile( PChar( IncludeTrailingPathDelimiter( LTCSim.Dir ) + 'tkdata.dll' ),
-          PChar( IncludeTrailingPathDelimiter( sSchemZipDirectory ) + 'tkdata.dll' ),
-          False) ;
-        CopyFile( PChar( IncludeTrailingPathDelimiter( LTCSim.Dir ) + 'tkhtml.dll' ),
-          PChar( IncludeTrailingPathDelimiter( sSchemZipDirectory ) + 'tkhtml.dll' ),
-          False) ;
-        CopyFile( PChar( IncludeTrailingPathDelimiter( LTCSim.Dir ) + 'tkmesg.dll' ),
-          PChar( IncludeTrailingPathDelimiter( sSchemZipDirectory ) + 'tkmesg.dll' ),
-          False) ;
-        CopyFile( PChar( IncludeTrailingPathDelimiter( LTCSim.Dir ) + 'tkwdog.exe' ),
-          PChar( IncludeTrailingPathDelimiter( sSchemZipDirectory ) + 'tkwdog.exe' ),
-          False) ;
-        CopyFile( PChar( IncludeTrailingPathDelimiter( LTCSim.Dir ) + 'nttapkp.dll' ),
-          PChar( IncludeTrailingPathDelimiter( sSchemZipDirectory ) + 'nttapkp.dll' ),
-          False) ;
-        with LMDStarterArchive do
-          begin
-            Wait := True;
-            Command := sCommand;
-            DefaultDir := sWorkingDir;
-            Parameters := sArgument;
-            Execute;
-          end; { with }
-        sDate := formatdatetime('mmddyy', Today);
-        sTime := formatdatetime('hhmm', Now);
-        // sDate := CurrentDateString('MMDDYY', true);
-        // sTime := CurrentTimeString('hhmm', true);
-        {
-        sZipFileName := IncludeTrailingPathDelimiter( sSchemDirectory )
-          + ChangeFileExt( sSchemFileName,'.exe' );
-          }
-        sZipFileName := IncludeTrailingPathDelimiter( sSchemDirectory )
-            + ChangeFileExt( sSchemFileName,'.snap' );
-        { Copy zip file to location of schematics }
-        if FileExists( sZipFileName ) then
-          begin
-            DeleteFile( PChar( sZipFileName ))
-          end;
-        try
-          archiver := TZipForge.Create(nil);
-          with archiver do
-            begin
-              FileName := sZipFileName;
-              // SFXStub := IncludeTrailingPathDelimiter(sLTCSimDir) + 'SFXStub.exe';
-              OpenArchive(fmCreate);
-              BaseDir := sSchemDirectory;
-              Comment := ExtractFileName( sSchematics );
-              CompressionLevel := clNone;
-              AddFiles( IncludeTrailingPathDelimiter( sSchemZipDirectory ) + '*.*' );
-              CloseArchive();
-            end;
-        except
-          on E: Exception do
-            begin
-              Writeln('Exception: ', E.Message);
-              Readln;
-            end;
-        end;
-        { Remove old directory }
-        if DirectoryExists( sSchemZipDirectory ) then
-          begin
-            JamFileOperationArchive.Options := [soFilesOnly, soNoConfirmation];
-            JamFileOperationArchive.Operation := otDelete;
-            JamFileOperationArchive.SourceFiles.Clear;
-            JamFileOperationArchive.SourceFiles.Add(IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
-            JamFileOperationArchive.Execute;
-            RemoveDir( sSchemZipDirectory );
-          end
-      end
+    if DirectoryExists(sSchemZipDirectory) then
+    begin
+      JamFileOperationArchive.Options := [soFilesOnly, soNoConfirmation];
+      JamFileOperationArchive.Operation := otDelete;
+      JamFileOperationArchive.SourceFiles.Clear;
+      JamFileOperationArchive.SourceFiles.Add
+        (IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
+      JamFileOperationArchive.Execute;
+      RemoveDir(sSchemZipDirectory)
+    end
     else
+    begin
+      CreateDir(sSchemZipDirectory);
+    end;
+    sCommand := IncludeTrailingPathDelimiter(LTCSim.Dir) + 'archive.exe ';
+    sArgument := ' -save=' + sSchemZipDirectory + ' ' + sSchematics;
+    sWorkingDir := sSchemDirectory;
+    { Copy HierNav and support files to same directory }
+    CopyFile(PChar(IncludeTrailingPathDelimiter(LTCSim.Dir) + 'HierNav.exe'),
+      PChar(IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+      'HierNav.exe'), False);
+    CopyFile(PChar(IncludeTrailingPathDelimiter(LTCSim.Dir) + 'tcl84.dll'),
+      PChar(IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+      'tcl84.dll'), False);
+    CopyFile(PChar(IncludeTrailingPathDelimiter(LTCSim.Dir) + 'tk84.dll'),
+      PChar(IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+      'tk84.dll'), False);
+    CopyFile(PChar(IncludeTrailingPathDelimiter(LTCSim.Dir) + 'tkdata.dll'),
+      PChar(IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+      'tkdata.dll'), False);
+    CopyFile(PChar(IncludeTrailingPathDelimiter(LTCSim.Dir) + 'tkhtml.dll'),
+      PChar(IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+      'tkhtml.dll'), False);
+    CopyFile(PChar(IncludeTrailingPathDelimiter(LTCSim.Dir) + 'tkmesg.dll'),
+      PChar(IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+      'tkmesg.dll'), False);
+    CopyFile(PChar(IncludeTrailingPathDelimiter(LTCSim.Dir) + 'tkwdog.exe'),
+      PChar(IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+      'tkwdog.exe'), False);
+    CopyFile(PChar(IncludeTrailingPathDelimiter(LTCSim.Dir) + 'nttapkp.dll'),
+      PChar(IncludeTrailingPathDelimiter(sSchemZipDirectory) +
+      'nttapkp.dll'), False);
+    with LMDStarterArchive do
+    begin
+      Wait := true;
+      Command := sCommand;
+      DefaultDir := sWorkingDir;
+      Parameters := sArgument;
+      Execute;
+    end; { with }
+    sDate := formatdatetime('mmddyy', Today);
+    sTime := formatdatetime('hhmm', Now);
+    // sDate := CurrentDateString('MMDDYY', true);
+    // sTime := CurrentTimeString('hhmm', true);
+    {
+      sZipFileName := IncludeTrailingPathDelimiter( sSchemDirectory )
+      + ChangeFileExt( sSchemFileName,'.exe' );
+    }
+    sZipFileName := IncludeTrailingPathDelimiter(sSchemDirectory) +
+      ChangeFileExt(sSchemFileName, '.snap');
+    { Copy zip file to location of schematics }
+    if FileExists(sZipFileName) then
+    begin
+      DeleteFile(PChar(sZipFileName))
+    end;
+    try
+      archiver := TZipForge.Create(nil);
+      with archiver do
       begin
-        //JSDialogMain.Header.Icon := tdiCustom;
-        // the 'SHIELD' icon has a black border and looks better when the background is dark
-        JSDialogMain.Content.Clear();
-        JSDialogMain.Header.Glyph.Bitmap.LoadFromResourceName(hInstance, 'JSD_SHIELD');
-        JSDialogMain.Header.Glyph.Bitmap.Transparent := True;
-        JSDialogMain.Instruction.Text := 'File ' + sTreFile + ' not found. Need to open with Navigator and save it first. Do you want to open the Navigator?';
-        JSDialogMain.Content.Add(sSchematics);
-        JSDialogMain.Execute;
+        FileName := sZipFileName;
+        // SFXStub := IncludeTrailingPathDelimiter(sLTCSimDir) + 'SFXStub.exe';
+        OpenArchive(fmCreate);
+        BaseDir := sSchemDirectory;
+        Comment := 'Schematics ' + ExtractFileName(sSchematics) + sDate + '-' + sTime;
+        CompressionLevel := clNone;
+        AddFiles(IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
+        CloseArchive();
       end;
+    except
+      on E: Exception do
+      begin
+        Writeln('Exception: ', E.Message);
+        Readln;
+      end;
+    end;
+    { Remove old directory }
+    if DirectoryExists(sSchemZipDirectory) then
+    begin
+      JamFileOperationArchive.Options := [soFilesOnly, soNoConfirmation];
+      JamFileOperationArchive.Operation := otDelete;
+      JamFileOperationArchive.SourceFiles.Clear;
+      JamFileOperationArchive.SourceFiles.Add
+        (IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
+      JamFileOperationArchive.Execute;
+      RemoveDir(sSchemZipDirectory);
+    end
+  end
+  else
+  begin
+    // JSDialogMain.Header.Icon := tdiCustom;
+    // the 'SHIELD' icon has a black border and looks better when the background is dark
+    JSDialogMain.Content.Clear();
+    JSDialogMain.Expando.Lines.Clear();
+    JSDialogMain.Header.Glyph.Bitmap.LoadFromResourceName(hInstance,
+      'JSD_SHIELD');
+    JSDialogMain.Header.Glyph.Bitmap.Transparent := true;
+    JSDialogMain.Instruction.Text :=
+      'Navigator "<>.tre" file not found. Need to open with Navigator and save it first. Do you want to open the Navigator?';
+    JSDialogMain.Expando.ShowText := 'Show schematics file name';
+    JSDialogMain.Expando.HideText := 'Hide schematics file name';
+    JSDialogMain.Expando.Lines.Add(sSchematics);
+    JSDialogMain.Content.Add(sTreFile);
+    JSDialogMain.Execute;
+  end;
 end;
 
 procedure TMainForm.ActionProjectArchiveExecute(Sender: TObject);
@@ -7809,7 +7813,7 @@ begin
     end
     else
       MessageDlg('You  need to have a valid project loaded.', mtError, [mbOK], 0);
- 
+
   CodeSite.ExitMethod(Self, 'SchematicsSnapshotExecute');
 end;
 
@@ -7874,7 +7878,7 @@ var
   sSchematics, sSchemDirectory, sSchemFileName : String;
 begin
   sTemp := lMRStr[Sender.ModalResult];
-  sSchematics := Sender.Content[0];
+  sSchematics := ChangeFileExt(Sender.Content[0], '.sch');
   sSchemFileName := ExtractFileName( sSchematics );
   sSchemDirectory := ExtractFilePath( sSchematics );
 
