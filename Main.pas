@@ -7427,8 +7427,8 @@ begin
       Parameters := sArgument;
       Execute;
     end; { with }
-    sDate := formatdatetime('mmddyy', Today);
-    sTime := formatdatetime('hhmm', Now);
+    sDate := formatdatetime('mm/dd/yy', Today);
+    sTime := formatdatetime('hh:mm', Now);
     // sDate := CurrentDateString('MMDDYY', true);
     // sTime := CurrentTimeString('hhmm', true);
     {
@@ -7450,7 +7450,7 @@ begin
         // SFXStub := IncludeTrailingPathDelimiter(sLTCSimDir) + 'SFXStub.exe';
         OpenArchive(fmCreate);
         BaseDir := sSchemDirectory;
-        Comment := 'Schematics ' + ExtractFileName(sSchematics) + sDate + '-' + sTime;
+        Comment := 'Schematics ' + ExtractFileName(sSchematics) + ': ' + sDate + ' ' + sTime;
         CompressionLevel := clNone;
         AddFiles(IncludeTrailingPathDelimiter(sSchemZipDirectory) + '*.*');
         CloseArchive();
