@@ -114,6 +114,7 @@ begin
       FileMasks.Add('*.doc*');
       FileMasks.Add('*.ppt*');
       FileMasks.Add('*.xl*');
+      FileMasks.Add('*.snap');
       AddFiles();
       CloseArchive();
       Close();
