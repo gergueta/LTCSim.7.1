@@ -13,14 +13,8 @@ Coordinates=1353,828,62,36
 [eAssuraBracketSubstitutionRight]
 Coordinates=1140,828,203,36
 
-[eComputeServer]
-Coordinates=309,348,111,58
-
 [cbAssuraOmitPrefix]
 Coordinates=915,828,128,36
-
-[bLSFUpdate]
-Coordinates=960,10,86,58
 
 [PopupMenuStim]
 Coordinates=1328,617,109,36
@@ -60,9 +54,6 @@ Coordinates=1002,862,49,36
 
 [eHSpiceViewerOptions]
 Coordinates=144,828,147,36
-
-[cmdConnect]
-Coordinates=433,144,86,58
 
 [LMDGroupBoxAPT]
 Coordinates=10,828,124,36
@@ -217,9 +208,6 @@ Coordinates=1140,690,130,36
 [Start1]
 Coordinates=1745,1010,49,36
 
-[Label9]
-Coordinates=566,348,53,58
-
 [eOption2Name]
 Coordinates=1029,690,101,36
 
@@ -240,9 +228,6 @@ Coordinates=1113,212,114,58
 
 [eAssuraBracketSubstitutionLeft]
 Coordinates=577,690,194,36
-
-[Label10]
-Coordinates=1026,280,60,58
 
 [cbLocation]
 Coordinates=10,10,101,124
@@ -310,9 +295,6 @@ Coordinates=2046,606,44,36
 [GroupBox2]
 Coordinates=647,484,79,58
 
-[Label12]
-Coordinates=642,10,60,58
-
 [Configure1]
 Coordinates=2046,661,78,36
 
@@ -321,9 +303,6 @@ Coordinates=2046,771,58,36
 
 [cbDraculaShrink]
 Coordinates=1368,280,114,58
-
-[eUserName]
-Coordinates=1346,416,83,58
 
 [PopupMenuFileList]
 Coordinates=2046,881,125,36
@@ -529,9 +508,6 @@ Coordinates=508,484,129,58
 [cbAssuraSubcircuit]
 Coordinates=298,144,125,58
 
-[eUserPassword]
-Coordinates=10,484,105,58
-
 [cbPSspiceShrink]
 Coordinates=865,212,114,58
 
@@ -615,7 +591,7 @@ Coordinates=1040,484,144,36
 Coordinates=2534,991,51,36
 
 []
-Coordinates=1944,874,93,36
+Coordinates=2095,386,173,36
 Visible=True
 
 [LMDDockPanelAPT]
@@ -723,9 +699,6 @@ Coordinates=1851,764,148,36
 [LabelFilter]
 Coordinates=1145,87,75,58
 
-[PanelLTCSimOptions3]
-Coordinates=246,153,145,58
-
 [Splitter2]
 Coordinates=893,87,62,36
 
@@ -767,9 +740,6 @@ Coordinates=130,78,93,58
 
 [LMDButtonSp]
 Coordinates=265,1,94,58
-
-[LMDLabeledCheckListBox1]
-Coordinates=2095,386,173,36
 
 [LMDButtonNet]
 Coordinates=1222,78,99,58
