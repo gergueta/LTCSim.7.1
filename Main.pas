@@ -360,6 +360,11 @@ type
     bLSFUpdate: TButton;
     eUserPassword: TEdit;
     cmdConnect: TButton;
+    ActionRunLTCSimNetlist: TAction;
+    ToolButton4: TToolButton;
+    ToolButton5: TToolButton;
+    ToolButton9: TToolButton;
+    ToolButton11: TToolButton;
     procedure AboutLTCSimClick(Sender: TObject);
     procedure AboutProcessClick(Sender: TObject);
     procedure ActionAscToSchExecute(Sender: TObject);
@@ -374,6 +379,7 @@ type
     procedure ActionProjectOpenExecute(Sender: TObject);
     procedure ActionProjectSaveExecute(Sender: TObject);
     procedure ActionRestartCohesionLicenseExecute(Sender: TObject);
+    procedure ActionRunLTCSimNetlistExecute(Sender: TObject);
     procedure ActionSchematicsEditExecute(Sender: TObject);
     procedure ActionSchematicsNavigateExecute(Sender: TObject);
     procedure ActionSchematicsNewExecute(Sender: TObject);
@@ -1132,6 +1138,75 @@ begin
   StartSCSShell;
 
   CodeSite.ExitMethod(Self, 'ActionRestartCohesionLicenseExecute');
+end;
+
+procedure TMainForm.ActionRunLTCSimNetlistExecute(Sender: TObject);
+  var
+  sSchematics: string;
+  sStimulus: string;
+  sFileExtension: string;
+begin
+  CodeSite.EnterMethod(Self, 'ToolButtonTopFormClick');
+
+  if ValidProject() then
+  begin
+    if not cbLTspiceSchematics.checked then
+      sFileExtension := '.sch'
+    else
+      sFileExtension := '.asc';
+    sSchematics := IncludeTrailingPathDelimiter(Project.SchemDir) +
+      cbSchematics.Text + sFileExtension;
+    sStimulus := IncludeTrailingPathDelimiter(Project.SchemDir) + cbStim.Text;
+    Project.SimulationDir := ExtractFilePath(sStimulus);
+    with Sender as TLMDSpeedButton do
+    begin
+      case tag of
+        1:
+          EditSchematics(sSchematics);
+        2:
+          NavigateSchematics(sSchematics);
+        3:
+          EditStimulus;
+        5:
+          begin
+            if (cbTool.Text = '') then
+            begin
+              MessageDlg('You need to select the tool to use!', mtError,
+                [mbOK], 0);
+              Exit;
+            end
+            else
+              runLTCSimNetlist(sSchematics, true, False)
+          end;
+        6:
+          begin
+            if (cbTool.Text = '') then
+            begin
+              MessageDlg('You need to select the tool to use!', mtError,
+                [mbOK], 0);
+              Exit;
+            end
+            else
+              runSimulation(sStimulus)
+          end;
+        7:
+          begin
+            if (cbTool.Text = '') then
+            begin
+              MessageDlg('You need to select the tool to use!', mtError,
+                [mbOK], 0);
+              Exit;
+            end
+            else
+              runLTCSimNetlist(sSchematics, true, true)
+          end;
+      end
+    end
+  end
+  else
+    MessageDlg('You need a valid project loaded first!', mtError, [mbOK], 0);
+
+  CodeSite.ExitMethod(Self, 'ToolButtonTopFormClick');
 end;
 
 procedure TMainForm.ActionSchematicsEditExecute(Sender: TObject);
@@ -6249,7 +6324,7 @@ begin
       cbSchematics.Text + sFileExtension;
     sStimulus := IncludeTrailingPathDelimiter(Project.SchemDir) + cbStim.Text;
     Project.SimulationDir := ExtractFilePath(sStimulus);
-    with Sender as TLMDSpeedButton do
+    with Sender as TToolButton do
     begin
       case tag of
         1:
