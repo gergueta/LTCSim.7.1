@@ -12,19 +12,6 @@ uses
 
 type
   TIconModule = class(TDataModule)
-    ShellBrowserMain: TShellBrowser;
-    TrayIconMain: TTrayIcon;
-    LMDStarterShell: TLMDStarter;
-    JamBrowseForFolder: TJamBrowseForFolder;
-    JamFileOperation: TJamFileOperation;
-    JamDropFileSch: TJamDropFiles;
-    JamDropFilesStim: TJamDropFiles;
-    JamShellLinkMain: TJamShellLink;
-    LMDStartArchive: TLMDStarter;
-    LMDStorRegistryVault: TLMDStorRegistryVault;
-    LMDMRUList: TLMDMRUList;
-    LMDDockManagerMain: TLMDDockManager;
-    JamFileOperationArchive: TJamFileOperation;
   private
     { Private declarations }
   public

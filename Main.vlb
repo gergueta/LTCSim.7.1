@@ -555,7 +555,7 @@ Coordinates=2534,881,123,36
 Coordinates=1040,484,144,36
 
 []
-Coordinates=16,936,61,36
+Coordinates=1630,606,84,36
 Visible=True
 
 [LMDDockPanelAPT]
@@ -590,9 +590,6 @@ Coordinates=748,221,145,58
 
 [SnapshotViewer]
 Coordinates=1222,155,108,36
-
-[ToolButton6]
-Coordinates=931,434,84,36
 
 [btnViewStyle]
 Coordinates=1203,357,89,36
@@ -635,9 +632,6 @@ Coordinates=461,366,102,58
 
 [LMDButtonSch]
 Coordinates=265,230,101,58
-
-[ToolButton10]
-Coordinates=1742,221,91,36
 
 [PanelLTCSimOptions1]
 Coordinates=1527,111,145,58
@@ -690,12 +684,6 @@ Coordinates=2120,331,121,36
 [ProjectNew]
 Coordinates=1630,243,80,36
 
-[ToolButton7]
-Coordinates=1630,298,84,36
-
-[ToolButton3]
-Coordinates=1630,353,84,36
-
 [LMDDockPanelTools]
 Coordinates=1553,764,135,36
 
@@ -714,20 +702,11 @@ Coordinates=461,289,119,58
 [LMDDockPanelLTspice]
 Coordinates=2120,606,148,36
 
-[ToolButton8]
-Coordinates=1630,606,84,36
-
 [LMDDockPanelAssura]
 Coordinates=2120,716,143,36
 
 [cbLTspiceSchematics]
 Coordinates=1265,221,140,58
-
-[CoolBar1]
-Coordinates=1628,716,68,36
-
-[LMDButton1]
-Coordinates=461,221,86,58
 
 [LMDButtonV]
 Coordinates=1222,1,87,58
@@ -791,4 +770,19 @@ Coordinates=2095,56,161,36
 
 [ProjectArchiveMain]
 Coordinates=1742,111,105,36
+
+[LMDButtonNetz]
+Coordinates=461,221,86,58
+
+[CoolBarFileList]
+Coordinates=1628,716,68,36
+
+[ToolButtonFileView]
+Coordinates=1630,353,84,36
+
+[ToolButtonFolderBack]
+Coordinates=931,434,84,36
+
+[ToolButtonFolderForward]
+Coordinates=1630,298,84,36
 

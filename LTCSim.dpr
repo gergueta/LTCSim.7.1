@@ -21,7 +21,6 @@ uses
   DisplayHideAttr in 'DisplayHideAttr.pas' {DisplayHideAttrDlg},
   LTCSimArchive in 'LTCSimArchive.pas' {LTCSimArchiveForm},
   AxNetwork_TLB in 'ActivExperts\AxNetwork_TLB.pas',
-  AppIcons in 'AppIcons.pas' {IconModule: TDataModule},
   Vcl.Themes,
   Vcl.Styles;
 
@@ -51,7 +50,6 @@ begin
   Application.CreateForm(TUpdateSchemDlg, UpdateSchemDlg);
   Application.CreateForm(TDisplayHideAttrDlg, DisplayHideAttrDlg);
   Application.CreateForm(TLTCSimArchiveForm, LTCSimArchiveForm);
-  Application.CreateForm(TIconModule, IconModule);
   Application.Run
 
 end.

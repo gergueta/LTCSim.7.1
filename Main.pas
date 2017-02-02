@@ -35,309 +35,306 @@ uses
 
 type
   TMainForm = class(TForm)
-    AboutLTCSim1                    : TMenuItem;
-    ActionAscToSch                  : TAction;
-    ActionAsyToSym                  : TAction;
-    ActionEditSchematics            : TAction;
-    ActionLibraryInitialize         : TAction;
-    ActionLibraryUpdate             : TAction;
-    ActionListFolder                : TActionList;
-    ActionManagerMain               : TActionManager;
-    ActionNavigateSchematics        : TAction;
-    ActionRestartCohesionLicense    : TAction;
-    ActionSchematicsNew             : TAction;
-    ActionSchematicsOpen            : TAction;
-    ActionSchToAsc                  : TAction;
-    ActionSymToAsy                  : TAction;
-    ActionSynIniEditor              : TAction;
-    ADCIItoSym1                     : TMenuItem;
-    ArchiveProject1                 : TMenuItem;
-    ASCIItoSchem1                   : TMenuItem;
-    btnViewStyle                    : TToolButton;
-    cbAPTBipolarArea                : TCheckBox;
-    cbAPTBipolarWL                  : TCheckBox;
-    cbAPTGND                        : TCheckBox;
-    cbAPTOmitPrefix                 : TLMDCheckBox;
-    cbAPTShrink                     : TCheckBox;
-    cbAPTSubcircuit                 : TCheckBox;
-    cbAPTXGNDX                      : TCheckBox;
-    cbAssuraBipolarArea             : TCheckBox;
-    cbAssuraBipolarWL               : TCheckBox;
-    cbAssuraGND                     : TCheckBox;
-    cbAssuraOmitPrefix              : TLMDCheckBox;
-    cbAssuraShrink                  : TCheckBox;
-    cbAssuraSubcircuit              : TCheckBox;
-    cbAssuraXGNDX                   : TCheckBox;
-    cbDraculaBipolarArea            : TCheckBox;
-    cbDraculaBipolarWL              : TCheckBox;
-    cbDraculaGND                    : TCheckBox;
-    cbDraculaOmitPrefix             : TLMDCheckBox;
-    cbDraculaShrink                 : TCheckBox;
-    cbDraculaSubcircuit             : TCheckBox;
-    cbDraculaXGNDX                  : TCheckBox;
-    cbFilterAfterNetlist            : TCheckBox;
-    cbFilterAfterSchematics         : TCheckBox;
-    cbFilterAfterSimulation         : TCheckBox;
-    cbHSpiceGND                     : TCheckBox;
-    cbHSpiceOmitPrefix              : TLMDCheckBox;
-    cbHSpiceShrink                  : TCheckBox;
-    cbHSpiceSubcircuit              : TCheckBox;
-    cbHSpiceVerilogA                : TCheckBox;
-    cbHSpiceXGNDX                   : TCheckBox;
-    cbIgnoreCase                    : TCheckBox;
-    cbLocation                      : TComboBox;
-    cbLTspiceGND                    : TCheckBox;
-    cbLTspiceOmitPrefix             : TLMDCheckBox;
-    cbLTspiceSchematics             : TCheckBox;
-    cbLTspiceShrink                 : TCheckBox;
-    cbLTspiceSubcircuit             : TCheckBox;
-    cbLTspiceXGNDX                  : TCheckBox;
-    cbPrimitiveReport               : TCheckBox;
-    cbPSpiceMixedSignal             : TCheckBox;
-    cbPSspiceGND                    : TCheckBox;
-    cbPSspiceOmitPrefix             : TLMDCheckBox;
-    cbPSspiceShrink                 : TCheckBox;
-    cbPSspiceSubcircuit             : TCheckBox;
-    cbPSspiceXGNDX                  : TCheckBox;
-    cbSchematics                    : TComboBox;
-    cbStim                          : TComboBox;
-    cbTool                          : TComboBox;
-    Changeoptions1                  : TMenuItem;
-    Cohesion1                       : TMenuItem;
-    Configure1                      : TMenuItem;
-    Control1                        : TMenuItem;
-    CoolBar1                        : TCoolBar;
-    CT2                             : TMenuItem;
-    Delete1                         : TMenuItem;
-    Delete2                         : TMenuItem;
-    Devicelist1                     : TMenuItem;
-    DiisplayHideattributes1         : TMenuItem;
-    eAPTBracketSubstitutionLeft     : TLMDLabeledMaskEdit;
-    eAPTBracketSubstitutionRight    : TLMDLabeledMaskEdit;
-    eAPTLVS_Short                   : TLMDLabeledEdit;
-    eAssuraBracketSubstitutionLeft  : TLMDLabeledMaskEdit;
-    eAssuraBracketSubstitutionRight : TLMDLabeledMaskEdit;
-    eAssuraLVS_Short                : TLMDLabeledEdit;
-    Edit1                           : TMenuItem;
-    Editschematics1                 : TMenuItem;
-    Editstimulus1                   : TMenuItem;
-    eDraculaBracketSubstitutionLeft : TLMDLabeledMaskEdit;
+    AboutLTCSim1: TMenuItem;
+    ActionAscToSch: TAction;
+    ActionAsyToSym: TAction;
+    ActionEditSchematics: TAction;
+    ActionLibraryInitialize: TAction;
+    ActionLibraryUpdate: TAction;
+    ActionListFolder: TActionList;
+    ActionManagerMain: TActionManager;
+    ActionNavigateSchematics: TAction;
+    ActionRestartCohesionLicense: TAction;
+    ActionSchematicsNew: TAction;
+    ActionSchematicsOpen: TAction;
+    ActionSchToAsc: TAction;
+    ActionSymToAsy: TAction;
+    ActionSynIniEditor: TAction;
+    ADCIItoSym1: TMenuItem;
+    ArchiveProject1: TMenuItem;
+    ASCIItoSchem1: TMenuItem;
+    btnViewStyle: TToolButton;
+    cbAPTBipolarArea: TCheckBox;
+    cbAPTBipolarWL: TCheckBox;
+    cbAPTGND: TCheckBox;
+    cbAPTOmitPrefix: TLMDCheckBox;
+    cbAPTShrink: TCheckBox;
+    cbAPTSubcircuit: TCheckBox;
+    cbAPTXGNDX: TCheckBox;
+    cbAssuraBipolarArea: TCheckBox;
+    cbAssuraBipolarWL: TCheckBox;
+    cbAssuraGND: TCheckBox;
+    cbAssuraOmitPrefix: TLMDCheckBox;
+    cbAssuraShrink: TCheckBox;
+    cbAssuraSubcircuit: TCheckBox;
+    cbAssuraXGNDX: TCheckBox;
+    cbDraculaBipolarArea: TCheckBox;
+    cbDraculaBipolarWL: TCheckBox;
+    cbDraculaGND: TCheckBox;
+    cbDraculaOmitPrefix: TLMDCheckBox;
+    cbDraculaShrink: TCheckBox;
+    cbDraculaSubcircuit: TCheckBox;
+    cbDraculaXGNDX: TCheckBox;
+    cbFilterAfterNetlist: TCheckBox;
+    cbFilterAfterSchematics: TCheckBox;
+    cbFilterAfterSimulation: TCheckBox;
+    cbHSpiceGND: TCheckBox;
+    cbHSpiceOmitPrefix: TLMDCheckBox;
+    cbHSpiceShrink: TCheckBox;
+    cbHSpiceSubcircuit: TCheckBox;
+    cbHSpiceVerilogA: TCheckBox;
+    cbHSpiceXGNDX: TCheckBox;
+    cbIgnoreCase: TCheckBox;
+    cbLocation: TComboBox;
+    cbLTspiceGND: TCheckBox;
+    cbLTspiceOmitPrefix: TLMDCheckBox;
+    cbLTspiceSchematics: TCheckBox;
+    cbLTspiceShrink: TCheckBox;
+    cbLTspiceSubcircuit: TCheckBox;
+    cbLTspiceXGNDX: TCheckBox;
+    cbPrimitiveReport: TCheckBox;
+    cbPSpiceMixedSignal: TCheckBox;
+    cbPSspiceGND: TCheckBox;
+    cbPSspiceOmitPrefix: TLMDCheckBox;
+    cbPSspiceShrink: TCheckBox;
+    cbPSspiceSubcircuit: TCheckBox;
+    cbPSspiceXGNDX: TCheckBox;
+    cbSchematics: TComboBox;
+    cbStim: TComboBox;
+    cbTool: TComboBox;
+    Changeoptions1: TMenuItem;
+    Cohesion1: TMenuItem;
+    Configure1: TMenuItem;
+    Control1: TMenuItem;
+    CoolBarFileList: TCoolBar;
+    CT2: TMenuItem;
+    Delete1: TMenuItem;
+    Delete2: TMenuItem;
+    Devicelist1: TMenuItem;
+    DiisplayHideattributes1: TMenuItem;
+    eAPTBracketSubstitutionLeft: TLMDLabeledMaskEdit;
+    eAPTBracketSubstitutionRight: TLMDLabeledMaskEdit;
+    eAPTLVS_Short: TLMDLabeledEdit;
+    eAssuraBracketSubstitutionLeft: TLMDLabeledMaskEdit;
+    eAssuraBracketSubstitutionRight: TLMDLabeledMaskEdit;
+    eAssuraLVS_Short: TLMDLabeledEdit;
+    Edit1: TMenuItem;
+    Editschematics1: TMenuItem;
+    Editstimulus1: TMenuItem;
+    eDraculaBracketSubstitutionLeft: TLMDLabeledMaskEdit;
     eDraculaBracketSubstitutionRight: TLMDLabeledMaskEdit;
-    eDraculaLVS_Short               : TLMDLabeledEdit;
-    eFileBrowserFilter              : TEdit;
-    eGenericVer                     : TLMDLabeledEdit;
-    eHSpiceBracketSubstitutionLeft  : TLMDLabeledMaskEdit;
-    eHSpiceBracketSubstitutionRight : TLMDLabeledMaskEdit;
-    eHSpiceFileName                 : TLMDLabeledFileOpenEdit;
-    eHSpiceOptions                  : TLMDLabeledEdit;
-    eHSpiceViewerCommand            : TLMDLabeledFileOpenEdit;
-    eHSpiceViewerOptions            : TLMDLabeledEdit;
-    eLTCSpiceFileName               : TLMDLabeledFileOpenEdit;
-    eLTCSpiceOptions                : TLMDLabeledEdit;
-    eLTspiceBracketSubstitutionLeft : TLMDLabeledMaskEdit;
+    eDraculaLVS_Short: TLMDLabeledEdit;
+    eFileBrowserFilter: TEdit;
+    eGenericVer: TLMDLabeledEdit;
+    eHSpiceBracketSubstitutionLeft: TLMDLabeledMaskEdit;
+    eHSpiceBracketSubstitutionRight: TLMDLabeledMaskEdit;
+    eHSpiceFileName: TLMDLabeledFileOpenEdit;
+    eHSpiceOptions: TLMDLabeledEdit;
+    eHSpiceViewerCommand: TLMDLabeledFileOpenEdit;
+    eHSpiceViewerOptions: TLMDLabeledEdit;
+    eLTCSpiceFileName: TLMDLabeledFileOpenEdit;
+    eLTCSpiceOptions: TLMDLabeledEdit;
+    eLTspiceBracketSubstitutionLeft: TLMDLabeledMaskEdit;
     eLTspiceBracketSubstitutionRight: TLMDLabeledMaskEdit;
-    eOption1                        : TLMDLabeledEdit;
-    eOption1Code                    : TLMDLabeledEdit;
-    eOption1Name                    : TLMDLabeledEdit;
-    eOption2                        : TLMDLabeledEdit;
-    eOption2Code                    : TLMDLabeledEdit;
-    eOption2Name                    : TLMDLabeledEdit;
-    eProcessName                    : TLMDLabeledEdit;
-    eProcessOpt                     : TEdit;
-    eProcessRev                     : TLMDLabeledEdit;
-    ePromis                         : TLMDLabeledEdit;
-    ePSpiceBracketSubstitutionLeft  : TLMDLabeledMaskEdit;
-    ePSpiceBracketSubstitutionRight : TLMDLabeledMaskEdit;
-    ePspiceFileName                 : TLMDLabeledFileOpenEdit;
-    ePspiceOptions                  : TLMDLabeledEdit;
-    ePspiceWaveformTool             : TLMDLabeledFileOpenEdit;
-    ePspiceWaveformToolOptions      : TLMDLabeledEdit;
-    eTextEditor                     : TJamPathEdit;
-    Exit1                           : TMenuItem;
-    ExitLTCSim                      : TAction;
-    FloatingGate1                   : TMenuItem;
-    FolderBackward                  : TAction;
-    FolderForward                   : TAction;
-    FolderUp                        : TAction;
-    FromASCII1                      : TMenuItem;
-    FromASCII2                      : TMenuItem;
-    GroupBox1                       : TGroupBox;
-    GroupBox2                       : TGroupBox;
-    Help1                           : TMenuItem;
-    Help2                           : TMenuItem;
-    ImageList                       : TImageList;
-    INIEditor1                      : TMenuItem;
-    Initialize1                     : TMenuItem;
-    Initializwe1                    : TMenuItem;
-    Install1                        : TMenuItem;
-    JamFileOperationArchive         : TJamFileOperation;
-    JamShellLinkMain                : TJamShellLink;
-    JamShellListMain                : TJamShellList;
-    JamShellTreeMain                : TJamShellTree;
-    JSDialogMain                    : TJSDialog;
-    Label2                          : TLabel;
-    Label3                          : TLabel;
-    Label4                          : TLabel;
-    Label7                          : TLabel;
-    LabelFilter                     : TLabel;
-    Largeicons2                     : TMenuItem;
-    Library1                        : TMenuItem;
-    LinkLabel2                      : TLinkLabel;
-    LinkLabel3                      : TLinkLabel;
-    List2                           : TMenuItem;
-    LMDAboutDlg                     : TLMDAboutDlg;
-    LMDBrowseDirDlg                 : TLMDBrowseDlg;
-    LMDButton1                      : TLMDButton;
-    LMDButton2                      : TLMDButton;
-    LMDButton3                      : TLMDButton;
-    LMDButtonAll                    : TLMDButton;
-    LMDButtonAlvh                   : TLMDButton;
-    LMDButtonApt                    : TLMDButton;
-    LMDButtonAsc                    : TLMDButton;
-    LMDButtonCir                    : TLMDButton;
-    LMDButtonEdf                    : TLMDButton;
-    LMDButtonLvh                    : TLMDButton;
-    LMDButtonLvs                    : TLMDButton;
-    LMDButtonNet                    : TLMDButton;
-    LMDButtonSch                    : TLMDButton;
-    LMDButtonSp                     : TLMDButton;
-    LMDButtonSpi                    : TLMDButton;
-    LMDButtonSym                    : TLMDButton;
-    LMDButtonV                      : TLMDButton;
-    LMDDockPanelAPT                 : TLMDDockPanel;
-    LMDDockPanelAssura              : TLMDDockPanel;
-    LMDDockPanelBottom              : TLMDDockPanel;
-    LMDDockPanelCalibre             : TLMDDockPanel;
-    LMDDockPanelDracula             : TLMDDockPanel;
-    LMDDockPanelExplorer            : TLMDDockPanel;
-    LMDDockPanelHSpice              : TLMDDockPanel;
-    LMDDockPanelLTspice             : TLMDDockPanel;
-    LMDDockPanelProcess             : TLMDDockPanel;
-    LMDDockPanelPSpice              : TLMDDockPanel;
-    LMDDockPanelSetup               : TLMDDockPanel;
-    LMDDockPanelTools               : TLMDDockPanel;
-    LMDDockSiteMain                 : TLMDDockSite;
-    LMDGroupBoxAPT                  : TLMDGroupBox;
-    LMDGroupBoxAssura               : TLMDGroupBox;
-    LMDGroupBoxDracula              : TLMDGroupBox;
-    LMDGroupBoxHSpice               : TLMDGroupBox;
-    LMDGroupBoxLTspice              : TLMDGroupBox;
-    LMDGroupBoxPSpice               : TLMDGroupBox;
-    LMDMRUListMain                  : TLMDMRUList;
-    LMDShellLink1                   : TLMDShellLink;
-    LMDStarterArchive               : TLMDStarter;
-    LMDTaskDialogMain               : TLMDTaskDialog;
-    LTC1                            : TMenuItem;
-    LTCBackannotation1              : TMenuItem;
-    LTCSim1                         : TMenuItem;
-    LTCSimuserguide1                : TMenuItem;
-    LTCSimuserguidepdf1             : TMenuItem;
-    LTSExporer1                     : TMenuItem;
-    MainMenu                        : TMainMenu;
-    Migrateschematics2              : TMenuItem;
-    ModifySchematics1               : TMenuItem;
-    N10                             : TMenuItem;
-    N12                             : TMenuItem;
-    N13                             : TMenuItem;
-    N14                             : TMenuItem;
-    N22                             : TMenuItem;
-    N28                             : TMenuItem;
-    N3                              : TMenuItem;
-    N4                              : TMenuItem;
-    N5                              : TMenuItem;
-    N6                              : TMenuItem;
-    N7                              : TMenuItem;
-    N8                              : TMenuItem;
-    N9                              : TMenuItem;
-    Navigate1                       : TMenuItem;
-    Navigateschematics1             : TMenuItem;
-    Netlist1                        : TMenuItem;
-    Netlist2                        : TMenuItem;
-    NetlistSimulate1                : TMenuItem;
-    New1                            : TMenuItem;
-    New2                            : TMenuItem;
-    NewRev1                         : TMenuItem;
-    oASCII1                         : TMenuItem;
-    oASCII2                         : TMenuItem;
-    Open2                           : TMenuItem;
-    Open3                           : TMenuItem;
-    OpenDialog                      : TOpenDialog;
-    PageControlTools                : TPageControl;
-    Panel4                          : TPanel;
-    PanelLTCSimOptions1             : TPanel;
-    PanelLTCSimOptions2             : TPanel;
-    PanelMainList                   : TPanel;
-    PanelMainTree                   : TPanel;
-    pAPT1                           : TMenuItem;
-    PopupMenuFileList               : TPopupMenu;
-    PopupMenuFileListStyle          : TPopupMenu;
-    PopupMenuSchem                  : TPopupMenu;
-    PopupMenuStim                   : TPopupMenu;
-    PopupMenuTray                   : TPopupMenu;
-    ProjectArchiveMain              : TAction;
-    ProjectInitialize2              : TAction;
-    ProjectNew                      : TAction;
-    ProjectNewRev                   : TAction;
-    ProjectOpen                     : TAction;
-    ProjectReOpen                   : TMenuItem;
-    ProjectSave                     : TAction;
-    RadioGroupLTspiceSyntax         : TRadioGroup;
-    RenameSchematicSymbols1         : TMenuItem;
-    Restartlicense1                 : TMenuItem;
-    rgArchiveNetlist                : TRadioGroup;
-    Save1                           : TMenuItem;
-    Schematics1                     : TMenuItem;
-    SchematicsSnapshot              : TAction;
-    SchematicsToAPT                 : TAction;
-    SchematicstoASCII1              : TMenuItem;
-    Server2                         : TMenuItem;
-    Simulate1                       : TMenuItem;
-    Simulate2                       : TMenuItem;
-    Smallicons2                     : TMenuItem;
-    Snapshot2                       : TMenuItem;
-    SnapshotViewer                  : TAction;
-    Snapshotviewer2                 : TMenuItem;
-    Splitter2                       : TSplitter;
-    Start1                          : TMenuItem;
-    Start2                          : TMenuItem;
-    Start3                          : TMenuItem;
-    Start4                          : TMenuItem;
-    Start5                          : TMenuItem;
-    STart6                          : TMenuItem;
-    Start7                          : TMenuItem;
-    Start8                          : TMenuItem;
-    Start9                          : TMenuItem;
-    Stop1                           : TMenuItem;
-    Sxchematics1                    : TMenuItem;
-    Symbol1                         : TMenuItem;
-    SymbolstoASCII1                 : TMenuItem;
-    TabSheet10                      : TTabSheet;
-    TabSheet5                       : TTabSheet;
-    TabSheet6                       : TTabSheet;
-    TabSheet7                       : TTabSheet;
-    TabSheet8                       : TTabSheet;
-    TabSheet9                       : TTabSheet;
-    ToolBar1                        : TToolBar;
-    ToolBarFileList                 : TToolBar;
-    ToolButton1                     : TToolButton;
-    ToolButton10                    : TToolButton;
-    ToolButton2                     : TToolButton;
-    ToolButton3                     : TToolButton;
-    ToolButton6                     : TToolButton;
-    ToolButton7                     : TToolButton;
-    ToolButton8                     : TToolButton;
-    ToolButtonDirUp                 : TToolButton;
-    Uninstall1                      : TMenuItem;
-    UpdateSchematics1               : TMenuItem;
-    UserGuide1                      : TMenuItem;
-    UserGuide2                      : TMenuItem;
-    UserGuide3                      : TMenuItem;
-    UserGuide4                      : TMenuItem;
-    UserGuide5                      : TMenuItem;
-    UseruideG1                      : TMenuItem;
-    Utilities2                      : TMenuItem;
-    Viewer2                         : TMenuItem;
-    VNC2                            : TMenuItem;
+    eOption1: TLMDLabeledEdit;
+    eOption1Code: TLMDLabeledEdit;
+    eOption1Name: TLMDLabeledEdit;
+    eOption2: TLMDLabeledEdit;
+    eOption2Code: TLMDLabeledEdit;
+    eOption2Name: TLMDLabeledEdit;
+    eProcessName: TLMDLabeledEdit;
+    eProcessOpt: TEdit;
+    eProcessRev: TLMDLabeledEdit;
+    ePromis: TLMDLabeledEdit;
+    ePSpiceBracketSubstitutionLeft: TLMDLabeledMaskEdit;
+    ePSpiceBracketSubstitutionRight: TLMDLabeledMaskEdit;
+    ePspiceFileName: TLMDLabeledFileOpenEdit;
+    ePspiceOptions: TLMDLabeledEdit;
+    ePspiceWaveformTool: TLMDLabeledFileOpenEdit;
+    ePspiceWaveformToolOptions: TLMDLabeledEdit;
+    eTextEditor: TJamPathEdit;
+    Exit1: TMenuItem;
+    ExitLTCSim: TAction;
+    FloatingGate1: TMenuItem;
+    FolderBackward: TAction;
+    FolderForward: TAction;
+    FolderUp: TAction;
+    FromASCII1: TMenuItem;
+    FromASCII2: TMenuItem;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    Help1: TMenuItem;
+    Help2: TMenuItem;
+    ImageList: TImageList;
+    INIEditor1: TMenuItem;
+    Initialize1: TMenuItem;
+    Initializwe1: TMenuItem;
+    Install1: TMenuItem;
+    JamFileOperationArchive: TJamFileOperation;
+    JamShellLinkMain: TJamShellLink;
+    JamShellListMain: TJamShellList;
+    JamShellTreeMain: TJamShellTree;
+    JSDialogMain: TJSDialog;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label7: TLabel;
+    LabelFilter: TLabel;
+    Largeicons2: TMenuItem;
+    Library1: TMenuItem;
+    LinkLabel2: TLinkLabel;
+    LinkLabel3: TLinkLabel;
+    List2: TMenuItem;
+    LMDAboutDlg: TLMDAboutDlg;
+    LMDBrowseDirDlg: TLMDBrowseDlg;
+    LMDButtonNetz: TLMDButton;
+    LMDButtonSnap: TLMDButton;
+    LMDButtonTre: TLMDButton;
+    LMDButtonAll: TLMDButton;
+    LMDButtonAlvh: TLMDButton;
+    LMDButtonApt: TLMDButton;
+    LMDButtonAsc: TLMDButton;
+    LMDButtonCir: TLMDButton;
+    LMDButtonEdf: TLMDButton;
+    LMDButtonLvh: TLMDButton;
+    LMDButtonLvs: TLMDButton;
+    LMDButtonNet: TLMDButton;
+    LMDButtonSch: TLMDButton;
+    LMDButtonSp: TLMDButton;
+    LMDButtonSpi: TLMDButton;
+    LMDButtonSym: TLMDButton;
+    LMDButtonV: TLMDButton;
+    LMDDockPanelAPT: TLMDDockPanel;
+    LMDDockPanelAssura: TLMDDockPanel;
+    LMDDockPanelBottom: TLMDDockPanel;
+    LMDDockPanelCalibre: TLMDDockPanel;
+    LMDDockPanelDracula: TLMDDockPanel;
+    LMDDockPanelExplorer: TLMDDockPanel;
+    LMDDockPanelHSpice: TLMDDockPanel;
+    LMDDockPanelLTspice: TLMDDockPanel;
+    LMDDockPanelProcess: TLMDDockPanel;
+    LMDDockPanelPSpice: TLMDDockPanel;
+    LMDDockPanelSetup: TLMDDockPanel;
+    LMDDockPanelTools: TLMDDockPanel;
+    LMDDockSiteMain: TLMDDockSite;
+    LMDGroupBoxAPT: TLMDGroupBox;
+    LMDGroupBoxAssura: TLMDGroupBox;
+    LMDGroupBoxDracula: TLMDGroupBox;
+    LMDGroupBoxHSpice: TLMDGroupBox;
+    LMDGroupBoxLTspice: TLMDGroupBox;
+    LMDGroupBoxPSpice: TLMDGroupBox;
+    LMDMRUListMain: TLMDMRUList;
+    LMDStarterArchive: TLMDStarter;
+    LMDTaskDialogMain: TLMDTaskDialog;
+    LTC1: TMenuItem;
+    LTCBackannotation1: TMenuItem;
+    LTCSim1: TMenuItem;
+    LTCSimuserguide1: TMenuItem;
+    LTCSimuserguidepdf1: TMenuItem;
+    LTSExporer1: TMenuItem;
+    MainMenu: TMainMenu;
+    Migrateschematics2: TMenuItem;
+    ModifySchematics1: TMenuItem;
+    N10: TMenuItem;
+    N12: TMenuItem;
+    N13: TMenuItem;
+    N14: TMenuItem;
+    N22: TMenuItem;
+    N28: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
+    N5: TMenuItem;
+    N6: TMenuItem;
+    N7: TMenuItem;
+    N8: TMenuItem;
+    N9: TMenuItem;
+    Navigate1: TMenuItem;
+    Navigateschematics1: TMenuItem;
+    Netlist1: TMenuItem;
+    Netlist2: TMenuItem;
+    NetlistSimulate1: TMenuItem;
+    New1: TMenuItem;
+    New2: TMenuItem;
+    NewRev1: TMenuItem;
+    oASCII1: TMenuItem;
+    oASCII2: TMenuItem;
+    Open2: TMenuItem;
+    Open3: TMenuItem;
+    OpenDialog: TOpenDialog;
+    PageControlTools: TPageControl;
+    Panel4: TPanel;
+    PanelLTCSimOptions1: TPanel;
+    PanelLTCSimOptions2: TPanel;
+    PanelMainList: TPanel;
+    PanelMainTree: TPanel;
+    pAPT1: TMenuItem;
+    PopupMenuFileList: TPopupMenu;
+    PopupMenuFileListStyle: TPopupMenu;
+    PopupMenuSchem: TPopupMenu;
+    PopupMenuStim: TPopupMenu;
+    PopupMenuTray: TPopupMenu;
+    ProjectArchiveMain: TAction;
+    ProjectInitialize2: TAction;
+    ProjectNew: TAction;
+    ProjectNewRev: TAction;
+    ProjectOpen: TAction;
+    ProjectReOpen: TMenuItem;
+    ProjectSave: TAction;
+    RadioGroupLTspiceSyntax: TRadioGroup;
+    RenameSchematicSymbols1: TMenuItem;
+    Restartlicense1: TMenuItem;
+    rgArchiveNetlist: TRadioGroup;
+    Save1: TMenuItem;
+    Schematics1: TMenuItem;
+    SchematicsSnapshot: TAction;
+    SchematicsToAPT: TAction;
+    SchematicstoASCII1: TMenuItem;
+    Server2: TMenuItem;
+    Simulate1: TMenuItem;
+    Simulate2: TMenuItem;
+    Smallicons2: TMenuItem;
+    Snapshot2: TMenuItem;
+    SnapshotViewer: TAction;
+    Snapshotviewer2: TMenuItem;
+    Splitter2: TSplitter;
+    Start1: TMenuItem;
+    Start2: TMenuItem;
+    Start3: TMenuItem;
+    Start4: TMenuItem;
+    Start5: TMenuItem;
+    STart6: TMenuItem;
+    Start7: TMenuItem;
+    Start8: TMenuItem;
+    Start9: TMenuItem;
+    Stop1: TMenuItem;
+    Sxchematics1: TMenuItem;
+    Symbol1: TMenuItem;
+    SymbolstoASCII1: TMenuItem;
+    TabSheet10: TTabSheet;
+    TabSheet5: TTabSheet;
+    TabSheet6: TTabSheet;
+    TabSheet7: TTabSheet;
+    TabSheet8: TTabSheet;
+    TabSheet9: TTabSheet;
+    ToolBar1: TToolBar;
+    ToolBarFileList: TToolBar;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    ToolButtonFileView: TToolButton;
+    ToolButtonFolderBack: TToolButton;
+    ToolButtonFolderForward: TToolButton;
+    ToolButtonDirUp: TToolButton;
+    Uninstall1: TMenuItem;
+    UpdateSchematics1: TMenuItem;
+    UserGuide1: TMenuItem;
+    UserGuide2: TMenuItem;
+    UserGuide3: TMenuItem;
+    UserGuide4: TMenuItem;
+    UserGuide5: TMenuItem;
+    UseruideG1: TMenuItem;
+    Utilities2: TMenuItem;
+    Viewer2: TMenuItem;
+    VNC2: TMenuItem;
     LMDDockPanelLSF: TLMDDockPanel;
     PanelLTCSimOptions3: TPanel;
     Label9: TLabel;
@@ -353,6 +350,18 @@ type
     ToolButton9: TToolButton;
     ToolButton11: TToolButton;
     humbnail1: TMenuItem;
+    JamDropFileSch: TJamDropFiles;
+    JamFileOperation1: TJamFileOperation;
+    LMDDockManagerMain: TLMDDockManager;
+    LMDMRUList: TLMDMRUList;
+    LMDStorRegistryVault: TLMDStorRegistryVault;
+    LMDStartArchive: TLMDStarter;
+    JamDropFilesStim: TJamDropFiles;
+    JamFileOperation: TJamFileOperation;
+    JamBrowseForFolder: TJamBrowseForFolder;
+    LMDStarterShell: TLMDStarter;
+    TrayIconMain: TTrayIcon;
+    ShellBrowserMain: TShellBrowser;
     procedure AboutLTCSimClick(Sender: TObject);
     procedure AboutProcessClick(Sender: TObject);
     procedure ActionAscToSchExecute(Sender: TObject);
@@ -412,14 +421,14 @@ type
     procedure InstallLicense1Click(Sender: TObject);
     procedure InstallSoftware1Click(Sender: TObject);
     procedure JamDropFileSchDrop(Sender: TObject; KeyState: TShiftState;
-        MousePos: TPoint; var JamDropEffect: TJamDropEffect);
+      MousePos: TPoint; var JamDropEffect: TJamDropEffect);
     procedure JamDropFilesStimDrop(Sender: TObject; KeyState: TShiftState;
-        MousePos: TPoint; var JamDropEffect: TJamDropEffect);
+      MousePos: TPoint; var JamDropEffect: TJamDropEffect);
     procedure JSDialogMainDialogClose(Sender: TJSCustomDialog);
     function libraryDBAvailable: Boolean;
     procedure LMDButtonFilter(Sender: TObject);
-    procedure LMDMRUListClick(Sender: TObject; const aValue: string; var
-        Remove: Boolean);
+    procedure LMDMRUListClick(Sender: TObject; const aValue: string;
+      var Remove: Boolean);
     procedure LTCSimArchiveNetlist(sSchematics: string);
     procedure LTCSimArchiveSnapshot(sSchematics: string);
     procedure LTCSimNewProject;
@@ -428,7 +437,7 @@ type
     procedure LTCSimUserGuideClick(Sender: TObject);
     procedure MenuButtonTopFormClick(Sender: TObject);
     procedure MigrateGlobalSignals(sOldSchemDir, sNewSchemDir, sOldRev,
-        sNewRev: string);
+      sNewRev: string);
     procedure MigrateLibFilesToNewRev(sOldRevDir, sNewRevDir: string);
     procedure MigrateProjectIniFileToNewrev(sOldSchemDir, sNewSchemDir: string);
     procedure MigrateSetupIniFileToNewrev(sOldSchemDir, sNewSchemDir: string);
@@ -451,8 +460,8 @@ type
     procedure ReadXMLFileSetup6;
     procedure runEdifNetlist(bView: bool; sSchematicsFile: string);
     procedure runHSpice(sSimulationFile: string);
-    procedure runLTCSimNetlist(sSchematicsFile: string; bDisplay, bSimulate:
-        Boolean);
+    procedure runLTCSimNetlist(sSchematicsFile: string;
+      bDisplay, bSimulate: Boolean);
     procedure runLTspice(sSimulationFile: string);
     procedure runLTspiceNetlist(sSchematics: string);
     procedure runPSpice(sSimulationFile: string);
@@ -477,8 +486,8 @@ type
     procedure ToolButtonBckClick(Sender: TObject);
     procedure ToolButtonTopFormClick(Sender: TObject);
     procedure TransferAndBuildFiles(sIniFile, DirectoryDest: string);
-    function TransferFileList(StringOfFiles: TStringList; DirectorySource,
-        DirectoryDest: string): Integer;
+    function TransferFileList(StringOfFiles: TStringList;
+      DirectorySource, DirectoryDest: string): Integer;
     procedure TransferSymbols;
     procedure Uninstall1Click(Sender: TObject);
     procedure UpdateFormComponents;
@@ -492,167 +501,167 @@ type
   end;
 
   ProjectRecord = record
-    Name                 : string;
-    Rev                  : string;
-    newRev               : string;
-    oldRev               : string;
-    Dir                  : string;
-    LibDir               : string;
-    SetupFile            : string;
-    XMLSetupFile6        : string;
-    XMLSetupFile71       : string;
-    XSDFile              : string;
-    oldSetupFile         : string;
-    RevDir               : string;
-    newRevDir            : string;
-    oldRevDir            : string;
-    SchemDir             : string;
-    newSchemDir          : string;
-    oldSchemDir          : string;
-    IniFileName          : string;
-    LTspiceIniFileName   : string;
-    SimulationDir        : string;
-    xmlSimulationDir     : string;
-    NetlistDir           : string;
-    WorkingDir           : string;
-    SCSWindowHandle      : THandle;
+    Name: string;
+    Rev: string;
+    newRev: string;
+    oldRev: string;
+    Dir: string;
+    LibDir: string;
+    SetupFile: string;
+    XMLSetupFile6: string;
+    XMLSetupFile71: string;
+    XSDFile: string;
+    oldSetupFile: string;
+    RevDir: string;
+    newRevDir: string;
+    oldRevDir: string;
+    SchemDir: string;
+    newSchemDir: string;
+    oldSchemDir: string;
+    IniFileName: string;
+    LTspiceIniFileName: string;
+    SimulationDir: string;
+    xmlSimulationDir: string;
+    NetlistDir: string;
+    WorkingDir: string;
+    SCSWindowHandle: THandle;
     DesignSettingsIniFile: string;
-    topLVSSchematics     : string;
-    projectsDirPath      : string;
-    cohesionDir          : string;
-    genericVersion       : string;
-    ignoreCase           : Boolean;
-    currentSchematics    : string;
-    currentStimulus      : string;
-    currentTool          : string;
-    lSchematicsUsed      : TStringList;
-    lStimulusUsed        : TStringList;
-    primitiveReport      : Boolean;
-    zipFileName          : string;
-    ltspiceGND           : Boolean;
-    ltspiceXGNDX         : Boolean;
-    ltspiceOmitPrefix    : Boolean;
-    ltspiceShrink        : Boolean;
-    ltspiceSubCircuit    : Boolean;
-    ltspiceschematics    : Boolean;
-    ltspiceLeftBracket   : string;
-    ltspiceRightBracket  : string;
-    ltspiceCommand       : string;
+    topLVSSchematics: string;
+    projectsDirPath: string;
+    cohesionDir: string;
+    genericVersion: string;
+    ignoreCase: Boolean;
+    currentSchematics: string;
+    currentStimulus: string;
+    currentTool: string;
+    lSchematicsUsed: TStringList;
+    lStimulusUsed: TStringList;
+    primitiveReport: Boolean;
+    zipFileName: string;
+    ltspiceGND: Boolean;
+    ltspiceXGNDX: Boolean;
+    ltspiceOmitPrefix: Boolean;
+    ltspiceShrink: Boolean;
+    ltspiceSubCircuit: Boolean;
+    ltspiceschematics: Boolean;
+    ltspiceLeftBracket: string;
+    ltspiceRightBracket: string;
+    ltspiceCommand: string;
     ltspiceCommandOptions: string;
-    ltspiceSyntax        : Integer;
-    pspiceGND            : Boolean;
-    pspiceXGNDX          : Boolean;
-    pspiceOmitPrefix     : Boolean;
-    pspiceShrink         : Boolean;
-    pspiceSubCircuit     : Boolean;
-    pspiceAD             : Boolean;
-    pspiceLeftBracket    : string;
-    pspiceRightBracket   : string;
-    pspiceCommand        : string;
-    pspiceCommandOptions : string;
-    pspiceViewer         : string;
-    pspiceViewerOptions  : string;
-    hspiceGND            : Boolean;
-    hspiceXGNDX          : Boolean;
-    hspiceOmitPrefix     : Boolean;
-    hspiceShrink         : Boolean;
-    hspiceSubCircuit     : Boolean;
-    hspiceVerilogA       : Boolean;
-    hspiceLeftBracket    : string;
-    hspiceRightBracket   : string;
-    hspiceCommand        : string;
-    hspiceCommandOptions : string;
-    hspiceViewer         : string;
-    hspiceViewerOptions  : string;
-    aptBipolarArea       : Boolean;
-    aptBipolarWL         : Boolean;
-    aptGND               : Boolean;
-    aptXGNDX             : Boolean;
-    aptOmitPrefix        : Boolean;
-    aptShrink            : Boolean;
-    aptSubCircuit        : Boolean;
-    aptLeftBracket       : string;
-    aptRightBracket      : string;
-    aptShort             : string;
-    assuraBipolarArea    : Boolean;
-    assuraBipolarWL      : Boolean;
-    assuraGND            : Boolean;
-    assuraXGNDX          : Boolean;
-    assuraOmitPrefix     : Boolean;
-    assuraShrink         : Boolean;
-    assuraSubCircuit     : Boolean;
-    assuraLeftBracket    : string;
-    assuraRightBracket   : string;
-    assuraShort          : string;
-    draculaBipolarArea   : Boolean;
-    draculaBipolarWL     : Boolean;
-    draculaGND           : Boolean;
-    draculaXGNDX         : Boolean;
-    draculaOmitPrefix    : Boolean;
-    draculaShrink        : Boolean;
-    draculaSubCircuit    : Boolean;
-    draculaLeftBracket   : string;
-    draculaRightBracket  : string;
-    draculaShort         : string;
+    ltspiceSyntax: Integer;
+    pspiceGND: Boolean;
+    pspiceXGNDX: Boolean;
+    pspiceOmitPrefix: Boolean;
+    pspiceShrink: Boolean;
+    pspiceSubCircuit: Boolean;
+    pspiceAD: Boolean;
+    pspiceLeftBracket: string;
+    pspiceRightBracket: string;
+    pspiceCommand: string;
+    pspiceCommandOptions: string;
+    pspiceViewer: string;
+    pspiceViewerOptions: string;
+    hspiceGND: Boolean;
+    hspiceXGNDX: Boolean;
+    hspiceOmitPrefix: Boolean;
+    hspiceShrink: Boolean;
+    hspiceSubCircuit: Boolean;
+    hspiceVerilogA: Boolean;
+    hspiceLeftBracket: string;
+    hspiceRightBracket: string;
+    hspiceCommand: string;
+    hspiceCommandOptions: string;
+    hspiceViewer: string;
+    hspiceViewerOptions: string;
+    aptBipolarArea: Boolean;
+    aptBipolarWL: Boolean;
+    aptGND: Boolean;
+    aptXGNDX: Boolean;
+    aptOmitPrefix: Boolean;
+    aptShrink: Boolean;
+    aptSubCircuit: Boolean;
+    aptLeftBracket: string;
+    aptRightBracket: string;
+    aptShort: string;
+    assuraBipolarArea: Boolean;
+    assuraBipolarWL: Boolean;
+    assuraGND: Boolean;
+    assuraXGNDX: Boolean;
+    assuraOmitPrefix: Boolean;
+    assuraShrink: Boolean;
+    assuraSubCircuit: Boolean;
+    assuraLeftBracket: string;
+    assuraRightBracket: string;
+    assuraShort: string;
+    draculaBipolarArea: Boolean;
+    draculaBipolarWL: Boolean;
+    draculaGND: Boolean;
+    draculaXGNDX: Boolean;
+    draculaOmitPrefix: Boolean;
+    draculaShrink: Boolean;
+    draculaSubCircuit: Boolean;
+    draculaLeftBracket: string;
+    draculaRightBracket: string;
+    draculaShort: string;
   end;
 
   ProcessRecord = record
-    Name           : string;
-    Rev            : string;
-    Promis         : string;
-    option1        : string;
-    option1Name    : string;
-    option1Code    : string;
-    option2        : string;
-    option2Name    : string;
-    option2Code    : string;
-    GenericRev     : string;
-    Process_Id     : Double;
-    ProcessInfoDir : string;
+    Name: string;
+    Rev: string;
+    Promis: string;
+    option1: string;
+    option1Name: string;
+    option1Code: string;
+    option2: string;
+    option2Name: string;
+    option2Code: string;
+    GenericRev: string;
+    Process_Id: Double;
+    ProcessInfoDir: string;
     ProcessInfoFile: string;
   end;
 
   LTCSimRecord = record
-    Dir                 : string;
-    designer6Dir        : string;
-    cohesionDir         : string;
-    libraryDir          : string;
-    xmlFileName         : string;
-    xmlSitesFile        : string;
-    ArchiveNetlistIndex : Integer;
-    AssuraToLayout      : Boolean;
-    DraculaToLayout     : Boolean;
-    lTools              : TStringList;
-    lSites              : TStringList;
-    dbServer            : string;
-    localProjectsDir    : string;
+    Dir: string;
+    designer6Dir: string;
+    cohesionDir: string;
+    libraryDir: string;
+    xmlFileName: string;
+    xmlSitesFile: string;
+    ArchiveNetlistIndex: Integer;
+    AssuraToLayout: Boolean;
+    DraculaToLayout: Boolean;
+    lTools: TStringList;
+    lSites: TStringList;
+    dbServer: string;
+    localProjectsDir: string;
     localSiteProjectsDir: string;
-    librariesServer     : string;
-    shellLicenseStarted : Boolean;
+    librariesServer: string;
+    shellLicenseStarted: Boolean;
   end;
 
   TTool = (LTspice, PSpice, HSpice, APT, Assura, Dracula, Verilog, Edif);
 
 var
-  MainForm               : TMainForm;
-  Project                : ProjectRecord;
-  Process                : ProcessRecord;
-  LTCSim                 : LTCSimRecord;
-  ToolInUse              : TTool;
-  sSchFileName           : string;
-  sWindowsDir            : string;
-  debugMode              : Boolean;
-  sSynarioDir            : string;
-  sLibraryDir            : string;
-  Version                : string;
-  bCheckWarningMessage   : Boolean;
+  MainForm: TMainForm;
+  Project: ProjectRecord;
+  Process: ProcessRecord;
+  LTCSim: LTCSimRecord;
+  ToolInUse: TTool;
+  sSchFileName: string;
+  sWindowsDir: string;
+  debugMode: Boolean;
+  sSynarioDir: string;
+  sLibraryDir: string;
+  Version: string;
+  bCheckWarningMessage: Boolean;
   sECSRegistryIniFileName: string;
-  CohesionShellHandle    : THandle;
-  bNetlistSim            : Boolean;
-  LTCSimVersion          : Double;
-  bNetworkAvailable      : Boolean;
-  cadMode                : Boolean;
-  HDSShellHandle         : THandle;
+  CohesionShellHandle: THandle;
+  bNetlistSim: Boolean;
+  LTCSimVersion: Double;
+  bNetworkAvailable: Boolean;
+  cadMode: Boolean;
+  HDSShellHandle: THandle;
 
 implementation
 
@@ -679,9 +688,9 @@ const
     'mrRetry', 'mrIgnore', 'mrYes', 'mrNo', 'mrAll', 'mrNoToAll', 'mrYesToAll');
   BoolStr: array [Boolean] of string = ('False', 'True');
 
-{
-********************************** TMainForm ***********************************
-}
+  {
+    ********************************** TMainForm ***********************************
+  }
 procedure TMainForm.AboutLTCSimClick(Sender: TObject);
 begin
   CodeSite.EnterMethod(Self, 'AboutLTCSimClick');
@@ -896,7 +905,7 @@ end;
 
 procedure TMainForm.ActionLTCSimExitExecute(Sender: TObject);
 begin
-      { TMainForm.FileExit }
+  { TMainForm.FileExit }
   CodeSite.EnterMethod(Self, 'ActionLTCSimExitExecute');
 
   StopSCSShell;
@@ -949,7 +958,7 @@ begin
               CreateSynarioFiles;
               TransferSymbols;
               UpdateProjectVariables;
-              AppIcons.IconModule.LMDMRUList.Add
+              LMDMRUList.Add
                 (ExtractFileDir(Project.SetupFile));
               SetDirectoryBrowsers(Project.SimulationDir);
               SaveActiveProjectInformation;
@@ -1071,15 +1080,15 @@ procedure TMainForm.ActionProjectOpenExecute(Sender: TObject);
 begin
   CodeSite.EnterMethod(Self, 'ActionProjectOpenExecute');
 
-  AppIcons.IconModule.JamBrowseForFolder.RootedAtFileSystemFolder :=
+  JamBrowseForFolder.RootedAtFileSystemFolder :=
     LTCSim.localProjectsDir;
-  AppIcons.IconModule.JamBrowseForFolder.Title :=
+  JamBrowseForFolder.Title :=
     'Select a valid revision directory';
-  AppIcons.IconModule.JamBrowseForFolder.WindowTitle :=
+ JamBrowseForFolder.WindowTitle :=
     'LTCSim - Projects directory';
-  if AppIcons.IconModule.JamBrowseForFolder.Execute then
+  if JamBrowseForFolder.Execute then
   begin
-    Project.RevDir := AppIcons.IconModule.JamBrowseForFolder.Path;
+    Project.RevDir := JamBrowseForFolder.Path;
     Project.Dir := ExcludeTrailingPathDelimiter
       (ExtractFilePath(Project.RevDir));
     ReadProjectSetupFile;
@@ -1118,12 +1127,11 @@ procedure TMainForm.ActionRestartCohesionLicenseExecute(Sender: TObject);
 begin
   CodeSite.EnterMethod(Self, 'ActionRestartCohesionLicenseExecute');
 
-  AppIcons.IconModule.LMDStarterShell.TerminateProcess;
+  LMDStarterShell.TerminateProcess;
   StartSCSShell;
 
   CodeSite.ExitMethod(Self, 'ActionRestartCohesionLicenseExecute');
 end;
-
 
 procedure TMainForm.ActionSchematicsNavigateExecute(Sender: TObject);
 var
@@ -1527,7 +1535,6 @@ begin
   CodeSite.ExitMethod(Self, 'cbSaveActiveProjectClick');
 end;
 
-
 procedure TMainForm.cbToolChange(Sender: TObject);
 begin
   CodeSite.EnterMethod(Self, 'cbToolChange');
@@ -1610,15 +1617,15 @@ begin
     CreateDir(sArchiveDir)
   else
   begin
-    AppIcons.IconModule.JamFileOperationArchive.Options :=
+    JamFileOperationArchive.Options :=
       [soFilesOnly, soNoConfirmation];
-    AppIcons.IconModule.JamFileOperationArchive.Operation := otDelete;
-    AppIcons.IconModule.JamFileOperationArchive.SourceFiles.Clear;
-    AppIcons.IconModule.JamFileOperationArchive.SourceFiles.Add
+    JamFileOperationArchive.Operation := otDelete;
+    JamFileOperationArchive.SourceFiles.Clear;
+    JamFileOperationArchive.SourceFiles.Add
       (IncludeTrailingPathDelimiter(sArchiveDir) + '*.*');
-    AppIcons.IconModule.JamFileOperationArchive.Execute;
+    JamFileOperationArchive.Execute;
   end;
-  with AppIcons.IconModule.LMDStartArchive do
+  with LMDStartArchive do
   begin
     Command := IncludeTrailingPathDelimiter(LTCSim.Dir) + 'archive.exe';
     DefaultDir := sArchiveDir;
@@ -1833,7 +1840,7 @@ var
   pTemp: PChar;
   bTemp: Boolean;
 begin
-      { TMainForm.CreateIniFile }
+  { TMainForm.CreateIniFile }
   CodeSite.EnterMethod(Self, 'CreateIniFile');
 
   lInfo := TStringList.Create;
@@ -2082,32 +2089,31 @@ begin
   CodeSite.ExitMethod(Self, 'Delete2Click');
 end;
 
-
 procedure TMainForm.FileListStyleClick(Sender: TObject);
 begin
   CodeSite.EnterMethod(Self, 'DetailsClick');
 
-    with Sender as TMenuItem do
-    begin
-      case tag of
-        0:
-          begin
-            JamShellListMain.ViewStyle := vsIcon;
-          end;
-        1:
-          begin
-            JamShellListMain.ViewStyle := vsReport; //Small icon
-          end;
-        2:
-          begin
-            JamShellListMain.ViewStyle := vsList;
-          end;
-        3:
-          begin
-            JamShellListMain.Thumbnails := True;
-      	  end;
-      end;
+  with Sender as TMenuItem do
+  begin
+    case tag of
+      0:
+        begin
+          JamShellListMain.ViewStyle := vsIcon;
+        end;
+      1:
+        begin
+          JamShellListMain.ViewStyle := vsReport; // Small icon
+        end;
+      2:
+        begin
+          JamShellListMain.ViewStyle := vsList;
+        end;
+      3:
+        begin
+          JamShellListMain.Thumbnails := true;
+        end;
     end;
+  end;
 
   CodeSite.ExitMethod(Self, 'DetailsClick');
 end;
@@ -2128,7 +2134,7 @@ var
   sWindowTitle: string;
   TheWindow: HWnd;
 begin
-      { TMainForm.CreateIniFile }
+  { TMainForm.CreateIniFile }
   CodeSite.EnterMethod(Self, 'DisplayHideattributesDlg');
 
   if not(cbLTspiceSchematics.checked and (ToolInUse = LTspice)) then
@@ -2462,87 +2468,87 @@ begin
   CodeSite.EnterMethod(Self, 'EraseLibraryFiles');
 
   { Erasing analog symbols }
-  AppIcons.IconModule.JamFileOperation.Operation := otDelete;
-  AppIcons.IconModule.JamFileOperation.Options :=
+  JamFileOperation.Operation := otDelete;
+  JamFileOperation.Options :=
     [soFilesOnly, soNoConfirmation];
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
+  JamFileOperation.SourceFiles.Clear;
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\analog\netlists\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) +
     '\lib\ecs\analog\schematics\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\analog\symbols\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\digital\netlists\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) +
     '\lib\ecs\digital\schematics\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\digital\symbols\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\generic\netlists\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) +
     '\lib\ecs\generic\schematics\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\generic\symbols\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\ideal\netlists\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\ideal\schematics\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\ideal\symbols\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\package\netlists\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) +
     '\lib\ecs\package\schematics\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ecs\package\symbols\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\assura\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\cadence\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\cats\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\doc\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\dracula\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\hspice\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\ledit\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\pspice\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.SourceFiles.Add(sTemp);
   sTemp := IncludeTrailingPathDelimiter(Project.Dir) +
     IncludeTrailingPathDelimiter(Project.Rev) + '\lib\verilog\*.*';
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
-  AppIcons.IconModule.JamFileOperation.Execute;
+  JamFileOperation.SourceFiles.Add(sTemp);
+  JamFileOperation.Execute;
   { Erasing HSpice files }
 
   CodeSite.ExitMethod(Self, 'EraseLibraryFiles');
@@ -2763,18 +2769,17 @@ begin
   CodeSite.ExitMethod(Self, 'InstallSoftware1Click');
 end;
 
-
 procedure TMainForm.JamDropFileSchDrop(Sender: TObject; KeyState: TShiftState;
-    MousePos: TPoint; var JamDropEffect: TJamDropEffect);
+  MousePos: TPoint; var JamDropEffect: TJamDropEffect);
 var
   sFileName, sFileExtension, sFilePathName: string;
   sNewPathName: string;
 begin
   CodeSite.EnterMethod(Self, 'JamDropFileSchDrop');
 
-  if AppIcons.IconModule.JamDropFileSch.DroppedFiles.Count = 1 then
+  if JamDropFileSch.DroppedFiles.Count = 1 then
   begin
-    sFileName := AppIcons.IconModule.JamDropFileSch.DroppedFiles.Strings[0];
+    sFileName := JamDropFileSch.DroppedFiles.Strings[0];
     sFileExtension := ExtractFileExt(sFileName);
     sFilePathName := ExtractFileDir(sFileName);
     if ((AnsiCompareText(sFileExtension, '.sch') = 0) or
@@ -2814,16 +2819,16 @@ begin
 end;
 
 procedure TMainForm.JamDropFilesStimDrop(Sender: TObject; KeyState: TShiftState;
-    MousePos: TPoint; var JamDropEffect: TJamDropEffect);
+  MousePos: TPoint; var JamDropEffect: TJamDropEffect);
 var
   sFileName, sFileExtension, sFilePathName: string;
   sNewPathName: string;
 begin
   CodeSite.EnterMethod(Self, 'JamDropFilesStimDrop');
 
-  if AppIcons.IconModule.JamDropFilesStim.DroppedFiles.Count = 1 then
+  if JamDropFilesStim.DroppedFiles.Count = 1 then
   begin
-    sFileName := AppIcons.IconModule.JamDropFilesStim.DroppedFiles.Strings[0];
+    sFileName := JamDropFilesStim.DroppedFiles.Strings[0];
     sFileExtension := ExtractFileExt(sFileName);
     sFilePathName := ExtractFileDir(sFileName);
     if ((AnsiCompareText(sFileExtension, '.cir') = 0) or
@@ -2872,7 +2877,7 @@ begin
 
   if (sTemp = 'mrOk') then
   begin
-    with AppIcons.IconModule.LMDStarterShell do
+    with LMDStarterShell do
     begin
       Command := IncludeTrailingPathDelimiter(LTCSim.Dir) + 'HierNav.exe';
       DefaultDir := sSchemDirectory;
@@ -2923,8 +2928,8 @@ begin
   CodeSite.ExitMethod(Self, 'LMDButtonFilter');
 end;
 
-procedure TMainForm.LMDMRUListClick(Sender: TObject; const aValue: string; var
-    Remove: Boolean);
+procedure TMainForm.LMDMRUListClick(Sender: TObject; const aValue: string;
+  var Remove: Boolean);
 begin
   CodeSite.EnterMethod(Self, 'LMDMRUListClick');
 
@@ -2996,7 +3001,7 @@ begin
   sCommand := IncludeTrailingPathDelimiter(LTCSim.Dir) + 'archive.exe ';
   sArgument := ' -save=' + sSchemZipDirectory + ' ' + sSchematics;
   sWorkingDir := sSchemDirectory;
-  with IconModule.LMDStartArchive do
+  with LMDStartArchive do
   begin
     Wait := true;
     Command := sCommand;
@@ -3252,7 +3257,7 @@ begin
         CreateSynarioFiles;
         TransferSymbols;
         LMDMRUListMain.Add(Project.RevDir);
-        AppIcons.IconModule.LMDMRUList.Add(Project.RevDir);
+        LMDMRUList.Add(Project.RevDir);
         SetDirectoryBrowsers(Project.SimulationDir);
         Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.RevDir) +
           'setup.xml';
@@ -3366,15 +3371,15 @@ begin
       LMDMRUListMain.Add(Project.RevDir);
   end;
 
-  if (AppIcons.IconModule.LMDMRUList.Items.IndexOf(Project.RevDir) < 0) then
+  if (LMDMRUList.Items.IndexOf(Project.RevDir) < 0) then
   begin
-    if (AppIcons.IconModule.LMDMRUList.Items.Count > 5) then
+    if (LMDMRUList.Items.Count > 5) then
     begin
-      AppIcons.IconModule.LMDMRUList.Items.Delete(5);
-      AppIcons.IconModule.LMDMRUList.Add(Project.RevDir);
+      LMDMRUList.Items.Delete(5);
+      LMDMRUList.Add(Project.RevDir);
     end
     else
-      AppIcons.IconModule.LMDMRUList.Add(Project.RevDir);
+      LMDMRUList.Add(Project.RevDir);
   end;
   SetDirectoryBrowsers(Project.SchemDir);
   SetCurrentDirectory(PChar(Project.SchemDir));
@@ -3481,7 +3486,7 @@ begin
 end;
 
 procedure TMainForm.MigrateGlobalSignals(sOldSchemDir, sNewSchemDir, sOldRev,
-    sNewRev: string);
+  sNewRev: string);
 var
   OldProjectIniFile, NewProjectIniFile: TIniFile;
   sOldValue: string;
@@ -3545,20 +3550,20 @@ begin
   CodeSite.EnterMethod(Self, 'MigrateLibFilesToNewRev');
 
   sOldLibDir := IncludeTrailingPathDelimiter(sOldRevDir) + 'lib';
-  AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-  AppIcons.IconModule.JamFileOperation.Options :=
+  JamFileOperation.Operation := otCopy;
+  JamFileOperation.Options :=
     [soNoConfirmMkDir, soSimpleProgress, soNoConfirmation];
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sOldLibDir);
-  AppIcons.IconModule.JamFileOperation.Destination := sNewRevDir;
-  if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+  JamFileOperation.SourceFiles.Clear;
+  JamFileOperation.SourceFiles.Add(sOldLibDir);
+  JamFileOperation.Destination := sNewRevDir;
+  if (not(JamFileOperation.Execute)) then
     MessageDlg('Error transferring library files.', mtError, [mbOK], 0);
 
   CodeSite.ExitMethod(Self, 'MigrateLibFilesToNewRev');
 end;
 
-procedure TMainForm.MigrateProjectIniFileToNewrev(sOldSchemDir, sNewSchemDir:
-    string);
+procedure TMainForm.MigrateProjectIniFileToNewrev(sOldSchemDir,
+  sNewSchemDir: string);
 begin
   CodeSite.EnterMethod(Self, 'MigrateProjectIniFileToNewrev');
 
@@ -3567,8 +3572,8 @@ begin
   CodeSite.ExitMethod(Self, 'MigrateProjectIniFileToNewrev');
 end;
 
-procedure TMainForm.MigrateSetupIniFileToNewrev(sOldSchemDir, sNewSchemDir:
-    string);
+procedure TMainForm.MigrateSetupIniFileToNewrev(sOldSchemDir,
+  sNewSchemDir: string);
 begin
   CodeSite.EnterMethod(Self, 'MigrateSetupIniFileToNewrev');
 
@@ -3810,7 +3815,7 @@ begin
       MigrateGlobalSignals(Project.oldSchemDir, Project.newSchemDir,
         Project.oldRev, Project.newRev);
       Project.SimulationDir := Project.newSchemDir;
-      AppIcons.IconModule.LMDMRUList.Add(Project.newRevDir);
+      LMDMRUList.Add(Project.newRevDir);
       SetDirectoryBrowsers(Project.SimulationDir);
       Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.newRevDir) +
         'setup.xml';
@@ -4056,7 +4061,7 @@ begin
         mtError, [mbOK], 0);
       Abort
     end
- end
+  end
   else
   begin
     if (FileExists(Project.XMLSetupFile6)) then
@@ -4840,7 +4845,7 @@ var
   StartUpInfo: TStartUpInfo;
   ProcessInfo: tProcessInformation;
 begin
-      { TMainForm.runVerilogNetlist }
+  { TMainForm.runVerilogNetlist }
   CodeSite.EnterMethod(Self, 'runEdifNetlist');
 
   FillChar(StartUpInfo, SizeOf(TStartUpInfo), 0);
@@ -4912,8 +4917,8 @@ begin
   CodeSite.ExitMethod(Self, 'runHSpice');
 end;
 
-procedure TMainForm.runLTCSimNetlist(sSchematicsFile: string; bDisplay,
-    bSimulate: Boolean);
+procedure TMainForm.runLTCSimNetlist(sSchematicsFile: string;
+  bDisplay, bSimulate: Boolean);
 var
   sHeaderFile, sLibraryHeaderFile: string;
   sWindowTitle: string;
@@ -5315,7 +5320,7 @@ var
   sSchTempFile: string;
   sCommand, sArgument, sWorkingDir: string;
 begin
-      { TMainForm.runSCSSchEditor }
+  { TMainForm.runSCSSchEditor }
   CodeSite.EnterMethod(Self, 'runSCSSymEditor');
 
   {
@@ -5702,7 +5707,7 @@ procedure TMainForm.SaveLTspiceIniFile;
 var
   ProjectLTspiceIniFile: TIniFile;
 begin
-      { TMainForm.CreateLTspiceIniFile }
+  { TMainForm.CreateLTspiceIniFile }
   CodeSite.EnterMethod(Self, 'SaveLTspiceIniFile');
 
   ProjectLTspiceIniFile := TIniFile.Create(Project.LTspiceIniFileName);
@@ -6092,7 +6097,7 @@ begin
       ShowMessage
         ('License manager could not be stopped. Close it manually (HDSShell.exe task)');
   end;
-  with AppIcons.IconModule.LMDStarterShell do
+  with LMDStarterShell do
   begin
     Command := IncludeTrailingPathDelimiter(LTCSim.Dir) + 'HDSShell.exe';
     DefaultDir := Project.SchemDir;
@@ -6152,7 +6157,7 @@ begin
         ('Hierarchy Navigator could not be stopped. Close it manually.');
   end;
   TimeDelay(200);
-  with AppIcons.IconModule.LMDStarterShell do
+  with LMDStarterShell do
     TerminateProcess;
 
   CodeSite.ExitMethod(Self, 'StopSCSShell');
@@ -6310,26 +6315,26 @@ begin
   CodeSite.ExitMethod(Self, 'TransferAndBuildFiles');
 end;
 
-function TMainForm.TransferFileList(StringOfFiles: TStringList; DirectorySource,
-    DirectoryDest: string): Integer;
+function TMainForm.TransferFileList(StringOfFiles: TStringList;
+  DirectorySource, DirectoryDest: string): Integer;
 var
   sSource, sDest: string;
   I: Integer;
 begin
   CodeSite.EnterMethod(Self, 'TransferFileList');
 
-  AppIcons.IconModule.JamFileOperation.Options :=
+  JamFileOperation.Options :=
     [soFilesOnly, soNoConfirmation];
-  AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-  AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-  AppIcons.IconModule.JamFileOperation.Destination := DirectoryDest;
+  JamFileOperation.SourceFiles.Clear;
+  JamFileOperation.Operation := otCopy;
+  JamFileOperation.Destination := DirectoryDest;
   sSource := '';
   sDest := '';
   for I := 0 to (StringOfFiles.Count - 1) do
-    AppIcons.IconModule.JamFileOperation.SourceFiles.Add
+    JamFileOperation.SourceFiles.Add
       (IncludeTrailingPathDelimiter(DirectorySource) +
       StringOfFiles.Strings[I]);
-  if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+  if (not(JamFileOperation.Execute)) then
     MessageDlg('Error transferring files from ' + DirectorySource + ' to ' +
       DirectoryDest + '.', mtError, [mbOK], 0);
   Result := 0;
@@ -6371,13 +6376,13 @@ begin
     if (RecordCount > 0) then
     begin
       sTemp := '';
-      AppIcons.IconModule.JamFileOperation.Options :=
+      JamFileOperation.Options :=
         [soFilesOnly, soNoConfirmation];
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Operation := otCopy;
       sDestination := IncludeTrailingPathDelimiter(Project.Dir) +
         IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\analog\symbols';
-      AppIcons.IconModule.JamFileOperation.Destination := sDestination;
+      JamFileOperation.Destination := sDestination;
       while not Eof do
       begin
         sDevice := Trim(FieldByName('name').AsString);
@@ -6385,10 +6390,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Name) +
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\analog\symbols\' +
           sDevice + '.sym';
-        AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+        JamFileOperation.SourceFiles.Add(sTemp);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring analog symbols.', mtError, [mbOK], 0);
     end;
     Close;
@@ -6408,11 +6413,11 @@ begin
     if (RecordCount > 0) then
     begin
       sTemp := '';
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Operation := otCopy;
       sDestination := IncludeTrailingPathDelimiter(Project.Dir) +
         IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\analog\symbols';
-      AppIcons.IconModule.JamFileOperation.Destination := sDestination;
+      JamFileOperation.Destination := sDestination;
       while not LibraryDatabase.UniQuery.Eof do
       begin
         sDevice := Trim(FieldByName('name').AsString);
@@ -6420,10 +6425,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Name) +
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\analog\symbols\' +
           sDevice + '.sym';
-        AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+        JamFileOperation.SourceFiles.Add(sTemp);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring optional analog symbols.', mtError,
           [mbOK], 0);
     end;
@@ -6444,11 +6449,11 @@ begin
     if (RecordCount > 0) then
     begin
       sTemp := '';
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Operation := otCopy;
       sDestination := IncludeTrailingPathDelimiter(Project.Dir) +
         IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\analog\schematics';
-      AppIcons.IconModule.JamFileOperation.Destination := sDestination;
+      JamFileOperation.Destination := sDestination;
       while not LibraryDatabase.UniQuery.Eof do
       begin
         sDevice := Trim(FieldByName('name').AsString);
@@ -6456,10 +6461,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Name) +
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\analog\schematics\' +
           sDevice + '.sch';
-        AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+        JamFileOperation.SourceFiles.Add(sTemp);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring optional analog schematics.', mtError,
           [mbOK], 0);
     end;
@@ -6481,11 +6486,11 @@ begin
     begin
       First;
       sTemp := '';
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Operation := otCopy;
       sDestination := IncludeTrailingPathDelimiter(Project.Dir) +
         IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\analog\schematics';
-      AppIcons.IconModule.JamFileOperation.Destination := sDestination;
+      JamFileOperation.Destination := sDestination;
       while not LibraryDatabase.UniQuery.Eof do
       begin
         sDevice := Trim(FieldByName('name').AsString);
@@ -6493,10 +6498,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Name) +
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\analog\schematics\' +
           sDevice + '.sch';
-        AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
+        JamFileOperation.SourceFiles.Add(sTemp);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring optional analog schematics.', mtError,
           [mbOK], 0);
     end;
@@ -6519,11 +6524,11 @@ begin
     begin
       { Transfer PSpice netlists }
       First;
-      AppIcons.IconModule.JamFileOperation.Options :=
+      JamFileOperation.Options :=
         [soFilesOnly, soNoConfirmation];
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination :=
+      JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Destination :=
         IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
         (Project.Rev) + 'lib\ecs\analog\netlists';
       while not Eof do
@@ -6533,16 +6538,16 @@ begin
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\analog\netlists\' +
           Trim(FieldByName('name').AsString);
         if FileExists(sName + '.p') then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName + '.p');
+          JamFileOperation.SourceFiles.Add(sName + '.p');
         if FileExists(sName + '.h') then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName + '.h');
+          JamFileOperation.SourceFiles.Add(sName + '.h');
         if FileExists(sName + '.l') then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName + '.l');
+          JamFileOperation.SourceFiles.Add(sName + '.l');
         if FileExists(sName + '.a') then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName + '.a');
+          JamFileOperation.SourceFiles.Add(sName + '.a');
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring netlists for analog symbols.', mtError,
           [mbOK], 0);
     end;
@@ -6563,11 +6568,11 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options :=
+      JamFileOperation.Options :=
         [soFilesOnly, soNoConfirmation];
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination :=
+      JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Destination :=
         IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
         (Project.Rev) + 'lib\ecs\analog\netlists';
       while not Eof do
@@ -6577,16 +6582,16 @@ begin
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\analog\netlists\' +
           Trim(FieldByName('name').AsString);
         if FileExists(sName + '.p') then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName + '.p');
+          JamFileOperation.SourceFiles.Add(sName + '.p');
         if FileExists(sName + '.h') then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName + '.h');
+          JamFileOperation.SourceFiles.Add(sName + '.h');
         if FileExists(sName + '.l') then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName + '.l');
+          JamFileOperation.SourceFiles.Add(sName + '.l');
         if FileExists(sName + '.a') then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName + '.a');
+          JamFileOperation.SourceFiles.Add(sName + '.a');
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring optional analog netlists.', mtError,
           [mbOK], 0);
     end;
@@ -6606,11 +6611,11 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options :=
+      JamFileOperation.Options :=
         [soFilesOnly, soNoConfirmation];
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination :=
+      JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Destination :=
         IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
         (Project.Rev) + 'lib\ecs\digital\symbols';
       while not Eof do
@@ -6620,10 +6625,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\digital\symbols\' +
           Trim(FieldByName('name').AsString) + '.sym';
         if FileExists(sName) then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName);
+          JamFileOperation.SourceFiles.Add(sName);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring gate symbols.', mtError, [mbOK], 0);
     end;
     Close;
@@ -6642,11 +6647,11 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options :=
+      JamFileOperation.Options :=
         [soFilesOnly, soNoConfirmation];
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination :=
+      JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Destination :=
         IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
         (Project.Rev) + 'lib\ecs\digital\symbols';
       while not Eof do
@@ -6656,10 +6661,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\digital\symbols\' +
           Trim(FieldByName('name').AsString) + '.sym';
         if FileExists(sName) then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName);
+          JamFileOperation.SourceFiles.Add(sName);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring optional gate symbols.', mtError,
           [mbOK], 0);
     end;
@@ -6679,11 +6684,11 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options :=
+      JamFileOperation.Options :=
         [soFilesOnly, soNoConfirmation];
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination :=
+      JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Destination :=
         IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
         (Project.Rev) + 'lib\ecs\digital\schematics';
       while not Eof do
@@ -6693,10 +6698,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\digital\schematics\'
           + Trim(FieldByName('name').AsString) + '.sch';
         if FileExists(sName) then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName);
+          JamFileOperation.SourceFiles.Add(sName);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring gate schematics.', mtError, [mbOK], 0);
     end;
     Close;
@@ -6716,11 +6721,11 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options :=
+      JamFileOperation.Options :=
         [soFilesOnly, soNoConfirmation];
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination :=
+      JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Destination :=
         IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
         (Project.Rev) + 'lib\ecs\digital\schematics';
       while not Eof do
@@ -6730,10 +6735,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\digital\schematics\'
           + Trim(FieldByName('name').AsString) + '.sch';
         if FileExists(sName) then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName);
+          JamFileOperation.SourceFiles.Add(sName);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring gate schematics.', mtError, [mbOK], 0);
     end;
     Close;
@@ -6753,11 +6758,11 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options :=
+      JamFileOperation.Options :=
         [soFilesOnly, soNoConfirmation];
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination :=
+      JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Destination :=
         IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
         (Project.Rev) + 'lib\ecs\digital\netlists';
       while not Eof do
@@ -6767,10 +6772,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\digital\netlists\' +
           Trim(FieldByName('name').AsString) + '.pd';
         if FileExists(sName) then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName);
+          JamFileOperation.SourceFiles.Add(sName);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring digital netlist files.', mtError,
           [mbOK], 0);
     end;
@@ -6791,11 +6796,11 @@ begin
     if (RecordCount > 0) then
     begin
       First;
-      AppIcons.IconModule.JamFileOperation.Options :=
+      JamFileOperation.Options :=
         [soFilesOnly, soNoConfirmation];
-      AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-      AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-      AppIcons.IconModule.JamFileOperation.Destination :=
+      JamFileOperation.Operation := otCopy;
+      JamFileOperation.SourceFiles.Clear;
+      JamFileOperation.Destination :=
         IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
         (Project.Rev) + 'lib\ecs\digital\netlists';
       while not Eof do
@@ -6805,10 +6810,10 @@ begin
           IncludeTrailingPathDelimiter(Process.Rev) + 'ecs\digital\netlists\' +
           Trim(FieldByName('name').AsString) + '.pd';
         if FileExists(sName) then
-          AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sName);
+          JamFileOperation.SourceFiles.Add(sName);
         Next;
       end;
-      if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+      if (not(JamFileOperation.Execute)) then
         MessageDlg('Error transferring digital files.', mtError, [mbOK], 0);
     end;
     Close;
@@ -7104,15 +7109,15 @@ begin
     (Process.Rev) + 'ledit\' + Process.Name + '.tdb';
   if FileExists(sTemp) then
   begin
-    AppIcons.IconModule.JamFileOperation.Options :=
+    JamFileOperation.Options :=
       [soFilesOnly, soNoConfirmation];
-    AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-    AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-    AppIcons.IconModule.JamFileOperation.Destination :=
+    JamFileOperation.SourceFiles.Clear;
+    JamFileOperation.Operation := otCopy;
+    JamFileOperation.Destination :=
       IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
       (Project.Rev) + 'lib\ledit';
-    AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
-    if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+    JamFileOperation.SourceFiles.Add(sTemp);
+    if (not(JamFileOperation.Execute)) then
       MessageDlg('Error transferring generic symbols.', mtError, [mbOK], 0);
   end;
   { Tanner files using files.ini }
@@ -7213,15 +7218,15 @@ begin
       (Process.Rev) + 'drac\' + Process.Name + '.lvh';
   if FileExists(sTemp) then
   begin
-    AppIcons.IconModule.JamFileOperation.Options :=
+    JamFileOperation.Options :=
       [soFilesOnly, soNoConfirmation];
-    AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-    AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-    AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
-    AppIcons.IconModule.JamFileOperation.Destination :=
+    JamFileOperation.Operation := otCopy;
+    JamFileOperation.SourceFiles.Clear;
+    JamFileOperation.SourceFiles.Add(sTemp);
+    JamFileOperation.Destination :=
       IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
       (Project.Rev) + 'lib\dracula';
-    if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+    if (not(JamFileOperation.Execute)) then
       MessageDlg('Error transferring dracula header file.', mtError, [mbOK], 0);
   end;
 
@@ -7231,15 +7236,15 @@ begin
     (Process.Rev) + 'assura\' + Process.Name + '.alvh';
   if FileExists(sTemp) then
   begin
-    AppIcons.IconModule.JamFileOperation.Options :=
+    JamFileOperation.Options :=
       [soFilesOnly, soNoConfirmation];
-    AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-    AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-    AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
-    AppIcons.IconModule.JamFileOperation.Destination :=
+    JamFileOperation.Operation := otCopy;
+    JamFileOperation.SourceFiles.Clear;
+    JamFileOperation.SourceFiles.Add(sTemp);
+    JamFileOperation.Destination :=
       IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
       (Project.Rev) + 'lib\assura';
-    if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+    if (not(JamFileOperation.Execute)) then
       MessageDlg('Error transferring assura header file.', mtError, [mbOK], 0);
   end;
 
@@ -7249,15 +7254,15 @@ begin
     (Process.Rev) + 'doc\' + Process.Name + '.pdf';
   if FileExists(sTemp) then
   begin
-    AppIcons.IconModule.JamFileOperation.Operation := otCopy;
-    AppIcons.IconModule.JamFileOperation.Options :=
+    JamFileOperation.Operation := otCopy;
+    JamFileOperation.Options :=
       [soFilesOnly, soNoConfirmation];
-    AppIcons.IconModule.JamFileOperation.SourceFiles.Clear;
-    AppIcons.IconModule.JamFileOperation.SourceFiles.Add(sTemp);
-    AppIcons.IconModule.JamFileOperation.Destination :=
+    JamFileOperation.SourceFiles.Clear;
+    JamFileOperation.SourceFiles.Add(sTemp);
+    JamFileOperation.Destination :=
       IncludeTrailingPathDelimiter(Project.Dir) + IncludeTrailingPathDelimiter
       (Project.Rev) + 'lib\doc';
-    if (not(AppIcons.IconModule.JamFileOperation.Execute)) then
+    if (not(JamFileOperation.Execute)) then
       MessageDlg('Error transferring documentation file.', mtError, [mbOK], 0);
   end;
 
@@ -7885,4 +7890,3 @@ end;
   -----------------------------------------------------------------------sc }
 
 end.
-
