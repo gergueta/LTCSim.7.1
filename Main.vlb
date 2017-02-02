@@ -19,9 +19,6 @@ Coordinates=915,828,128,36
 [PopupMenuStim]
 Coordinates=1328,617,109,36
 
-[Cut1]
-Coordinates=0,538,42,36
-
 [cbAssuraBipolarWL]
 Coordinates=636,280,127,58
 
@@ -57,9 +54,6 @@ Coordinates=144,828,147,36
 
 [LMDGroupBoxAPT]
 Coordinates=10,828,124,36
-
-[TreePopupMenu]
-Coordinates=754,862,110,36
 
 [Label7]
 Coordinates=721,416,53,58
@@ -145,9 +139,6 @@ Coordinates=10,782,108,36
 [UserGuide4]
 Coordinates=1033,936,83,36
 
-[Open1]
-Coordinates=974,936,53,36
-
 [Largeicons2]
 Coordinates=608,936,85,36
 
@@ -162,9 +153,6 @@ Coordinates=853,736,77,36
 
 [TabSheet9]
 Coordinates=766,736,77,36
-
-[Details2]
-Coordinates=16,936,61,36
 
 [ePSpiceBracketSubstitutionRight]
 Coordinates=552,736,204,36
@@ -322,9 +310,6 @@ Coordinates=2046,1046,114,36
 [Panel3]
 Coordinates=736,484,55,58
 
-[Paste2]
-Coordinates=2027,1084,54,36
-
 [rgArchiveNetlist]
 Coordinates=287,280,105,58
 
@@ -346,9 +331,6 @@ Coordinates=10,644,188,36
 [LTCSim1]
 Coordinates=1473,1084,68,36
 
-[Selectall2]
-Coordinates=1394,1084,71,36
-
 [Control1]
 Coordinates=1325,1084,63,36
 
@@ -363,9 +345,6 @@ Coordinates=720,212,135,58
 
 [eAssuraLVS_Short]
 Coordinates=1117,598,124,36
-
-[N1]
-Coordinates=1098,1084,40,36
 
 [eOption2]
 Coordinates=1040,598,67,36
@@ -426,9 +405,6 @@ Coordinates=2288,661,91,36
 
 [eOption1]
 Coordinates=1407,552,67,36
-
-[Newfolder1]
-Coordinates=2288,771,80,36
 
 [GroupBox4]
 Coordinates=1117,144,79,58
@@ -529,9 +505,6 @@ Coordinates=164,552,140,36
 [ePspiceWaveformTool]
 Coordinates=10,552,144,36
 
-[N2]
-Coordinates=508,1158,40,36
-
 [UpdateSchematics1]
 Coordinates=171,1194,129,36
 
@@ -547,9 +520,6 @@ Coordinates=655,144,114,58
 
 [UserGuide3]
 Coordinates=2534,276,83,36
-
-[PopupMenuFileTree]
-Coordinates=2534,331,131,36
 
 [DiisplayHideattributes1]
 Coordinates=2534,441,147,36
@@ -572,9 +542,6 @@ Coordinates=2534,606,71,36
 [LMDGroupBoxDracula]
 Coordinates=1194,484,143,36
 
-[LTCSim2]
-Coordinates=2534,716,68,36
-
 [Start2]
 Coordinates=2534,826,49,36
 
@@ -587,11 +554,8 @@ Coordinates=2534,881,123,36
 [LMDGroupBoxLTspice]
 Coordinates=1040,484,144,36
 
-[Copy1]
-Coordinates=2534,991,51,36
-
 []
-Coordinates=2095,386,173,36
+Coordinates=16,936,61,36
 Visible=True
 
 [LMDDockPanelAPT]

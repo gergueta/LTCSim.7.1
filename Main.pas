@@ -31,7 +31,7 @@ uses
   CodeSiteLogging, AppIcons, ActiveX, AxNetwork_TLB, ZipForge,
   LMDCustomExtCombo, LMDComboBoxExt, Vcl.PlatformDefaultStyleActnCtrls,
   LMDShLink, LMDShList, LMDShTree, LMDShFolder, LMDTaskDlg, JSDialog,
-  LMDTextButton;
+  LMDTextButton, JamSystemShellView;
 
 type
   TMainForm = class(TForm)
@@ -107,12 +107,9 @@ type
     Configure1                      : TMenuItem;
     Control1                        : TMenuItem;
     CoolBar1                        : TCoolBar;
-    Copy1                           : TMenuItem;
     CT2                             : TMenuItem;
-    Cut1                            : TMenuItem;
     Delete1                         : TMenuItem;
     Delete2                         : TMenuItem;
-    Details2                        : TMenuItem;
     Devicelist1                     : TMenuItem;
     DiisplayHideattributes1         : TMenuItem;
     eAPTBracketSubstitutionLeft     : TLMDLabeledMaskEdit;
@@ -233,19 +230,16 @@ type
     LTC1                            : TMenuItem;
     LTCBackannotation1              : TMenuItem;
     LTCSim1                         : TMenuItem;
-    LTCSim2                         : TMenuItem;
     LTCSimuserguide1                : TMenuItem;
     LTCSimuserguidepdf1             : TMenuItem;
     LTSExporer1                     : TMenuItem;
     MainMenu                        : TMainMenu;
     Migrateschematics2              : TMenuItem;
     ModifySchematics1               : TMenuItem;
-    N1                              : TMenuItem;
     N10                             : TMenuItem;
     N12                             : TMenuItem;
     N13                             : TMenuItem;
     N14                             : TMenuItem;
-    N2                              : TMenuItem;
     N22                             : TMenuItem;
     N28                             : TMenuItem;
     N3                              : TMenuItem;
@@ -262,11 +256,9 @@ type
     NetlistSimulate1                : TMenuItem;
     New1                            : TMenuItem;
     New2                            : TMenuItem;
-    Newfolder1                      : TMenuItem;
     NewRev1                         : TMenuItem;
     oASCII1                         : TMenuItem;
     oASCII2                         : TMenuItem;
-    Open1                           : TMenuItem;
     Open2                           : TMenuItem;
     Open3                           : TMenuItem;
     OpenDialog                      : TOpenDialog;
@@ -277,10 +269,8 @@ type
     PanelMainList                   : TPanel;
     PanelMainTree                   : TPanel;
     pAPT1                           : TMenuItem;
-    Paste2                          : TMenuItem;
     PopupMenuFileList               : TPopupMenu;
     PopupMenuFileListStyle          : TPopupMenu;
-    PopupMenuFileTree               : TPopupMenu;
     PopupMenuSchem                  : TPopupMenu;
     PopupMenuStim                   : TPopupMenu;
     PopupMenuTray                   : TPopupMenu;
@@ -300,7 +290,6 @@ type
     SchematicsSnapshot              : TAction;
     SchematicsToAPT                 : TAction;
     SchematicstoASCII1              : TMenuItem;
-    Selectall2                      : TMenuItem;
     Server2                         : TMenuItem;
     Simulate1                       : TMenuItem;
     Simulate2                       : TMenuItem;
@@ -338,7 +327,6 @@ type
     ToolButton7                     : TToolButton;
     ToolButton8                     : TToolButton;
     ToolButtonDirUp                 : TToolButton;
-    TreePopupMenu                   : TPopupMenu;
     Uninstall1                      : TMenuItem;
     UpdateSchematics1               : TMenuItem;
     UserGuide1                      : TMenuItem;
@@ -360,11 +348,11 @@ type
     bLSFUpdate: TButton;
     eUserPassword: TEdit;
     cmdConnect: TButton;
-    ActionRunLTCSimNetlist: TAction;
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
     ToolButton9: TToolButton;
     ToolButton11: TToolButton;
+    humbnail1: TMenuItem;
     procedure AboutLTCSimClick(Sender: TObject);
     procedure AboutProcessClick(Sender: TObject);
     procedure ActionAscToSchExecute(Sender: TObject);
@@ -379,8 +367,6 @@ type
     procedure ActionProjectOpenExecute(Sender: TObject);
     procedure ActionProjectSaveExecute(Sender: TObject);
     procedure ActionRestartCohesionLicenseExecute(Sender: TObject);
-    procedure ActionRunLTCSimNetlistExecute(Sender: TObject);
-    procedure ActionSchematicsEditExecute(Sender: TObject);
     procedure ActionSchematicsNavigateExecute(Sender: TObject);
     procedure ActionSchematicsNewExecute(Sender: TObject);
     procedure ActionSchematicsOpenExecute(Sender: TObject);
@@ -404,7 +390,7 @@ type
     procedure CreateSynarioFiles;
     procedure Delete1Click(Sender: TObject);
     procedure Delete2Click(Sender: TObject);
-    procedure DetailsClick(Sender: TObject);
+    procedure FileListStyleClick(Sender: TObject);
     procedure DisplayHideattributesDlg(Sender: TObject);
     procedure EditFile(sFileName: string);
     function EditSchematics(sFileName: string): Boolean;
@@ -425,8 +411,6 @@ type
     procedure Install1Click(Sender: TObject);
     procedure InstallLicense1Click(Sender: TObject);
     procedure InstallSoftware1Click(Sender: TObject);
-    procedure ipwPingError(Sender: TObject; ErrorCode: Integer; const
-        Description: string);
     procedure JamDropFileSchDrop(Sender: TObject; KeyState: TShiftState;
         MousePos: TPoint; var JamDropEffect: TJamDropEffect);
     procedure JamDropFilesStimDrop(Sender: TObject; KeyState: TShiftState;
@@ -1140,88 +1124,6 @@ begin
   CodeSite.ExitMethod(Self, 'ActionRestartCohesionLicenseExecute');
 end;
 
-procedure TMainForm.ActionRunLTCSimNetlistExecute(Sender: TObject);
-  var
-  sSchematics: string;
-  sStimulus: string;
-  sFileExtension: string;
-begin
-  CodeSite.EnterMethod(Self, 'ToolButtonTopFormClick');
-
-  if ValidProject() then
-  begin
-    if not cbLTspiceSchematics.checked then
-      sFileExtension := '.sch'
-    else
-      sFileExtension := '.asc';
-    sSchematics := IncludeTrailingPathDelimiter(Project.SchemDir) +
-      cbSchematics.Text + sFileExtension;
-    sStimulus := IncludeTrailingPathDelimiter(Project.SchemDir) + cbStim.Text;
-    Project.SimulationDir := ExtractFilePath(sStimulus);
-    with Sender as TLMDSpeedButton do
-    begin
-      case tag of
-        1:
-          EditSchematics(sSchematics);
-        2:
-          NavigateSchematics(sSchematics);
-        3:
-          EditStimulus;
-        5:
-          begin
-            if (cbTool.Text = '') then
-            begin
-              MessageDlg('You need to select the tool to use!', mtError,
-                [mbOK], 0);
-              Exit;
-            end
-            else
-              runLTCSimNetlist(sSchematics, true, False)
-          end;
-        6:
-          begin
-            if (cbTool.Text = '') then
-            begin
-              MessageDlg('You need to select the tool to use!', mtError,
-                [mbOK], 0);
-              Exit;
-            end
-            else
-              runSimulation(sStimulus)
-          end;
-        7:
-          begin
-            if (cbTool.Text = '') then
-            begin
-              MessageDlg('You need to select the tool to use!', mtError,
-                [mbOK], 0);
-              Exit;
-            end
-            else
-              runLTCSimNetlist(sSchematics, true, true)
-          end;
-      end
-    end
-  end
-  else
-    MessageDlg('You need a valid project loaded first!', mtError, [mbOK], 0);
-
-  CodeSite.ExitMethod(Self, 'ToolButtonTopFormClick');
-end;
-
-procedure TMainForm.ActionSchematicsEditExecute(Sender: TObject);
-var
-  sSchematicsFile, sFileExtension: String;
-begin
-  CodeSite.EnterMethod(Self, 'ActionSchematicsEditExecute');
-
-  // Edit schematics from cbSchematics
-  sFileExtension := '.sch';
-  sSchematicsFile := cbSchematics.Text + sFileExtension;
-  EditSchematics(sSchematicsFile);
-
-  CodeSite.ExitMethod(Self, 'ActionSchematicsEditExecute');
-end;
 
 procedure TMainForm.ActionSchematicsNavigateExecute(Sender: TObject);
 var
@@ -2180,33 +2082,32 @@ begin
   CodeSite.ExitMethod(Self, 'Delete2Click');
 end;
 
-procedure TMainForm.DetailsClick(Sender: TObject);
+
+procedure TMainForm.FileListStyleClick(Sender: TObject);
 begin
   CodeSite.EnterMethod(Self, 'DetailsClick');
 
-  JamShellListMain.ViewStyle := TViewStyle(Integer(TComponent(Sender).tag));
-  case JamShellListMain.ViewStyle of
-    vsIcon:
-      begin
-        Largeicons2.checked := true;
-        Largeicons2.checked := true
+    with Sender as TMenuItem do
+    begin
+      case tag of
+        0:
+          begin
+            JamShellListMain.ViewStyle := vsIcon;
+          end;
+        1:
+          begin
+            JamShellListMain.ViewStyle := vsReport; //Small icon
+          end;
+        2:
+          begin
+            JamShellListMain.ViewStyle := vsList;
+          end;
+        3:
+          begin
+            JamShellListMain.Thumbnails := True;
+      	  end;
       end;
-    vsSmallIcon:
-      begin
-        Smallicons2.checked := true;
-        Smallicons2.checked := true
-      end;
-    vsList:
-      begin
-        List2.checked := true;
-        List2.checked := true
-      end;
-    vsReport:
-      begin
-        Details2.checked := true;
-        Details2.checked := true
-      end;
-  end;
+    end;
 
   CodeSite.ExitMethod(Self, 'DetailsClick');
 end;
@@ -2862,15 +2763,6 @@ begin
   CodeSite.ExitMethod(Self, 'InstallSoftware1Click');
 end;
 
-procedure TMainForm.ipwPingError(Sender: TObject; ErrorCode: Integer; const
-    Description: string);
-begin
-  CodeSite.EnterMethod(Self, 'ipwPingError');
-
-  // ProjectNewMenu.Enabled := False;
-
-  CodeSite.ExitMethod(Self, 'ipwPingError');
-end;
 
 procedure TMainForm.JamDropFileSchDrop(Sender: TObject; KeyState: TShiftState;
     MousePos: TPoint; var JamDropEffect: TJamDropEffect);
