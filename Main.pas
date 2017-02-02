@@ -2614,9 +2614,19 @@ end;
 procedure TMainForm.FormCreate(Sender: TObject);
 var
   VarValue: array [0 .. 200] of Char;
+  Dest: TCodeSiteDestination;
 begin
-  CodeSite.EnterMethod(Self, 'FormCreate');
+  Dest := TCodeSiteDestination.Create( Self );
 
+  Dest.LogFile.Active := True;
+  Dest.LogFile.FileName := 'LTCSimLog.csl';
+  Dest.LogFile.FilePath := '$(MyDocs)';
+
+  Dest.Viewer.Active := False;   // Add this line
+
+  CodeSite.Destination := Dest;
+
+  CodeSite.EnterMethod(Self, 'FormCreate');
   debugMode := False;
   cadMode := False;
   if (ParamStr(1) = '-d') then
@@ -3434,7 +3444,7 @@ begin
       cbSchematics.Text + sFileExtension;
     sStimulus := IncludeTrailingPathDelimiter(Project.SchemDir) + cbStim.Text;
     Project.SimulationDir := ExtractFilePath(sStimulus);
-    with Sender as TLMDSpeedButton do
+    with Sender as TToolButton do
     begin
       case tag of
         1:
