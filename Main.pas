@@ -608,6 +608,7 @@ type
   ProcessRecord = record
     Name: string;
     Rev: string;
+    Option: String;
     Promis: string;
     option1: string;
     option1Name: string;
@@ -651,8 +652,6 @@ var
   sSchFileName: string;
   sWindowsDir: string;
   debugMode: Boolean;
-  sSynarioDir: string;
-  sLibraryDir: string;
   Version: string;
   bCheckWarningMessage: Boolean;
   sECSRegistryIniFileName: string;
@@ -710,7 +709,7 @@ var
 begin
   CodeSite.EnterMethod(Self, 'AboutProcessClick');
 
-  sFileName := IncludeTrailingPathDelimiter(sLibraryDir) +
+  sFileName := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
     IncludeTrailingPathDelimiter(Process.Name) + IncludeTrailingPathDelimiter
     (Process.Rev) + 'help\' + Process.Name + '.hlp';
   if FileExists(sFileName) then
@@ -3297,68 +3296,69 @@ begin
   CodeSite.EnterMethod(Self, 'LTCSimProjectOpen');
 
   StopSCSShell;
-  UpdateFormComponents;
   if ((Project.Name = '') or (Project.Rev = '')) then
     if MessageDlg('Invalid process information. Do you want to continue?',
       mtConfirmation, [mbYes, mbNo], 0) = mrNo then
       Abort;
-  if (eProcessOpt.Text <> '') and (ePromis.Text = '') then
+  if (Process.Option <> '') and (Process.Promis = '') then
   begin
-    ePromis.Text := 'N/A';
-    eOption1Name.Text := 'N/A';
-    eOption1Code.Text := 'N/A';
-    eOption1.Text := 'N/A';
-    eOption2Name.Text := 'N/A';
-    eOption2Code.Text := 'N/A';
-    eOption2.Text := 'N/A';
-    eGenericVer.Text := '1.0';
+    Process.Promis := 'N/A';
+    Process.option1 := 'N/A';
+    Process.option1Name := 'N/A';
+    Process.option1Code := 'N/A';
+    Process.option2 := 'N/A';
+    Process.option2Name := 'N/A';
+    Process.option2Code := 'N/A';
+    Process.GenericRev := '1.0';
   end;
-  if ((ePromis.Text = '') or (ePromis.Text = 'N/A')) then
+  if ((Process.Promis = '') or (Process.Promis = 'N/A')) then
   begin
-    ePromis.Text := 'N/A';
-    eOption1Name.Text := 'N/A';
-    eOption1Code.Text := 'N/A';
-    eOption1.Text := 'N/A';
-    eOption2Name.Text := 'N/A';
-    eOption2Code.Text := 'N/A';
-    eOption2.Text := 'N/A';
-    eGenericVer.Text := '1.0';
+    Process.Promis := 'N/A';
+    Process.option1 := 'N/A';
+    Process.option1Name := 'N/A';
+    Process.option1Code := 'N/A';
+    Process.option2 := 'N/A';
+    Process.option2Name := 'N/A';
+    Process.option2Code := 'N/A';
+    Process.GenericRev := '1.0';
   end;
-  if ((eOption1.Text = '') or (eOption1.Text = 'N/A')) then
+  if ((Process.option1 = '') or (Process.option1 = 'N/A')) then
   begin
-    eOption1Name.Text := 'N/A';
-    eOption1Code.Text := 'N/A';
-    eOption1.Text := 'N/A';
-    eOption2Name.Text := 'N/A';
-    eOption2Code.Text := 'N/A';
-    eOption2.Text := 'N/A';
-    eGenericVer.Text := '1.0';
+    Process.option1 := 'N/A';
+    Process.option1Name := 'N/A';
+    Process.option1Code := 'N/A';
+    Process.option2 := 'N/A';
+    Process.option2Name := 'N/A';
+    Process.option2Code := 'N/A';
+    Process.GenericRev := '1.0';
   end;
-  if ((eOption2.Text = '') or (eOption2.Text = 'N/A')) then
+  if ((Process.option2 = '') or (Process.option2 = 'N/A')) then
   begin
-    eOption2Name.Text := 'N/A';
-    eOption2Code.Text := 'N/A';
-    eOption2.Text := 'N/A';
-    eGenericVer.Text := '1.0';
+    Process.option2 := 'N/A';
+    Process.option2Name := 'N/A';
+    Process.option2Code := 'N/A';
+    Process.GenericRev := '1.0';
   end;
-  if (eOption1Code.Text = '') then
+  if (Process.option1Code = '') then
   begin
-    if ((UpperCase(eOption1.Text) = '1K') or (UpperCase(eOption1.Text) = '3K')
-      or (UpperCase(eOption1.Text) = '2.5K') or
-      (UpperCase(eOption1.Text) = '30K') or (UpperCase(eOption1.Text) = '10K'))
+    if ((UpperCase(Process.option1) = '1K') or (UpperCase(Process.option1) = '3K')
+      or (UpperCase(Process.option1) = '2.5K') or
+      (UpperCase(Process.option1) = '30K') or (UpperCase(Process.option1 ) = '10K'))
     then
     begin
-      eOption1Code.Text := 'TF';
+      Process.option1 := 'TF';
     end
   end;
-  if (eOption2Code.Text = '') then
+  if (Process.option2Code = '') then
   begin
-    eOption2Code.Text := 'N/A';
+    Process.option2Code := 'N/A';
   end;
-  if (eGenericVer.Text = '') then
+  if (Process.GenericRev = '') then
   begin
-    eGenericVer.Text := '1.0';
+    Process.GenericRev := '1.0';
   end;
+
+  UpdateFormComponents;
   UpdateProjectVariables;
   if (LMDMRUListMain.Items.IndexOf(Project.RevDir) < 0) then
   begin
@@ -4176,6 +4176,9 @@ begin
   CNode := Node.ChildNodes.FindNode('rev');
   if Assigned(CNode) then
     Process.Rev := CNode.Text;
+  CNode := Node.ChildNodes.FindNode('Option');
+  if Assigned(CNode) then
+    Process.Option := CNode.Text;
   CNode := Node.ChildNodes.FindNode('promis');
   if Assigned(CNode) then
     Process.Promis := CNode.Text;
@@ -5403,6 +5406,7 @@ begin
       (ExtractFilePath(IncludeTrailingPathDelimiter(Project.SchemDir) + sTemp));
     Project.xmlSimulationDir :=
       RightStr(sTemp, (Length(sTemp) - Length(Project.SchemDir) - 1));
+    UpdateProjectVariables;
     SaveXMLFile71;
     SaveLTspiceIniFile;
     SaveActiveProjectToReg;
@@ -5429,218 +5433,14 @@ begin
       begin
         WriteString('ActiveProject', 'Directory', LTCSim.localProjectsDir);
         WriteString('ActiveProject', 'Project', Project.Name);
-        WriteString('ActiveProject', 'Rev', Project.Rev);
+        WriteBool('ActiveProject', 'XGNDXTo0', Project.ltspiceXGNDX);
+        WriteBool('ActiveProject', 'GNDTo0', Project.ltspiceGND);
+        WriteBool('ActiveProject', 'Shrunk', Project.ltspiceShrink);
+        WriteBool('ActiveProject', 'WLBip', Project.aptBipolarWL);
+        WriteBool('ActiveProject', 'AreaBip', Project.aptBipolarArea);
         WriteString('ActiveProject', 'LTCSimDir', LTCSim.Dir);
         WriteString('ActiveProject', 'Process', Process.Name);
-        WriteString('ActiveProject', 'netlistDir', Project.NetlistDir);
         WriteString('ActiveProject', 'ProjectIniFile', Project.IniFileName);
-        WriteBool('ActiveProject', 'netlistSim', bNetlistSim);
-        WriteBool('ActiveProject', 'LTCSimPrimitiveReport',
-          cbPrimitiveReport.checked);
-        WriteBool('ActiveProject', 'LTCSimIgnoreCase', cbIgnoreCase.checked);
-        case ToolInUse of
-          LTspice:
-            begin
-              WriteString('ActiveProject', 'ToolInUse', 'LTspice');
-              if (RadioGroupLTspiceSyntax.ItemIndex = 0) then
-                WriteString('ActiveProject', 'Tool', '6')
-              else
-                WriteString('ActiveProject', 'Tool', '1');
-            end;
-          PSpice:
-            begin
-              WriteString('ActiveProject', 'ToolInUse', 'PSpice');
-              WriteString('ActiveProject', 'Tool', '0')
-            end;
-          HSpice:
-            begin
-              WriteString('ActiveProject', 'ToolInUse', 'HSpice');
-              WriteString('ActiveProject', 'Tool', '1')
-            end;
-          Dracula:
-            begin
-              WriteString('ActiveProject', 'ToolInUse', 'Dracula');
-              WriteString('ActiveProject', 'Tool', '2')
-            end;
-          Assura:
-            begin
-              WriteString('ActiveProject', 'ToolInUse', 'Assura');
-              WriteString('ActiveProject', 'Tool', '8')
-            end;
-          APT:
-            begin
-              WriteString('ActiveProject', 'ToolInUse', 'APT');
-              WriteString('ActiveProject', 'Tool', '7')
-            end;
-          Verilog:
-            begin
-              WriteString('ActiveProject', 'Tool', '3')
-            end;
-          Edif:
-            begin
-              WriteString('ActiveProject', 'Tool', '4')
-            end;
-        end;
-        WriteString('ActiveProject', 'SchemInUse',
-          IncludeTrailingPathDelimiter(Project.SchemDir) + cbSchematics.Text);
-        sTemp := IncludeTrailingPathDelimiter(Project.SchemDir) + cbStim.Text;
-        Project.SimulationDir := ExtractFilePath(sTemp);
-        WriteString('ActiveProject', 'simulationDir', Project.SimulationDir);
-        WriteString('ActiveProject', 'StimInUse', ExtractFileName(sTemp));
-
-        // LTspice
-        WriteString('ActiveProject', 'LTspiceFileName',
-          eLTCSpiceFileName.FileName);
-        WriteString('ActiveProject', 'LTspiceOptions', eLTCSpiceOptions.Text);
-        WriteBool('ActiveProject', 'LTspiceXGNDXTo0', cbLTspiceXGNDX.checked);
-        WriteBool('ActiveProject', 'XGNDXTo0', cbLTspiceXGNDX.checked);
-        WriteBool('ActiveProject', 'LTspiceGNDTo0', cbLTspiceGND.checked);
-        WriteBool('ActiveProject', 'GNDTo0', cbLTspiceGND.checked);
-        WriteBool('ActiveProject', 'LTspiceSubcircuit',
-          cbLTspiceSubcircuit.checked);
-        WriteBool('ActiveProject', 'Subcircuit', cbLTspiceSubcircuit.checked);
-        WriteBool('ActiveProject', 'LTspiceOmitPrefix',
-          cbLTspiceOmitPrefix.checked);
-        WriteBool('ActiveProject', 'FilterPrefix', cbLTspiceOmitPrefix.checked);
-        WriteBool('ActiveProject', 'LTspiceShrink', cbLTspiceShrink.checked);
-        WriteBool('ActiveProject', 'Shrunk', cbLTspiceShrink.checked);
-        if (eLTspiceBracketSubstitutionLeft.Text <> '') then
-          WriteString('ActiveProject', 'LTspiceBracketSubstitutionLeft',
-            eLTspiceBracketSubstitutionLeft.Text)
-        else
-          WriteString('ActiveProject', 'LTspiceBracketSubstitutionLeft', '_');
-        if (eLTspiceBracketSubstitutionRight.Text <> '') then
-          WriteString('ActiveProject', 'LTspiceBracketSubstitutionRight',
-            eLTspiceBracketSubstitutionRight.Text)
-        else
-          WriteString('ActiveProject', 'LTspiceBracketSubstitutionRight', '_');
-        WriteInteger('ActiveProject', 'LTspiceNetlistSyntax',
-          RadioGroupLTspiceSyntax.ItemIndex);
-        // PSpice
-        WriteString('ActiveProject', 'PSpiceFileName',
-          ePspiceFileName.FileName);
-        WriteString('ActiveProject', 'PSpiceWaveformTool',
-          ePspiceWaveformTool.FileName);
-        WriteString('ActiveProject', 'PSpiceOptions', ePspiceOptions.Text);
-        WriteBool('ActiveProject', 'PSpiceXGNDXTo0', cbPSspiceXGNDX.checked);
-        WriteBool('ActiveProject', 'PSpiceGNDTo0', cbPSspiceGND.checked);
-        WriteBool('ActiveProject', 'PSpiceSubcircuit',
-          cbPSspiceSubcircuit.checked);
-        WriteBool('ActiveProject', 'PSpiceMixedSignal',
-          cbPSpiceMixedSignal.checked);
-        WriteBool('ActiveProject', 'PSspiceOmitPrefix',
-          cbPSspiceOmitPrefix.checked);
-        WriteBool('ActiveProject', 'PSspiceShrink', cbPSspiceShrink.checked);
-        if (ePSpiceBracketSubstitutionLeft.Text <> '') then
-          WriteString('ActiveProject', 'PSpiceBracketSubstitutionLeft',
-            ePSpiceBracketSubstitutionLeft.Text)
-        else
-          WriteString('ActiveProject', 'PSpiceBracketSubstitutionLeft', '_');
-        if (ePSpiceBracketSubstitutionRight.Text <> '') then
-          WriteString('ActiveProject', 'PSpiceBracketSubstitutionRight',
-            ePSpiceBracketSubstitutionRight.Text)
-        else
-          WriteString('ActiveProject', 'PSpiceBracketSubstitutionRight', '_');
-
-        // HSpice
-        WriteString('ActiveProject', 'HSpiceFileName',
-          eHSpiceFileName.FileName);
-        WriteString('ActiveProject', 'HSpiceOptions', eHSpiceOptions.Text);
-        WriteString('ActiveProject', 'SpiceViewerCommand',
-          eHSpiceViewerCommand.FileName);
-        WriteString('ActiveProject', 'SpiceViewerOptions',
-          eHSpiceViewerOptions.Text);
-        WriteBool('ActiveProject', 'HSpiceXGNDXTo0', cbHSpiceXGNDX.checked);
-        WriteBool('ActiveProject', 'HSpiceGNDTo0', cbHSpiceGND.checked);
-        WriteBool('ActiveProject', 'HSpiceSubcircuit',
-          cbHSpiceSubcircuit.checked);
-        WriteBool('ActiveProject', 'HSpiceVerilogA', cbHSpiceVerilogA.checked);
-        WriteBool('ActiveProject', 'HSpiceOmitPrefix',
-          cbHSpiceOmitPrefix.checked);
-        WriteBool('ActiveProject', 'HSpiceShrink', cbHSpiceShrink.checked);
-        if (eHSpiceBracketSubstitutionLeft.Text <> '') then
-          WriteString('ActiveProject', 'HSpiceBracketSubstitutionLeft',
-            eHSpiceBracketSubstitutionLeft.Text)
-        else
-          WriteString('ActiveProject', 'HSpiceBracketSubstitutionLeft', '_');
-        if (eHSpiceBracketSubstitutionRight.Text <> '') then
-          WriteString('ActiveProject', 'HSpiceBracketSubstitutionRight',
-            eHSpiceBracketSubstitutionRight.Text)
-        else
-          WriteString('ActiveProject', 'HSpiceBracketSubstitutionRight', '_');
-
-        // APT
-        WriteBool('ActiveProject', 'APTXGNDXTo0', cbAPTXGNDX.checked);
-        WriteBool('ActiveProject', 'APTGNDTo0', cbAPTGND.checked);
-        WriteBool('ActiveProject', 'APTSubcircuit', cbAPTSubcircuit.checked);
-        WriteBool('ActiveProject', 'APTOmitPrefix', cbAPTOmitPrefix.checked);
-        WriteBool('ActiveProject', 'APTBipolarWL', cbAPTBipolarWL.checked);
-        WriteBool('ActiveProject', 'APTBipolarArea', cbAPTBipolarArea.checked);
-        WriteBool('ActiveProject', 'APTShrink', cbAPTShrink.checked);
-        if (eAPTBracketSubstitutionLeft.Text <> '') then
-          WriteString('ActiveProject', 'APTBracketSubstitutionLeft',
-            eAPTBracketSubstitutionLeft.Text)
-        else
-          WriteString('ActiveProject', 'APTBracketSubstitutionLeft', '_');
-        if (eAPTBracketSubstitutionRight.Text <> '') then
-          WriteString('ActiveProject', 'APTBracketSubstitutionRight',
-            eAPTBracketSubstitutionRight.Text)
-        else
-          WriteString('ActiveProject', 'APTBracketSubstitutionRight', '_');
-
-        // Assura
-        WriteBool('ActiveProject', 'AssuraXGNDXTo0', cbAssuraXGNDX.checked);
-        WriteBool('ActiveProject', 'AssuraGNDTo0', cbAssuraGND.checked);
-        WriteBool('ActiveProject', 'AssuraSubcircuit',
-          cbAssuraSubcircuit.checked);
-        WriteBool('ActiveProject', 'AssuraOmitPrefix',
-          cbAssuraOmitPrefix.checked);
-        WriteBool('ActiveProject', 'AssuraBipolarWL',
-          cbAssuraBipolarWL.checked);
-        WriteBool('ActiveProject', 'AssuraBipolarArea',
-          cbAssuraBipolarArea.checked);
-        WriteBool('ActiveProject', 'AssuraShrink', cbAssuraShrink.checked);
-        if (eAssuraBracketSubstitutionLeft.Text <> '') then
-          WriteString('ActiveProject', 'AssuraBracketSubstitutionLeft',
-            eAssuraBracketSubstitutionLeft.Text)
-        else
-          WriteString('ActiveProject', 'AssuraBracketSubstitutionLeft', '_');
-        if (eAssuraBracketSubstitutionRight.Text <> '') then
-          WriteString('ActiveProject', 'AssuraBracketSubstitutionRight',
-            eAssuraBracketSubstitutionRight.Text)
-        else
-          WriteString('ActiveProject', 'AssuraBracketSubstitutionRight', '_');
-        if (eAssuraLVS_Short.Text <> '') then
-          WriteString('ActiveProject', 'AssuraLVSShort', eAssuraLVS_Short.Text)
-        else
-          WriteString('ActiveProject', 'AssuraLVSShort', '0.01');
-        // Dracula
-        WriteBool('ActiveProject', 'DraculaXGNDXTo0', cbDraculaXGNDX.checked);
-        WriteBool('ActiveProject', 'DraculaGNDTo0', cbDraculaGND.checked);
-        WriteBool('ActiveProject', 'DraculaSubcircuit',
-          cbDraculaSubcircuit.checked);
-        WriteBool('ActiveProject', 'DraculaOmitPrefix',
-          cbDraculaOmitPrefix.checked);
-        WriteBool('ActiveProject', 'DraculaBipolarWL',
-          cbDraculaBipolarWL.checked);
-        WriteBool('ActiveProject', 'DraculaBipolarArea',
-          cbDraculaBipolarArea.checked);
-        WriteBool('ActiveProject', 'DraculaShrink', cbDraculaShrink.checked);
-        if (eDraculaBracketSubstitutionLeft.Text <> '') then
-          WriteString('ActiveProject', 'DraculaBracketSubstitutionLeft',
-            eDraculaBracketSubstitutionLeft.Text)
-        else
-          WriteString('ActiveProject', 'DraculaBracketSubstitutionLeft', '_');
-        if (eDraculaBracketSubstitutionRight.Text <> '') then
-          WriteString('ActiveProject', 'DraculaBracketSubstitutionRight',
-            eDraculaBracketSubstitutionRight.Text)
-        else
-          WriteString('ActiveProject', 'DraculaBracketSubstitutionRight', '_');
-        if (eDraculaLVS_Short.Text <> '') then
-          WriteString('ActiveProject', 'DraculaLVSShort',
-            eDraculaLVS_Short.Text)
-        else
-          WriteString('ActiveProject', 'DraculaLVSShort', '0.01');
       end
     finally
       RegActiveProject.Free;
@@ -5714,6 +5514,7 @@ begin
   try
     with ProjectLTspiceIniFile do
     begin
+    {
       WriteBool('Project', 'LTspiceXGNDXTo0', Project.ltspiceXGNDX);
       WriteBool('Project', 'LTspiceGNDTo0', Project.ltspiceGND);
       WriteBool('Project', 'LTspiceShrink', Project.ltspiceShrink);
@@ -5721,6 +5522,18 @@ begin
       WriteBool('Project', 'AssuraBipolarWL', Project.assuraBipolarWL);
       WriteBool('Project', 'DraculaBipolarArea', Project.draculaBipolarArea);
       WriteBool('Project', 'DraculaBipolarWL', Project.draculaBipolarWL);
+    }
+      WriteString('ActiveProject', 'Directory', LTCSim.localProjectsDir);
+      WriteString('ActiveProject', 'Project', Project.Name);
+      WriteBool('ActiveProject', 'XGNDXTo0', Project.ltspiceXGNDX);
+      WriteBool('ActiveProject', 'GNDTo0', Project.ltspiceGND);
+      WriteBool('ActiveProject', 'Shrunk', Project.ltspiceShrink);
+      WriteBool('ActiveProject', 'WLBip', Project.assuraBipolarArea);
+      WriteBool('ActiveProject', 'AreaBip', Project.assuraBipolarWL);
+      WriteString('ActiveProject', 'LTCSimDir', LTCSim.Dir);
+      WriteString('ActiveProject', 'Process', Process.Name);
+      WriteString('ActiveProject', 'ProjectIniFile', Project.IniFileName);
+ 
     end;
   finally
     ProjectLTspiceIniFile.Free;
@@ -5744,7 +5557,6 @@ begin
     XDoc.Options := [doNodeAutoIndent];
     XDoc.Version := '1.0';
 
-    UpdateProjectVariables;
     RootNode := XDoc.AddChild('LTCSimProject');
     Node := RootNode.AddChild('Project');
     CNode := Node.AddChild('name');
@@ -5771,6 +5583,8 @@ begin
     CNode.Text := Process.Name;
     CNode := Node.AddChild('rev');
     CNode.Text := Process.Rev;
+    CNode := Node.AddChild('option');
+    CNode.Text := Process.Option;
     CNode := Node.AddChild('promis');
     CNode.Text := Process.Promis;
     CNode := Node.AddChild('option1');
@@ -7311,7 +7125,9 @@ begin
 
   eProcessName.Text := Process.Name;
   eProcessRev.Text := Process.Rev;
+  eProcessOpt.Text := Process.Option;
   ePromis.Text := Process.Promis;
+  eProcessOpt.Text := Process.Option;
   eOption1Name.Text := Process.option1Name;
   eOption1.Text := Process.option1;
   eOption1Code.Text := Process.option1Code;
@@ -7407,9 +7223,26 @@ procedure TMainForm.UpdateProjectVariables;
 begin
   CodeSite.EnterMethod(Self, 'UpdateProjectVariables');
 
-  { Updating global variables }
-  sSynarioDir := LTCSim.Dir;
-  sLibraryDir := LTCSim.libraryDir;
+  { Updating Process variables }
+  with Process do
+  begin
+    Name := eProcessName.Text;
+    Rev := eProcessRev.Text;
+    Promis := ePromis.Text;
+    Option := eProcessOpt.Text;
+    option1Name := eOption1Name.Text;
+    option1Code := eOption1Code.Text;
+    option1 := eOption1.Text;
+    option2Name := eOption2Name.Text;
+    option2Code := eOption2Code.Text;
+    option2 := eOption2.Text;
+    GenericRev := eGenericVer.Text;
+    ProcessInfoDir := IncludeTrailingPathDelimiter(Project.RevDir) + 'lib\doc';
+    ProcessInfoFile := IncludeTrailingPathDelimiter(ProcessInfoDir) +
+      Name + '.pdf';
+  end;
+
+  { Updating Project variables }
   with Project do
   begin
     Dir := IncludeTrailingPathDelimiter(LTCSim.localProjectsDir) + Project.Name;
@@ -7424,17 +7257,6 @@ begin
     IniFileName := IncludeTrailingPathDelimiter(Project.SchemDir) +
       'project.ini';
     primitiveReport := cbPrimitiveReport.checked;
-
-    eProcessName.Text := Process.Name;
-    eProcessRev.Text := Process.Rev;
-    eOption1.Text := Process.option1;
-    eOption1.Text := Process.option1;
-    eOption1Name.Text := Process.option1Name;
-    eOption1Code.Text := Process.option1Code;
-    eOption2.Text := Process.option2;
-    eOption2Name.Text := Process.option2Name;
-    eOption2Code.Text := Process.option2Code;
-    eGenericVer.Text := Process.GenericRev;
 
     ltspiceGND := cbLTspiceGND.checked;
     ltspiceXGNDX := cbLTspiceXGNDX.checked;
@@ -7507,22 +7329,6 @@ begin
     draculaShort := eDraculaLVS_Short.Text;
   end;
 
-  with Process do
-  begin
-    Name := eProcessName.Text;
-    Rev := eProcessRev.Text;
-    Promis := ePromis.Text;
-    option1Name := eOption1Name.Text;
-    option1Code := eOption1Code.Text;
-    option1 := eOption1.Text;
-    option2Name := eOption2Name.Text;
-    option2Code := eOption2Code.Text;
-    option2 := eOption2.Text;
-    GenericRev := eGenericVer.Text;
-    ProcessInfoDir := IncludeTrailingPathDelimiter(Project.RevDir) + 'lib\doc';
-    ProcessInfoFile := IncludeTrailingPathDelimiter(ProcessInfoDir) +
-      Name + '.pdf';
-  end;
 
   if cbTool.Text <> '' then
   begin
@@ -7878,15 +7684,5 @@ begin
 
   CodeSite.ExitMethod(Self, 'WindowsName');
 end;
-
-{ sc-----------------------------------------------------------------------
-  Name:       TMainForm.ShowHint
-  -----------------------------------------------------------------------sc }
-
-{ TMainForm.EraseLibraryFiles }
-
-{ sc-----------------------------------------------------------------------
-  Name:       TMainForm.StopSCSShell
-  -----------------------------------------------------------------------sc }
 
 end.
