@@ -3268,8 +3268,8 @@ begin
         LMDMRUListMain.Add(Project.RevDir);
         LMDMRUList.Add(Project.RevDir);
         SetDirectoryBrowsers(Project.SimulationDir);
-        Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.RevDir) +
-          'setup.xml';
+        Project.XMLSetupFile71 := IncludeTrailingPathDelimiter(Project.RevDir) +
+          'setup71.xml';
         SaveActiveProjectInformation;
         SetDirectoryBrowsers(Project.SchemDir);
         SetCurrentDirectory(PChar(Project.SchemDir));

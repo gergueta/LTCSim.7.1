@@ -14,11 +14,10 @@ uses
 
 type
   TLibraryDatabase = class(TDataModule)
-    UniConnectionLTCSim: TUniConnection;
-    UniQuery: TUniQuery;
-    UniQueryNames: TUniQuery;
-    PostgreSQLUniProvider: TPostgreSQLUniProvider;
     DataSource: TDataSource;
+    UniConnectionLTCSim: TUniConnection;
+    UniQueryNames: TUniQuery;
+    UniQuery: TUniQuery;
   private
     { Private declarations }
   public
