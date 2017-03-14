@@ -370,6 +370,7 @@ type
     Server1: TMenuItem;
     ActionVNCViewer: TAction;
     ActionVNCServer: TAction;
+    M1: TMenuItem;
     procedure AboutLTCSimClick(Sender: TObject);
     procedure AboutProcessClick(Sender: TObject);
     procedure ActionVNCViewerExecute(Sender: TObject);
@@ -509,6 +510,7 @@ type
     procedure Viewer2Click(Sender: TObject);
     function WindowsName(FileName: string): string;
     procedure CheckProjectAndProcessVariables;
+    procedure ManchesterDCTools(Sender: TObject);
   end;
 
   ProjectRecord = record
@@ -3476,6 +3478,19 @@ begin
     MessageDlg('Help is in development!', mtInformation, [mbOK], 0);
 
   CodeSite.ExitMethod(Self, 'LTCSimUserGuideClick');
+end;
+
+procedure TMainForm.ManchesterDCTools(Sender: TObject);
+var
+  sCommand: string;
+begin
+  CodeSite.EnterMethod(Self, 'ManchesterDCTools');
+
+  sCommand := 'http://man-web.engineering.linear.com/software.html';
+  ShellExecute(MainForm.Handle, PChar('open'), PChar(sCommand), nil, nil,
+  SW_NORMAL);
+
+  CodeSite.ExitMethod(Self, 'ManchesterDCTools');
 end;
 
 procedure TMainForm.MenuButtonTopFormClick(Sender: TObject);

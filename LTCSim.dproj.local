@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899/12/30 00:00:00.000.506,X:\LTCSim 6.20\IconModuleUnit.pas=X:\LTCSim 6.20\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.506,X:\LTCSim 6.20\Unit1.pas=X:\LTCSim 6.20\IconModuleUnit.pas</Transaction>
     <Transaction>1899/12/30 00:00:00.000.479,=X:\LTCSim 6.20\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00:00:00.000.179,=X:\LTCSim 6.20\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.506,X:\LTCSim 6.20\IconModuleUnit.dfm=X:\LTCSim 6.20\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.506,X:\LTCSim 6.20\Unit1.dfm=X:\LTCSim 6.20\IconModuleUnit.dfm</Transaction>
     <Transaction>1899/12/30 00:00:00.000.397,=X:\LTCSim 6.20\Profiling\AQtimeModule1.aqt</Transaction>
     <Transaction>2016/12/19 14:15:06.000.937,=E:\LTCSim.7.1\ActivExperts\AxNetwork_TLB.pas</Transaction>
     <Transaction>2016/12/19 17:30:48.000.259,E:\LTCSim.7.1\IconModuleUnit.pas=</Transaction>
