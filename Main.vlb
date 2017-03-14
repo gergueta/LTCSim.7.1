@@ -91,9 +91,6 @@ Coordinates=1356,10,114,58
 [cbLTspiceGND]
 Coordinates=188,416,114,58
 
-[Server2]
-Coordinates=1567,276,60,36
-
 [cbLTspiceOmitPrefix]
 Coordinates=739,782,133,36
 
@@ -108,9 +105,6 @@ Coordinates=1567,496,58,36
 
 [cbFilterAfterSimulation]
 Coordinates=565,212,145,58
-
-[Stop1]
-Coordinates=1567,606,48,36
 
 [PageControlMain]
 Coordinates=420,782,114,36
@@ -177,9 +171,6 @@ Coordinates=910,484,120,58
 
 [cbHSpiceOmitPrefix]
 Coordinates=1140,690,130,36
-
-[Start1]
-Coordinates=1745,1010,49,36
 
 [eOption2Name]
 Coordinates=1029,690,101,36
@@ -268,9 +259,6 @@ Coordinates=2046,606,44,36
 [GroupBox2]
 Coordinates=647,484,79,58
 
-[Configure1]
-Coordinates=2046,661,78,36
-
 [Netlist2]
 Coordinates=2046,771,58,36
 
@@ -315,9 +303,6 @@ Coordinates=10,644,188,36
 
 [LTCSim1]
 Coordinates=1473,1084,68,36
-
-[Control1]
-Coordinates=1325,1084,63,36
 
 [N4]
 Coordinates=1276,1084,40,36
@@ -509,17 +494,11 @@ Coordinates=2534,441,147,36
 [eProcessName]
 Coordinates=1347,484,102,36
 
-[Install1]
-Coordinates=2534,551,56,36
-
 [cbAssuraXGNDX]
 Coordinates=989,212,114,58
 
 [Panel2]
 Coordinates=312,416,55,58
-
-[Uninstall1]
-Coordinates=2534,606,71,36
 
 [LMDGroupBoxDracula]
 Coordinates=1194,484,143,36
@@ -537,7 +516,7 @@ Coordinates=2534,881,123,36
 Coordinates=1040,484,144,36
 
 []
-Coordinates=1630,606,84,36
+Coordinates=1567,276,60,36
 Visible=True
 
 [LMDDockPanelAPT]

@@ -104,8 +104,6 @@ type
     cbTool: TComboBox;
     Changeoptions1: TMenuItem;
     Cohesion1: TMenuItem;
-    Configure1: TMenuItem;
-    Control1: TMenuItem;
     CoolBarFileList: TCoolBar;
     CT2: TMenuItem;
     Delete1: TMenuItem;
@@ -169,7 +167,6 @@ type
     INIEditor1: TMenuItem;
     Initialize1: TMenuItem;
     Initializwe1: TMenuItem;
-    Install1: TMenuItem;
     JamFileOperationArchive: TJamFileOperation;
     JamShellLinkMain: TJamShellLink;
     JamShellListMain: TJamShellList;
@@ -289,7 +286,6 @@ type
     SchematicsSnapshot: TAction;
     SchematicsToAPT: TAction;
     SchematicstoASCII1: TMenuItem;
-    Server2: TMenuItem;
     Simulate1: TMenuItem;
     Simulate2: TMenuItem;
     Smallicons2: TMenuItem;
@@ -297,7 +293,6 @@ type
     SnapshotViewer: TAction;
     Snapshotviewer2: TMenuItem;
     Splitter2: TSplitter;
-    Start1: TMenuItem;
     Start2: TMenuItem;
     Start3: TMenuItem;
     Start4: TMenuItem;
@@ -306,7 +301,6 @@ type
     Start7: TMenuItem;
     Start8: TMenuItem;
     Start9: TMenuItem;
-    Stop1: TMenuItem;
     Sxchematics1: TMenuItem;
     Symbol1: TMenuItem;
     SymbolstoASCII1: TMenuItem;
@@ -324,7 +318,6 @@ type
     ToolButtonFolderBack: TToolButton;
     ToolButtonFolderForward: TToolButton;
     ToolButtonDirUp: TToolButton;
-    Uninstall1: TMenuItem;
     UpdateSchematics1: TMenuItem;
     UserGuide1: TMenuItem;
     UserGuide2: TMenuItem;
@@ -374,8 +367,12 @@ type
     RadioGroup1: TRadioGroup;
     LMDLabeledFileOpenEdit1: TLMDLabeledFileOpenEdit;
     LMDLabeledEdit1: TLMDLabeledEdit;
+    Server1: TMenuItem;
+    ActionVNCViewer: TAction;
+    ActionVNCServer: TAction;
     procedure AboutLTCSimClick(Sender: TObject);
     procedure AboutProcessClick(Sender: TObject);
+    procedure ActionVNCViewerExecute(Sender: TObject);
     procedure ActionAscToSchExecute(Sender: TObject);
     procedure ActionAsyToSymExecute(Sender: TObject);
     procedure ActionLibraryInitializeExecute(Sender: TObject);
@@ -397,6 +394,7 @@ type
     procedure ActionSnapshotViewerExecute(Sender: TObject);
     procedure ActionSymToAsyExecute(Sender: TObject);
     procedure ActionSynIniEditorExecute(Sender: TObject);
+    procedure ActionVNCServerExecute(Sender: TObject);
     procedure cbSaveActiveProjectClick(Sender: TObject);
     procedure cbToolChange(Sender: TObject);
     procedure CheckCurrrentProcessVersion;
@@ -732,6 +730,23 @@ begin
     MessageDlg('Not available on this process yet!', mtInformation, [mbOK], 0);
 
   CodeSite.ExitMethod(Self, 'AboutProcessClick');
+end;
+
+procedure TMainForm.ActionVNCViewerExecute(Sender: TObject);
+var
+  sWorkingDir,
+  sCommand,
+  sArgument: string;
+begin
+  CodeSite.EnterMethod(Self, 'ActionVNCViewerExecute');
+  sWorkingDir := IncludeTrailingPathDelimiter(LTCSim.designer6Dir) +
+    'Ltc\TightVNC\Viewer';
+  sCommand := IncludeTrailingPathDelimiter(sWorkingDir) + 'tvnviewer.exe';
+  sArgument := '';
+  ShellExecute(MainForm.Handle, PChar('open'), PChar(sCommand),
+    PChar(sArgument), PChar(sWorkingDir), SW_NORMAL);
+
+  CodeSite.ExitMethod(Self, 'ActionVNCViewerExecute');
 end;
 
 procedure TMainForm.ActionAscToSchExecute(Sender: TObject);
@@ -1536,6 +1551,23 @@ begin
       mtError, [mbOK], 0);
 
   CodeSite.ExitMethod(Self, 'ActionSynIniEditorExecute');
+end;
+
+procedure TMainForm.ActionVNCServerExecute(Sender: TObject);
+var
+  sWorkingDir,
+  sCommand,
+  sArgument: string;
+begin
+  CodeSite.EnterMethod(Self, 'ActionVNCServerExecute');
+  sWorkingDir := IncludeTrailingPathDelimiter(LTCSim.designer6Dir) +
+    'Ltc\TightVNC\Server';
+  sCommand := IncludeTrailingPathDelimiter(sWorkingDir) + 'tvnserver.exe';
+  sArgument := '';
+  ShellExecute(MainForm.Handle, PChar('open'), PChar(sCommand),
+    PChar(sArgument), PChar(sWorkingDir), SW_NORMAL);
+
+  CodeSite.ExitMethod(Self, 'ActionVNCServerExecute');
 end;
 
 procedure TMainForm.cbSaveActiveProjectClick(Sender: TObject);
@@ -7709,17 +7741,6 @@ procedure TMainForm.Viewer2Click(Sender: TObject);
 var
   sCommand, sArgument, sWorkingDir: string;
 begin
-  CodeSite.EnterMethod(Self, 'Viewer2Click');
-
-  { VNC server configure }
-  sWorkingDir := IncludeTrailingPathDelimiter(LTCSim.designer6Dir) +
-    'LTC\TightVNC';
-  sCommand := IncludeTrailingPathDelimiter(sWorkingDir) + 'vncviewer.exe';
-  sArgument := '';
-  ShellExecute(MainForm.Handle, PChar('open'), PChar(sCommand),
-    PChar(sArgument), PChar(sWorkingDir), SW_NORMAL);
-
-  CodeSite.ExitMethod(Self, 'Viewer2Click');
 end;
 
 function TMainForm.WindowsName(FileName: string): string;
