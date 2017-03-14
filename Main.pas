@@ -310,12 +310,12 @@ type
     Sxchematics1: TMenuItem;
     Symbol1: TMenuItem;
     SymbolstoASCII1: TMenuItem;
-    TabSheet10: TTabSheet;
-    TabSheet5: TTabSheet;
-    TabSheet6: TTabSheet;
-    TabSheet7: TTabSheet;
-    TabSheet8: TTabSheet;
-    TabSheet9: TTabSheet;
+    TabSheetDracula: TTabSheet;
+    TabSheetLTspice: TTabSheet;
+    TabSheetPspice: TTabSheet;
+    TabSheetHspice: TTabSheet;
+    TabSheetAPT: TTabSheet;
+    TabSheetAssura: TTabSheet;
     ToolBar1: TToolBar;
     ToolBarFileList: TToolBar;
     ToolButton1: TToolButton;
@@ -362,6 +362,18 @@ type
     LMDStarterShell: TLMDStarter;
     TrayIconMain: TTrayIcon;
     ShellBrowserMain: TShellBrowser;
+    TabSheetAdice: TTabSheet;
+    LMDGroupBox1: TLMDGroupBox;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
+    LMDCheckBox1: TLMDCheckBox;
+    CheckBox4: TCheckBox;
+    LMDLabeledMaskEdit1: TLMDLabeledMaskEdit;
+    LMDLabeledMaskEdit2: TLMDLabeledMaskEdit;
+    RadioGroup1: TRadioGroup;
+    LMDLabeledFileOpenEdit1: TLMDLabeledFileOpenEdit;
+    LMDLabeledEdit1: TLMDLabeledEdit;
     procedure AboutLTCSimClick(Sender: TObject);
     procedure AboutProcessClick(Sender: TObject);
     procedure ActionAscToSchExecute(Sender: TObject);
@@ -498,6 +510,7 @@ type
     function ValidString(sCharacters: string): Boolean;
     procedure Viewer2Click(Sender: TObject);
     function WindowsName(FileName: string): string;
+    procedure CheckProjectAndProcessVariables;
   end;
 
   ProjectRecord = record
@@ -1091,6 +1104,7 @@ begin
     Project.Dir := ExcludeTrailingPathDelimiter
       (ExtractFilePath(Project.RevDir));
     ReadProjectSetupFile;
+    CheckProjectAndProcessVariables;
   end;
   if (ValidateSearchPath()) then
   begin
@@ -3299,13 +3313,9 @@ begin
   CodeSite.ExitMethod(Self, 'LTCSimOptionsChange');
 end;
 
-procedure TMainForm.LTCSimProjectOpen;
-var
-  sIsDir, sShouldDir: string;
+procedure TMainForm.CheckProjectAndProcessVariables;
 begin
-  CodeSite.EnterMethod(Self, 'LTCSimProjectOpen');
-
-  StopSCSShell;
+  CodeSite.EnterMethod(Self, 'CheckProjectAndProcessVariables');
   if ((Project.Name = '') or (Project.Rev = '')) then
     if MessageDlg('Invalid process information. Do you want to continue?',
       mtConfirmation, [mbYes, mbNo], 0) = mrNo then
@@ -3367,9 +3377,19 @@ begin
   begin
     Process.GenericRev := '1.0';
   end;
+  CodeSite.ExitMethod(Self, 'CheckProjectAndProcessVariables');
 
+end;
+
+procedure TMainForm.LTCSimProjectOpen;
+var
+  sIsDir, sShouldDir: string;
+begin
+  CodeSite.EnterMethod(Self, 'LTCSimProjectOpen');
+
+  StopSCSShell;
   UpdateFormComponents;
-  UpdateProjectVariables;
+
   if (LMDMRUListMain.Items.IndexOf(Project.RevDir) < 0) then
   begin
     if (LMDMRUListMain.Items.Count > 5) then
@@ -4050,14 +4070,28 @@ var
 begin
   CodeSite.EnterMethod(Self, 'ReadProjectSetupFile');
 
-  Project.SetupFile := IncludeTrailingPathDelimiter(Project.RevDir) +
-    'setup.ini';
-  Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.RevDir) +
-    'setup.xml';
-  Project.XMLSetupFile71 := IncludeTrailingPathDelimiter(Project.RevDir) +
+  with Project do
+  begin
+    LibDir := IncludeTrailingPathDelimiter(Project.RevDir) + 'lib';
+    SetupFile := IncludeTrailingPathDelimiter(Project.RevDir) + 'setup.ini';
+    Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.RevDir) +
+      'project.xml';
+    XMLSetupFile71 := IncludeTrailingPathDelimiter(Project.RevDir) +
     'setup71.xml';
-  Project.LTspiceIniFileName := IncludeTrailingPathDelimiter(Project.RevDir) +
-    'ltspice.ini';
+    LTspiceIniFileName := IncludeTrailingPathDelimiter(Project.RevDir) +
+      'ltspice.ini.';
+    SchemDir := IncludeTrailingPathDelimiter(Project.RevDir) + 'schem';
+    IniFileName := IncludeTrailingPathDelimiter(Project.SchemDir) +
+      'project.ini';
+  end;
+
+  with Process do
+  begin
+    ProcessInfoDir := IncludeTrailingPathDelimiter(Project.RevDir) + 'lib\doc';
+    ProcessInfoFile := IncludeTrailingPathDelimiter(ProcessInfoDir) +
+      Name + '.pdf';
+  end;
+
   if (FileExists(Project.XMLSetupFile71)) then
   begin
     ReadXMLFile71;

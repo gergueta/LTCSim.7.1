@@ -73,14 +73,8 @@ Coordinates=507,862,77,36
 [cbDraculaBipolarArea]
 Coordinates=1452,348,140,58
 
-[TabSheet10]
-Coordinates=1193,782,84,36
-
 [CT2]
 Coordinates=0,634,40,36
-
-[TabSheet8]
-Coordinates=1106,782,77,36
 
 [cbAPTOmitPrefix]
 Coordinates=983,782,113,36
@@ -148,12 +142,6 @@ Coordinates=559,936,40,36
 [eGenericVer]
 Coordinates=1005,736,87,36
 
-[TabSheet7]
-Coordinates=853,736,77,36
-
-[TabSheet9]
-Coordinates=766,736,77,36
-
 [ePSpiceBracketSubstitutionRight]
 Coordinates=552,736,204,36
 
@@ -177,9 +165,6 @@ Coordinates=10,416,168,58
 
 [Netlist1]
 Coordinates=1804,661,58,36
-
-[TabSheet5]
-Coordinates=10,736,77,36
 
 [UserGuide1]
 Coordinates=1804,826,83,36
@@ -496,9 +481,6 @@ Coordinates=712,10,114,58
 [cbPSspiceSubcircuit]
 Coordinates=257,212,132,58
 
-[TabSheet6]
-Coordinates=314,552,77,36
-
 [LMDGroupBoxHSpice]
 Coordinates=164,552,140,36
 
@@ -785,4 +767,22 @@ Coordinates=931,434,84,36
 
 [ToolButtonFolderForward]
 Coordinates=1630,298,84,36
+
+[TabSheetDracula]
+Coordinates=1193,782,84,36
+
+[TabSheetAssura]
+Coordinates=766,736,77,36
+
+[TabSheetAPT]
+Coordinates=1106,782,77,36
+
+[TabSheetHspice]
+Coordinates=853,736,77,36
+
+[TabSheetPspice]
+Coordinates=314,552,77,36
+
+[TabSheetLTspice]
+Coordinates=10,736,77,36
 
