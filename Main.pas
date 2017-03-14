@@ -5902,12 +5902,17 @@ begin
               (sFileExtension = '.p') or (sFileExtension = '.h') or
               (sFileExtension = '.cir') or (sFileExtension = '.v') or
               (sFileExtension = '.edf') or (sFileExtension = '.list') or
-              (sFileExtension = '.sp')) then
-              EditFile(sFileName);
-            if ((sFileExtension = '.sch') or (sFileExtension = '.asc')) then
-              EditSchematics(sFileName);
-            if (sFileExtension = '.sym') then
-              EditSymbol(sFileName);
+              (sFileExtension = '.ini')) then
+              EditFile(sFileName)
+            else
+              if ((sFileExtension = '.sch') or (sFileExtension = '.asc')) then
+                EditSchematics(sFileName)
+              else
+                if (sFileExtension = '.sym') then
+                  EditSymbol(sFileName)
+                else
+                  MessageDlg('File extension not supported!', mtError,
+                    [mbOK], 0);
           end;
         2:
           begin
@@ -5929,7 +5934,7 @@ begin
           else
             MessageDlg('File can not be used for simulation!', mtError,
               [mbOK], 0);
-      end
+       end
     end
   end;
 
