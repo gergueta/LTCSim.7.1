@@ -1,0 +1,51 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ascin", "Ascin\Ascin.vcproj", "{E44FA3A5-C28C-485B-B234-68A157DBC1F6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Asyin", "Asyin\Asyin.vcproj", "{ABB77548-0B3D-47C1-BB18-8A093A066FEA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Asyout", "Asyout\Asyout.vcproj", "{48052AA7-8C05-4F1A-BB9C-108A0A04F187}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Edifin", "Edifin\Edifin.vcproj", "{4C0F2BC4-2F94-4542-A310-C3B6CA8475D2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Edifout", "Edifout\Edifout.vcproj", "{0A9467A1-3F9E-4BDB-8612-05DF9E47EDE4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LTCSimSchShrink", "ascout\Ascout.vcproj", "{3AD2C3D6-51E4-417F-97A1-42F0E780BE43}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{E44FA3A5-C28C-485B-B234-68A157DBC1F6}.Debug.ActiveCfg = Debug|Win32
+		{E44FA3A5-C28C-485B-B234-68A157DBC1F6}.Debug.Build.0 = Debug|Win32
+		{E44FA3A5-C28C-485B-B234-68A157DBC1F6}.Release.ActiveCfg = Release|Win32
+		{E44FA3A5-C28C-485B-B234-68A157DBC1F6}.Release.Build.0 = Release|Win32
+		{ABB77548-0B3D-47C1-BB18-8A093A066FEA}.Debug.ActiveCfg = Debug|Win32
+		{ABB77548-0B3D-47C1-BB18-8A093A066FEA}.Debug.Build.0 = Debug|Win32
+		{ABB77548-0B3D-47C1-BB18-8A093A066FEA}.Release.ActiveCfg = Release|Win32
+		{ABB77548-0B3D-47C1-BB18-8A093A066FEA}.Release.Build.0 = Release|Win32
+		{48052AA7-8C05-4F1A-BB9C-108A0A04F187}.Debug.ActiveCfg = Debug|Win32
+		{48052AA7-8C05-4F1A-BB9C-108A0A04F187}.Debug.Build.0 = Debug|Win32
+		{48052AA7-8C05-4F1A-BB9C-108A0A04F187}.Release.ActiveCfg = Release|Win32
+		{48052AA7-8C05-4F1A-BB9C-108A0A04F187}.Release.Build.0 = Release|Win32
+		{4C0F2BC4-2F94-4542-A310-C3B6CA8475D2}.Debug.ActiveCfg = Debug|Win32
+		{4C0F2BC4-2F94-4542-A310-C3B6CA8475D2}.Debug.Build.0 = Debug|Win32
+		{4C0F2BC4-2F94-4542-A310-C3B6CA8475D2}.Release.ActiveCfg = Release|Win32
+		{4C0F2BC4-2F94-4542-A310-C3B6CA8475D2}.Release.Build.0 = Release|Win32
+		{0A9467A1-3F9E-4BDB-8612-05DF9E47EDE4}.Debug.ActiveCfg = Debug|Win32
+		{0A9467A1-3F9E-4BDB-8612-05DF9E47EDE4}.Debug.Build.0 = Debug|Win32
+		{0A9467A1-3F9E-4BDB-8612-05DF9E47EDE4}.Release.ActiveCfg = Release|Win32
+		{0A9467A1-3F9E-4BDB-8612-05DF9E47EDE4}.Release.Build.0 = Release|Win32
+		{3AD2C3D6-51E4-417F-97A1-42F0E780BE43}.Debug.ActiveCfg = Debug|Win32
+		{3AD2C3D6-51E4-417F-97A1-42F0E780BE43}.Debug.Build.0 = Debug|Win32
+		{3AD2C3D6-51E4-417F-97A1-42F0E780BE43}.Release.ActiveCfg = Release|Win32
+		{3AD2C3D6-51E4-417F-97A1-42F0E780BE43}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

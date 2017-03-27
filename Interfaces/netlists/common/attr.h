@@ -1,0 +1,290 @@
+/* $HDR$*/
+/************************************************************************/
+/*LTCSim is Copyright 1999 by Linear technology Corp.      */
+/***********************************************************************/
+/**/
+/* $Log:  D:\Repository4..X\edifnets\Include\attr.h.z
+/*
+/*   Rev 1.0    3/13/2001 2:15:11 PM  german_e
+/* Initial Revision
+*/
+/**/
+/* attr.h -- Attribute Definitions for ECS */
+
+/* Copyright (C) 1993 -- Data I/O Corporation -- All Rights Reserved.
+ *
+ * This program is protected under the copyright laws as a published work.
+ * It may not be copied, reproduced, further distributed, adaptations
+ * made from the same, or used to prepare derivative works, without the
+ * prior written consent of the Data I/O Corporation
+ *
+ * History:
+ *    5/05/93 - Included in Version 2.5
+ *    4/18/94 - Added VERIORDER pin attribute - MJM
+ */
+
+#ifndef __ATTR_H__
+#define __ATTR_H__
+
+/* Generic Attribute Definitions */
+
+#define NAME  0                       /* the same for all types of attributes */
+#define GROUP 0xfa                   /* mark attribute for nets and instances */
+#define NETGROUP 0xfa                              /* mark attribute for nets */
+#define INSTGROUP 0xfa                        /* mark attribute for instances */
+#define LAST_GROUP 0xfa
+
+#define MAX_ATTR 200	// all attribute numbers must be < this (also < 0xfa)
+
+/* Symbol Attribute Definitions */
+
+#define TYPE           1
+#define REFNAME        2
+#define VALUE          3
+#define PARTNUM        4
+#define GEOMETRY       5
+#define COMPNAME       6
+#define GATEGROUP      7
+#define PREFIX         8
+#define COMPGROUP      9
+#define HIDEPINNUMBERS 13
+	// verilog
+#define VERILSTOP      19	// do not traverse into block
+#define VERILMODEL     20
+#define VERILTIMES     21
+#define VERILSTRENGTH  22
+#define VERILCOMPONENT 23
+	// spice
+#define IMPEDANCE      34
+#define WIDTH          35
+#define LENGTH         36
+#define MULTI          37
+#define SPICEMODEL     38
+#define SPICELINE      39
+#define SPICELINE2     40
+#define AREA_S         41
+#define AREA_D         42
+#define PERI_S         43
+#define PERI_D         44
+#define NRS            45
+#define NRD            46
+#define DEFSUBSTRATE   47
+#define CJS0           48
+#define QAREA          49
+#define DIGITAL_TIMING 50
+#define DIGITAL_EXTRACT 51  /* To become digital block */
+#define DIGITAL_IO     52  /* To become digital block */
+#define DIGITAL_LINE   53  /* To become digital block */
+#define DIGITAL_PRIMITIVE   54  /* name of associated file or file extension */
+#define DIGITAL_MNTYMXDLY   55  /* name of associated file or file extension */
+#define DIGITAL_IO_LEVEL   56  /* name of associated file or file extension */
+#define DIGITAL_STDCELL   57  /* ATTRIBUTE FOR STANDARD CELL */
+#define DIGITAL_FILE   58
+#define NOCONHIDDENPIN 59
+#define FIRSTPOWERPIN  60
+#define LASTPOWERPIN   69
+#define PCBGLOBAL0     60
+#define PCBGLOBAL1     ( PCBGLOBAL0 +1 )
+#define PCBGLOBAL2     ( PCBGLOBAL0 +2 )
+#define PCBGLOBAL3     ( PCBGLOBAL0 +3 )
+#define PCBGLOBAL4     ( PCBGLOBAL0 +4 )
+#define PCBGLOBAL5     ( PCBGLOBAL0 +5 )
+#define PCBGLOBAL6     ( PCBGLOBAL0 +6 )
+#define PCBGLOBAL7     ( PCBGLOBAL0 +7 )
+#define PCBGLOBAL8     ( PCBGLOBAL0 +8 )
+#define PCBGLOBAL9     ( PCBGLOBAL0 +9 )
+//#define FIRSTPOWERPIN  PCBGLOBAL0 // attention: this is a range
+//#define LASTPOWERPIN   PCBGLOBAL9 // attention: this is a range
+	// vhdl
+#define VHDLSTOP       76
+#define VHDLATTR       77
+#define VHDLCONFIG     78
+#define VHDLUSELIB     79
+#define VHDLMODEL      80
+#define VHDL_1ST       81 // attention: this is a range
+#define VHDL_2ND       ( VHDL_1ST +1 )
+#define VHDL_3RD       ( VHDL_1ST +2 )
+#define VHDL_4TH       ( VHDL_1ST +3 )
+#define VHDL_5TH       ( VHDL_1ST +4 )
+#define VHDL_6TH       ( VHDL_1ST +5 )
+#define VHDL_7TH       ( VHDL_1ST +6 )
+#define VHDL_8TH       ( VHDL_1ST +7 )
+#define VHDL_NTH       89 // attention: this is a range
+	// verilog
+#define VERILPARAM_1ST 91 // attention: this is a range
+#define VERILPARAM_2ND ( VERILPARAM_1ST +1 )
+#define VERILPARAM_3RD ( VERILPARAM_1ST +2 )
+#define VERILPARAM_4TH ( VERILPARAM_1ST +3 )
+#define VERILPARAM_5TH ( VERILPARAM_1ST +4 )
+#define VERILPARAM_6TH ( VERILPARAM_1ST +5 )
+#define VERILPARAM_7TH ( VERILPARAM_1ST +6 )
+#define VERILPARAM_8TH ( VERILPARAM_1ST +7 )
+#define VERILPARAM_NTH 99 // attention: this is a range
+
+	// PCB
+#define WN			      101
+#define LN			      102
+#define WP			      103
+#define LP			      104
+#define CELL		      105
+#define PARTDESC      109
+#define MASSTECKFP    110
+#define EM_SCALE      111
+#define MULT          112
+#define PADNAME       113
+#define PADNUM        114
+#define SOURCE        115
+#define WBL           116
+#define LBL           117
+#define AQ            118
+#define AQSUB         119
+#define ZSIZE         120
+#define ESR           121
+#define AREA          122
+#define VALUE2        123
+#define COUPLE        124
+#define VOLTAGE       125
+#define AREA1         126
+#define AREA2         127
+#define AREA3         128
+#define AREA4         129
+#define MULTI1        130
+#define MULTI2        131
+#define MULTI3        132
+#define MULTI4        133
+#define DAREA         134
+#define DPERIM        135
+#define CAREA         136
+#define CPERIM        137
+#define SHRINK        138
+#define GATE_RESIZE   139
+#define GATE_BP       140
+#define GATE_BN       141
+#define SIM_LEVEL     144
+#define SIM_PREFIX    145
+#define SPICELINE3    150
+#define XDEF_SUB      158
+#define LVS_TYPE      160
+#define LVS_LDD       161
+#define USER1         162
+#define USER2         163
+#define USER3         164
+#define USER4         165
+#define USER5         166
+#define ROOT          167
+#define CLASS         168
+#define GEOM          169
+#define VCEO          174
+#define LVS_REMOVE    177
+#define LVS_SHORT     178
+#define LVS_VALUE_DELTA     179
+#define LVS_LEVEL     180
+#define RTN           190
+#define PWR           191
+#define BW            192
+#define XDEF_TUB      200
+#define LOCATION     0xfd	// special, reserved for system use
+
+/* Pin Attribute Definitions */
+
+#define PINNAME        0
+#define USE            1                /* don't use this anymore, use PINUSE */
+#define PINUSE         1
+#define FANIN          2
+#define FANOUT         3
+#define PINNUM         4
+#define WIREOR         5
+#define PINGROUP       6
+#define LOADLOW        7
+#define DRIVELOW       8
+#define OPENOK         9
+
+	// Verilog
+#define VERILPINNAME   14
+#define VERIORDER      45
+
+#define LOADHIGH       15
+#define DRIVEHIGH      16
+
+	// VHDL
+#define VHDLPINNAME    29
+#define VHDLPINTYPE    30
+#define VHDLBUSPINTYPE 31
+#define VHDLDEFVAL     32
+#define VHDLNETCONV    33
+#define VHDLBUSCONV    34
+#define VHDLPINUSE     35
+
+#define SPICEORDER     38
+
+#define ECLTYPE        112
+#define CMPNWIDTH      120
+
+/* Net Attribute Definitions */
+
+//#define PORTNUM          2
+#define CAPACITANCE      3
+#define NETLENGTH        5
+#define NETWIDTH         8
+#define VERILTYPE        10
+#define VHDLNETTYPE      30
+#define VHDLBUSTYPE      31
+#define ROUTELAYERS      111
+#define THERMALLAYERS    112
+#define NETWEIGHT        113
+#define VIAPERNET        114
+#define MINWIDTH         115
+#define MAXWIDTH         116
+#define MINLENGTH        117
+#define MAXLENGTH        118
+#define WIDTHBYLAYER     119
+#define SPACINGBYLAYER   120
+#define CONNWIDTH        121
+#define RECONNTYPE       122
+#define MATCHEDPAIR      123
+#define SHIELDING        124
+#define CONSTRAINT1      126
+#define CONSTRAINT2      127
+#define CONSTRAINT3      128
+#define ECL              129
+#define BUSNAME          130
+#define MINNECKWIDTH     131
+#define HIGHLIGHT        132
+#define TESTPOINT        133
+
+/* graphic attribute window definitions */
+
+#define GRAPHICWIN_File     200		// name of the schematic file
+#define GRAPHICWIN_Date     201
+#define GRAPHICWIN_Sheet    202		// number of the sheet
+#define GRAPHICWIN_NumShts  203		// count of sheets
+#define GRAPHICWIN_Time     204
+#define GRAPHICWIN_Design   205		// name of the design
+#define GRAPHICWIN_Inst     206		// hierarchical path name of the instance
+#define GRAPHICWIN_Page     207		// hierarchical page index
+#define GRAPHICWIN_Pages    208		// total number of pages in the hierarchy
+
+#define NUMGRAPHICWINDOWS 9            /* number of graphic attribute windows */
+
+	/* Show that a PCB symbol has
+	 * multiple pinNumbers on a single port
+	 */
+#define MULTIPINNUMS      "*"
+
+
+// Attribute Names
+int         DerivedSymAttr( int );
+int         DerivedPinAttr( int );
+int         SymAttrEditCode( int nNumber );
+int         PinAttrEditCode( int nNumber );
+const char* GetAttrWindowName( int window );
+int         GetAttrOfWindow( int window );
+int         GetAttrWindowOfAttr( int sym_attr_num );
+const char* GetNetAttrName( int );
+int         GetNetAttrNumber( const char* );
+const char* GetPinAttrName( int );
+int         GetPinAttrNumber( const char* );
+const char* GetSymAttrName( int );
+int         GetSymAttrNumber( const char* );
+
+#endif	// ! __ATTR_H__

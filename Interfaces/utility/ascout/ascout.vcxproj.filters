@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{57a1c86e-f79a-4190-8d69-49c5c89fe2c8}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{08595047-3297-48f7-812d-907360722f2f}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;fi;fd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{95466f9c-4dbe-4a63-82b8-c4714c355881}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Library Files">
+      <UniqueIdentifier>{5513eb65-1cd2-43e5-a47c-a84df385f162}</UniqueIdentifier>
+      <Extensions>lib</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ASCOUT.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MAINASCO.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\editors\include\scsdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editors\Include\spikproc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editors\include\sysdlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\netlists\common\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\netlists\common\attr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\editors\pwin\alert.dlg">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\LTCSimNetlist\Libraries\nttapkp.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\Libraries\scpik.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\Libraries\sympi.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\tclLib\tcl84.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\tclLib\tclstub84.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\tclLib\tk84.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\tclLib\tkstub84.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\Libraries\pik.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\utility.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

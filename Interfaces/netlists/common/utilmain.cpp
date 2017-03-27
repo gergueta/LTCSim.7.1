@@ -1,0 +1,238 @@
+/* utilmain.c - main for schematic PIK net list programs */
+
+/* Copyright (C) 1993 -- Data I/O Corporation -- All Rights Reserved.
+ *
+ * This program is protected under the copyright laws as a published work.
+ * It may not be copied, reproduced, further distributed, adaptations
+ * made from the same, or used to prepare derivative works, without the
+ * prior written consent of the Data I/O Corporation
+ *
+ * History:
+ *    5/05/93 - Included in Version 2.5
+ */
+
+#include "stdafx.h"
+#include "spikproc.h"
+
+#define db 1
+
+extern char ProgramName[];
+
+FILE *err_file;
+int error_msg_flag;                               /* TRUE if call to ErrorMsg */
+static char err_name[_MAX_PATH];
+
+/* NOTE: This file may be used by any netlister using the schematic PIK */
+
+static int getWord( FILE* fp, char* word )
+{ 
+	char c;
+	int count;
+
+	count = 0;
+
+      /* Skip leading white space
+       */
+	c = fgetc( fp );
+	while ( ( c == ' ' ) || ( c == '\t' ) || ( c == '\n' ) || ( c == '\r' ) )
+    {
+		if ( c == EOF ) return 0;
+		c = fgetc( fp );
+	}
+
+	if ( c == '"' )  // look for closing quote
+	{
+		c = fgetc( fp );
+		while ( ( c != '"' ) && ( c != EOF ) && ( count < MAXARGLEN - 1 ) )
+		{
+			word[count] = c;
+			++count;
+			
+			c = fgetc( fp );
+		}
+	}
+	else
+	{
+		while ( ( c != ' ' ) && ( c != '\t' ) && ( c != '\n' ) &&
+                ( c != '\r' ) && ( c != EOF ) && ( count < MAXARGLEN - 1 ) )
+		{
+			word[count] = c;
+			++count;
+			
+			c = fgetc( fp );
+		}
+	}
+	
+	word[count] = '\0';
+	return count;
+}
+
+int Parse_Command_File( char* name, char* argv[] )
+{ 
+	int argc;
+	FILE* rfile;
+	char arg[MAXARGLEN];
+
+   /* build the argument list in argc and argv */
+	rfile = fopen( name, "r" );
+	if ( rfile == NULL )
+		return 0;
+
+	argc = 1;
+	argv[0] = (char*) malloc( strlen( name ) + 1 );
+	strcpy( argv[0], name );             /* dummy for program name */
+
+	while ( argc < MAXNARGS )
+	{ 
+	   if ( getWord( rfile, arg ) == 0 )
+		   break;
+
+	   argv[argc] = (char*) malloc( strlen( arg ) + 1 );
+	   strcpy( argv[argc], arg );
+	   ++argc;
+	}
+
+	return argc;
+}
+
+void Free_Arg_List( int argc, char* argv[] )
+{
+	int index;
+	for ( index=0; index < argc; ++index )
+		free( argv[index] );
+}
+
+int Process_Command_Line( int argc, char *argv[] );
+
+#if defined(UNIX)
+
+                         /*---------- main ----------*/
+
+int main( int argc, char* argv[] )
+ { int retn;
+   if ( !Initialize() ) 
+	   exit( 1 ); 
+   retn = Process_Command_Line( argc, argv );
+   exit( retn );
+ }
+
+#else
+
+HINSTANCE _hInstance;
+HWND hBackWnd;           /* used as parent for dialog boxes, OK to leave NULL */
+
+static int Do_Command_Line( char* command_line )
+ { char *cc, *argv[64];
+   int argc, retn;
+   /* build the argument list in argc and argv */
+   argc = 1;
+   argv[0] = "";                                    /* dummy for program name */
+
+   for ( cc = command_line; *cc && argc < 64; )
+    { while ( *cc && (BYTE)*cc <= ' ' ) *cc++ = '\0';          /* skip spaces */
+      if ( *cc == '\"' )               /* treat strings as an entire argument */
+       { argv[argc++] = ++cc;
+         while( *cc && *cc != '\n' && *cc != '\"' ) cc++;
+         if ( *cc ) *cc++ = '\0';
+       }
+      else if ( *cc )
+       { argv[argc++] = cc;
+         while ( (BYTE)*cc > ' ' ) cc++;       /* skip to the end of this arg */
+         if ( *cc ) *cc++ = '\0';
+       }
+    }
+
+   retn = Process_Command_Line( argc, argv );
+   return( retn );
+ }
+
+static int Do_Script( const char* name )
+ { char buff[_MAX_PATH], program[_MAX_PATH], *cc;
+   FILE *script_file;
+   int retn = 0;
+
+   buff[0] = '\0';
+   GetModuleFileName( _hInstance, buff, sizeof(buff) );
+   strcpy( program, FileInPath( buff ) );
+   AddExt( program, "" );          /* now program is the name of this program */
+   script_file = fopen( name, "r" );
+   if ( script_file )
+    { while ( fgets( buff, sizeof(buff), script_file ) && retn == 0 )
+       { /* separate program name from rest of command line */
+         for ( cc = buff; *cc && *cc != ' '; cc++ )
+		 {	;}
+         while ( *cc == ' ' ) 
+			 *cc++ = '\0';
+         if ( stricmp( FileInPath( buff ), program ) == 0 )
+            retn = Do_Command_Line( cc );
+       }
+      fclose( script_file );
+      unlink( name );
+    }
+   return( retn );
+ }
+
+                      /*----------  WinMain  -----------*/
+
+int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpszCmdLine, int nCmdShow )
+ {
+   int error = 1;
+
+   _hInstance = hInstance;
+   Yield();                      /* KLUDGE, we may not want to do this always */
+   if ( Initialize() )
+    {
+      char szCommand[_MAX_PATH];
+      strcpy( szCommand, lpszCmdLine );		// copy to buffer that can be modified
+      if ( !stricmp( szCommand, "makesim.bat" ) ||
+           !stricmp( szCommand, "makesimfile" ) )
+         error = Do_Script( szCommand );
+      else
+         error = Do_Command_Line( szCommand );
+    }
+   return( error );
+ }
+
+#endif
+
+FILE *OpenErrorFile( char* name )
+ { /* open the file which will be used by ErrorMsg */
+   strcpy( err_name, name );
+   AddExt( err_name, ".err" );
+   err_file = fopen( err_name, "w" );
+   if ( !err_file )
+    { char buff[300];
+      sprintf( buff, "Failed to create %s", err_name );
+      MajorError( buff );
+    }
+   error_msg_flag = 0;
+   return( err_file );
+ }
+
+void CloseErrorFile()
+ { long lBytes;
+   /* close the file which was used by ErrorMsg.  Run VIEWER if errors */
+   if ( err_file )
+    { lBytes = ftell( err_file );
+      fclose( err_file );
+      if ( error_msg_flag ) LaunchViewer( err_name );
+      else if ( !lBytes ) unlink( err_name );
+      err_file = (FILE *)NULL;
+      err_name[0] = '\0';
+    }
+   error_msg_flag = 0;
+ }
+
+                       /*---------- ErrorMsg ----------*/
+
+int ErrorMsg( const char* string )
+ {
+   if ( err_file )
+    { if ( *string == '\\' )
+         fprintf( err_file, "%s\n", string + 1 );
+      else
+         fprintf( err_file, "%s ERROR: %s\n", ProgramName, string );
+      error_msg_flag = 1;
+    }
+   return( 1 );
+ }

@@ -1,0 +1,58 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Prnt - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo".\Pr\Debug/Prnt.res" /i "pr" /i ".\Common" /d "_DEBUG" "C:\Delphi\Interfaces\netlists\pr\Prnt.RC"" 
+Creating temporary file "C:\DOCUME~1\GERMAN~1.ENG\LOCALS~1\Temp\RSP5.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\editors\include" /I ".\common" /I ".\tclInclude" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "PR" /FR".\Pr\Debug/" /Fp".\Pr\Debug/Prnt.pch" /YX /Fo".\Pr\Debug/" /Fd".\Pr\Debug/" /FD /c 
+"C:\Delphi\Interfaces\netlists\common\Dataout.cpp"
+"C:\Delphi\Interfaces\netlists\pr\prsub.cpp"
+"C:\Delphi\Interfaces\netlists\common\SPICDLG.cpp"
+"C:\Delphi\Interfaces\netlists\common\spice.cpp"
+"C:\Delphi\Interfaces\netlists\common\SPICEPAT.cpp"
+"C:\Delphi\Interfaces\netlists\common\spicprim.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\GERMAN~1.ENG\LOCALS~1\Temp\RSP5.tmp" 
+Creating temporary file "C:\DOCUME~1\GERMAN~1.ENG\LOCALS~1\Temp\RSP6.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:yes /pdb:".\Pr\Debug/LTCSimPr.pdb" /debug /machine:I386 /nodefaultlib:"msvcrt.lib" /nodefaultlib:"libcd.lib" /out:"C:\Cohesion\Designer6\bin\LTCSimPr.exe" /pdbtype:sept 
+.\Pr\Debug\Dataout.obj
+.\Pr\Debug\prsub.obj
+.\Pr\Debug\SPICDLG.obj
+.\Pr\Debug\spice.obj
+.\Pr\Debug\SPICEPAT.obj
+.\Pr\Debug\spicprim.obj
+.\Pr\Debug\Prnt.res
+.\lib\nttapkp.lib
+.\lib\pik.lib
+.\tclLib\tkstub84.lib
+.\tclLib\tcl84.lib
+.\tclLib\tcl84d.lib
+.\tclLib\tclstub84.lib
+.\tclLib\tk84.lib
+.\tclLib\tk84d.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\GERMAN~1.ENG\LOCALS~1\Temp\RSP6.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+Dataout.cpp
+prsub.cpp
+SPICDLG.cpp
+spice.cpp
+SPICEPAT.cpp
+spicprim.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+LTCSimPr.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

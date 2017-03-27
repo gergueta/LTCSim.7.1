@@ -516,7 +516,7 @@ Coordinates=2534,881,123,36
 Coordinates=1040,484,144,36
 
 []
-Coordinates=1567,276,60,36
+Coordinates=1265,221,140,58
 Visible=True
 
 [LMDDockPanelAPT]
@@ -665,9 +665,6 @@ Coordinates=2120,606,148,36
 
 [LMDDockPanelAssura]
 Coordinates=2120,716,143,36
-
-[cbLTspiceSchematics]
-Coordinates=1265,221,140,58
 
 [LMDButtonV]
 Coordinates=1222,1,87,58

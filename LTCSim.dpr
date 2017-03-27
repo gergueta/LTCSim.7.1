@@ -34,6 +34,7 @@ begin
   TStyleManager.TrySetStyle('Windows10');
   TStyleManager.TrySetStyle('Windows10');
   TStyleManager.TrySetStyle('Windows10');
+  TStyleManager.TrySetStyle('Windows10');
   Application.HelpFile := 'LTCSim.hlp';
   Application.Title := 'LTCSim';
   Application.CreateForm(TMainForm, MainForm);

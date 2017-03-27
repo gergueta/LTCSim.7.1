@@ -1,0 +1,31 @@
+9
+
+dir
+13
+svn+ssh://german@cadmgr.engineering.linear.com/home/german/SVN/trunk/LTCSim/6.8/Interfaces/610libs/scpik
+svn+ssh://german@cadmgr.engineering.linear.com/home/german/SVN
+
+
+
+2008-01-29T17:56:15.528496Z
+3
+german
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+49dabbc7-df44-0410-af5a-b9829de3ee09
+
+Release
+dir
+

@@ -1,0 +1,1248 @@
+#include <stdafx.h>
+#include "pikproc.h"
+#include "dataout.h"
+#include "mbstring.h"
+
+extern char szCmd_MultiCode[];
+
+#define NETLIST_VER "6.8.4"
+unsigned int feature_code = 0;
+unsigned int feature_version = 0;
+unsigned long ProcRequiredLicBit = 0xFFFFFFFF;
+unsigned long ProcRequiredVersion = 0;
+
+int  bCmd_Macro = FALSE, bCmd_Node_Names = FALSE, bCmd_Use_Globals = FALSE;
+int  bCmd_LVS = FALSE;
+int  bCmd_FilterPrefix;
+int  bCmd_Units = TRUE;                              /* add unit specification */
+int  bCmd_Flat = FALSE;
+int  bCmd_PrimitiveLevel = 0;
+int  bCmd_XGNDXto0 = FALSE;
+int  bCmd_GNDto0 = FALSE;
+int  bCmd_Shrink = FALSE;
+int  bCmd_WLRes = FALSE;
+int  bCmd_WLBip = FALSE;
+int  bCmd_AreaBip = FALSE;
+int  bCmd_MixedSignal = FALSE;
+
+long num_unconn;
+
+static long num_locals, num_globals, num_pins, num_nets;
+static long max_nets = 2048;
+static TN_PTR* net_tn;
+extern int nMaxCachedItems = 128;
+int nSubCircuitIndex = 0;
+extern char *szNewName;
+
+extern char **SubCircuitNames;
+extern char ***SubCircuits;
+extern int **SubCircuitMaxIndexCount;
+extern char *szCurrentSubCircuitName;
+int nMaxNumSubCircuits = 1024;
+extern int nMaxSubCircuitIndexCount;
+static char *element;
+extern FILE *errorFile;
+
+#define CHECK_NET_MEM( amt ) if ( amt > max_nets ) \
+   abort = ExtendNetBase(); if ( abort ) return( abort );
+
+/* external functions */
+int Merge_Macro_File( char* );
+#if defined( PSPICE )
+int Merge_Digital_Macro_File( char* );
+#endif // PSPICE
+int Do_Primitive( TI_PTR, char * );
+void Process_Pattern_File( FILE * );
+char* Get_Spice_Net_Name( TN_PTR );
+char* LTC_HSpice_Process_Net_Name( char * );
+#if defined(PSPICE)
+char* LTC_PSpice_Process_Net_Name( char * );
+char *szGlobalPinNames[1024];
+#endif //PSPICE
+#if ( defined(LVS) || defined(PR) || defined(NTL) )
+int Merge_Header_File( char* );
+char *LTCSimReplacePFByP( char *value );
+char *LTCSimSplitXLoc( char *value );
+char *LTCSimSplitYLoc( char *value );
+
+#endif //LVS
+/* public functions */
+long Get_Net_Number( TN_PTR tn );
+long Find_Net_Number_Of( char *name );
+char GATE_BP_NODE[256], GATE_BN_NODE[256];
+extern char *determineFullInstPath( TI_PTR ti );
+extern void errorWithInstance( char *string, TI_PTR ti );
+#if defined(PSPICE)				
+char *ProgramName = "LTCSimPspice.exe";
+#endif
+#if defined(HSPICE)				
+char *ProgramName = "LTCSimHspice.exe";
+#endif
+#if defined(LVS)				
+char *ProgramName = "LTCSimLvs.exe";
+#endif
+#if defined(PR)				
+char *ProgramName = "LTCSimPr.exe";
+#endif
+#if defined(NTL)				
+char *ProgramName = "LTCSimNtl.exe";
+#endif
+
+Tcl_Interp *interp;
+
+
+
+                    /*---------- ExtendNetBase ----------*/
+
+static int ExtendNetBase() {
+  int nMax = max_nets + 512;
+  void* pTmp = realloc( net_tn, nMax * sizeof(TN_PTR) );
+  if ( pTmp ){
+    max_nets = nMax;
+    net_tn = (TN_PTR*)pTmp;
+  }
+  else
+    MajorError( "Insufficient memory to process design\nClose other processes" );
+  return( pTmp == NULL );                   /* abort if fail to alloc */
+}
+
+/* Get_Net_Number is coded differently in Flat version */
+long Get_Net_Number( TN_PTR tn ) {
+  /* Finds the number of the given net, Hierarchical version */
+  long ll;
+  char* name;
+  
+  if ( NetLocExtGbl( tn ) == 2 ) {
+    /* for global nets the tn's stored in the net_tn will be root tn's for
+       node 0 and other nodes if using .GLOBAL, otherwise the tn's will be
+       local.  The parameter tn will be local unless it came from a FindNetNamed
+       which happens in looking for DEFSUBSTRATE.  So the only valid way to find
+       the net is by comparing the names. */
+    name = NetName( tn );
+    
+    if ( !stricmp( name, "GND" ) && net_tn[0] ) 
+      ll = 0;
+    else if ( bCmd_Use_Globals ) {
+      for ( ll = 1; ll < num_globals &&  stricmp( name, NetName( net_tn[ll] ) ); 
+	    ll++ );
+      if ( ll >= num_globals ) 
+	ll = num_nets;    /* failed to find it, BUG */
+    }
+    else {
+      for ( ll = num_globals; ll < num_nets && stricmp( name, NetName( net_tn[ll] ) );
+	    ll++ );
+    }
+  }
+  else {
+    for ( ll = num_globals; ll < num_nets && tn != net_tn[ll]; 
+	  ll++ );
+  }
+  if ( ll >= num_nets ) {
+    sprintf( line, "Failed to find net (%lx) %s", tn, name );
+    Error_Out( line );
+  }
+  return( ll );
+}
+
+/* Find_Net_Number_Of is coded differently in Flat version */
+long Find_Net_Number_Of( char* name )
+{ 
+/* Finds the number of the net with the given name, Hierarchical version */
+  long ll;
+  
+  for ( ll = num_nets -1; ll >= 0 && net_tn[ll] &&
+	  stricmp( name, NetName( net_tn[ll] ) ); ll-- );
+  if ( ll >= 0 && net_tn[ll] == 0 ) 
+    ll = -1;                    /* not found */
+  return( ll );
+}
+					   /*---------- Code_Pin_BG ----------*/
+
+static int Code_Pin_BG( TP_PTR tp  ) {
+  TN_PTR tn;
+  TG_PTR tg;
+  
+  long templ;
+  char *name;
+  
+  tg = GenericPinOfPin ( tp );
+  
+  if ( stricmp( Get_TGA( tg, NAME ) , "PWR" )  == 0 ) {
+    if (tn = NetContainingPin( tp ) ) templ = Get_Net_Number( tn );
+    else templ = num_unconn++;
+    if ( bCmd_Node_Names && !tn )
+      sprintf( GATE_BP_NODE, "UNC%ld", templ );
+    else if ( bCmd_Node_Names && ( name = Get_Spice_Net_Name( tn ) ) )
+      sprintf( GATE_BP_NODE , " %s", name );
+    else sprintf( GATE_BP_NODE , " %ld", templ );
+  }
+  if ( stricmp( Get_TGA( tg, NAME ) , "RTN" ) == 0 ) {
+    if (tn = NetContainingPin( tp ) ) 
+      templ = Get_Net_Number( tn );
+    else 
+      templ = num_unconn++;
+
+    if ( bCmd_Node_Names && !tn )
+      sprintf( GATE_BN_NODE, "UNC%ld", templ );
+    else if ( bCmd_Node_Names && ( name = Get_Spice_Net_Name( tn ) ) )
+      sprintf( GATE_BN_NODE , " %s", name );
+    else sprintf( GATE_BN_NODE , " %ld", templ );
+  }
+  return( 0 );
+}
+                       /*---------- Code_Pin ----------*/
+
+static int Code_Pin( TP_PTR tp ) {
+  /* List all non-global pins.  If not using globals list global pins
+     except GND.  For LVS list GND also */
+  if ( !GlobalPin( tp ) || ( !bCmd_Use_Globals && ( bCmd_LVS || stricmp( Get_TPA( tp, NAME ), "GND" ) ) ) ) {
+    long templ;
+    TN_PTR tn;
+    if ( tn = NetContainingPin( tp ))
+      templ = Get_Net_Number( tn );
+    else 
+      templ = num_unconn++;                           /* unconnected pin */
+    char* name;
+    if ( bCmd_Node_Names && !tn )
+      sprintf( line, " UNC%ld", templ );
+    else if ( bCmd_Node_Names && ( name = Get_Spice_Net_Name( tn ) ) )
+      sprintf( line, " %s", name );
+    else sprintf( line, " %ld", templ );
+    Data_Out( line , false);
+  }
+  return( 0 );
+}
+
+/*----------Do_Subcircuit-------------*/
+static int Do_Subcircuit( TI_PTR ti ) {
+	TD_PTR td;
+
+	char prefix[64], *name, *val, *tempName ,ch = '\0';
+	char sim_level[64];
+	char tVal[256];
+	char tName[256];
+
+	td = DescriptorOfInstance( ti );
+	bool fType = false;
+
+	strcpy( prefix, Get_TIA( ti, PREFIX ) );
+	strcpy( sim_level, Get_TIA( ti, SIM_LEVEL ) );
+	name = LocalInstanceName( ti );
+	char *szIllegalChar;
+	while ( szIllegalChar = strpbrk( name, ".-[]()<>{}" ) ) {
+		*szIllegalChar = '_';
+	}
+
+#if defined(PSPICE)				
+	if ( bCmd_MixedSignal && ( toupper( *( val = Get_TIA( ti, DIGITAL_EXTRACT ))) == 'Y' )) {
+		sprintf( line, "U%s", name );
+		Data_Out( line , false);
+		if ( *(val = Get_TIA( ti, DIGITAL_PRIMITIVE ))) {
+			sprintf( line, " %s", val );
+			Data_Out( line , false);
+		}
+		else {
+			char msg[128];
+			sprintf( msg, "Error:Digital primitive information not available on instance" );
+			errorWithInstance( msg, ti );
+		}
+	}
+	else {
+		if ( bCmd_FilterPrefix && (( 'X' == *name ) || ( 'x' == *name ))) {
+			sprintf( line, "%s", name );
+			Data_Out( line , false);
+		}
+		else {
+			sprintf( line, "X%s", name );
+			Data_Out( line , false);
+		}
+	}
+#endif // PSPICE				
+#if defined(HSPICE)
+	if ( bCmd_FilterPrefix && (( 'X' == *name ) || ( 'x' == *name ))) {
+		sprintf( line, "%s", name );
+		Data_Out( line , false);
+	}
+	else {
+		sprintf( line, "X%s", name );
+		Data_Out( line , false);
+	}
+#endif // HSPICE
+#if ( defined(LVS) || defined(PR) || defined(NTL))
+	if ( *(val = Get_TIA( ti, LVS_REMOVE ) ) && (*val == 'y' || *val =='Y') ) {
+		if ( bCmd_FilterPrefix && (( 'X' == *name ) || ( 'x' == *name ))) {
+			sprintf( line, "*%s", name );
+			Data_Out( line , false);
+		}
+		else {
+			sprintf( line, "*X%s", name );
+			Data_Out( line , false);
+		}
+	}
+	else {
+		if ( bCmd_FilterPrefix && (( 'X' == *name ) || ( 'x' == *name ))) {
+			sprintf( line, "%s", name );
+			Data_Out( line , false);
+		}
+		else {
+			sprintf( line, "X%s", name );
+			Data_Out( line , false);
+		}
+	}
+
+#endif // LVS or PR
+
+	// PWR 
+	if ( *(val = Get_TIA( ti, PWR ))) {
+#if defined(PSPICE)				
+		strcpy( tName,LTC_PSpice_Process_Net_Name( val ));
+		if ( bCmd_MixedSignal && ( toupper( *( val = Get_TIA( ti, DIGITAL_EXTRACT ))) == 'Y' ))
+			sprintf( line, " %s", "$G_Dpwr" );
+		else
+			sprintf( line, " %s", tName );
+#endif // PSPICE				
+#if ( defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )
+		strcpy( tName,LTC_HSpice_Process_Net_Name( val ));
+		sprintf( line, " %s", tName );
+#endif // HSPICE or LVS or PR
+		fType = false;
+		Data_Out( line , false);
+	}
+	else
+		fType = true;
+
+	// RTN
+	if ( *(val = Get_TIA( ti, RTN ))) {
+#if defined(PSPICE)				
+		strcpy( tName,LTC_PSpice_Process_Net_Name( val ));
+		if ( bCmd_MixedSignal && ( toupper( *( val = Get_TIA( ti, DIGITAL_EXTRACT ))) == 'Y' ))
+			sprintf( line, " %s", "$G_Dgnd" );
+		else
+			sprintf( line, " %s", tName );
+#endif // PSPICE				
+#if ( defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )
+		strcpy( tName,LTC_HSpice_Process_Net_Name( val ));
+		sprintf( line, " %s", tName );
+#endif // HSPICE or LVS
+		Data_Out( line , false);
+	}
+#if defined(PSPICE)				
+	if (( ! bCmd_MixedSignal )  || ( bCmd_MixedSignal && (( toupper(*(val = Get_TIA( ti, DIGITAL_EXTRACT ))) == 'N') || !(*(val = Get_TIA( ti, DIGITAL_EXTRACT )))))) {
+#endif // PSPICE
+
+		// GATE_BP				
+		if ( *(val = Get_TIA( ti, GATE_BP ) ) ) {
+			if ( stricmp( val, "GATE_BP" ) == 0 ) {
+				if (!fType) {
+#if defined(PSPICE)				
+					tempName = LTC_PSpice_Process_Net_Name( Get_TIA( ti, PWR ) );
+#endif // PSPICE					
+#if (defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )
+					tempName = LTC_HSpice_Process_Net_Name( Get_TIA( ti, PWR ) );
+#endif // HSPICE or LVS				
+					sprintf( line, " %s", tempName);
+				} 
+				else {
+					strcpy(GATE_BP_NODE, "\0");
+					strcpy(GATE_BN_NODE, "\0");
+					ForEachInstancePin( ti, Code_Pin_BG );
+					sprintf( line, " %s", GATE_BP_NODE );
+				}
+			}
+			else {
+#if defined(PSPICE)				
+				tempName = LTC_PSpice_Process_Net_Name( val );
+#endif // PSPICE				
+#if (defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )
+				tempName = LTC_HSpice_Process_Net_Name( val );
+#endif // HSPICE or LVS				
+				sprintf( line, " %s", tempName );
+			}
+			Data_Out( line , false);
+		}
+#if defined(PSPICE)				
+	}
+#endif // PSPICE				
+
+#if defined(PSPICE)				
+	if (( ! bCmd_MixedSignal )  || ( bCmd_MixedSignal && (( toupper(*(val = Get_TIA( ti, DIGITAL_EXTRACT ))) == 'N') || !(*(val = Get_TIA( ti, DIGITAL_EXTRACT )))))) {
+#endif // PSPICE
+
+		//GATE_BN				
+		if ( *(val = Get_TIA( ti, GATE_BN ) ) ) {
+			if ( stricmp( val, "GATE_BN" ) == 0 ) {
+				if (!fType) {
+#if defined(PSPICE)			
+					tempName = LTC_PSpice_Process_Net_Name( Get_TIA( ti, RTN ) );
+#endif // PSPICE				
+#if (defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )
+					tempName = LTC_HSpice_Process_Net_Name( Get_TIA( ti, RTN ) );
+#endif // HSPICE or LVS 
+					sprintf( line, " %s", tempName );
+				}
+				else {
+					strcpy(GATE_BP_NODE, "\0");
+					strcpy(GATE_BN_NODE, "\0");
+					ForEachInstancePin( ti, Code_Pin_BG );
+					sprintf( line, " %s", GATE_BN_NODE );
+				}
+			}
+			else {
+#if defined(PSPICE)				
+				tempName = LTC_PSpice_Process_Net_Name( val );
+#endif // PSPICE				
+#if (defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )
+				tempName = LTC_HSpice_Process_Net_Name( val );
+#endif // HSPICE or LVS				
+				sprintf( line, " %s", tempName );
+			}
+			Data_Out( line , false);
+		}
+#if defined(PSPICE)				
+	}
+#endif // PSPICE		
+
+	ForEachInstancePin( ti, Code_Pin );
+
+	if ( *(val = Get_TIA( ti, XDEF_TUB ))) {
+#if defined(PSPICE)				
+		tempName = LTC_PSpice_Process_Net_Name( val );
+#endif // PSPICE				
+#if (defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )
+		tempName = LTC_HSpice_Process_Net_Name( val );
+#endif // HSPICE or LVS				
+		sprintf( line, " %s", tempName );
+		Data_Out( line , false);
+	}
+
+	if ( *(val = Get_TIA( ti, XDEF_SUB ))) {
+#if defined(PSPICE)				
+		tempName = LTC_PSpice_Process_Net_Name( val );
+#endif // PSPICE				
+#if (defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )
+		tempName = LTC_HSpice_Process_Net_Name( val );
+#endif // HSPICE or LVS				
+		sprintf( line, " %s", tempName );
+		Data_Out( line , false);
+	}
+
+#if defined(PSPICE)				
+	if ( bCmd_MixedSignal && toupper(*(val = Get_TIA( ti, DIGITAL_EXTRACT ))) == 'Y') {
+		if ( *(val = Get_TIA( ti, DIGITAL_TIMING ))) {
+			sprintf( line, " %s", val );
+			Data_Out( line , false);
+		}
+		else {
+			char msg[128];
+			sprintf( msg, "Error:Timing information not available on instance" );
+			errorWithInstance( msg, ti );
+		}
+
+		if ( *(val = Get_TIA( ti, DIGITAL_IO )))	{
+			sprintf( line, " %s", val );
+			Data_Out( line , false);
+		}
+		else {
+			char msg[128];
+			sprintf( msg, "Error:I/O information not available on instance" );
+			errorWithInstance( msg, ti );
+		}
+
+		if ( *(val = Get_TIA( ti, DIGITAL_MNTYMXDLY ))) {
+			sprintf( line, " MNTYMXDLY=%s", val );
+			Data_Out( line , false);
+		}
+
+		if ( *(val = Get_TIA( ti, DIGITAL_IO_LEVEL ))) {
+			sprintf( line, " IO_LEVEL=%s", val );
+			Data_Out( line , false);
+		}
+	}
+	else {
+		if ( !*(tempName = Get_TIA( ti, SPICEMODEL ) ) ) tempName = Get_TDA( td, NAME );
+		sprintf( line, " %s", tempName );
+		Data_Out( line , false);
+
+		if ( *(val = Get_TIA( ti, MULTI ) ) && *val != '*' ) {
+			sprintf( line, " %s%s", szCmd_MultiCode, val );
+			Data_Out( line , false);
+		}
+	}
+#endif // PSPICE				
+
+#if (defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )
+	if ( !*(tempName = Get_TIA( ti, SPICEMODEL ) ) ) tempName = Get_TDA( td, NAME );
+	sprintf( line, " %s", tempName );
+	Data_Out( line , false);
+
+	if ( *(val = Get_TIA( ti, MULTI ) ) && *val != '*' ) {
+		sprintf( line, " %s%s", szCmd_MultiCode, val );
+		Data_Out( line , false);
+	}
+#endif // HSPICE or LVS
+
+	if ( *(val = Get_TIA( ti, SPICELINE ) ) && *val != '*' ) {
+		sprintf( tVal, " %s", val);
+#if defined(PSPICE)				
+		if (( ! bCmd_MixedSignal )  || ( bCmd_MixedSignal && (( toupper(*(val = Get_TIA( ti, DIGITAL_EXTRACT ))) == 'N') || !(*(val = Get_TIA( ti, DIGITAL_EXTRACT )))))) {
+			sprintf( line, " PARAMS: %s", tVal );
+			Data_Out( line , false);
+		}
+#endif // PSPICE				
+
+#if (defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )				
+		sprintf( line, " %s", tVal );
+		Data_Out( line , false);
+#endif // HSPICE or LVS
+	}
+#if defined(NTL)
+	/* APT LOCATION */
+	if (*(val = Get_TIA( ti, 254 ))){
+		sprintf( line, " X_LOC=%s Y_LOC=%s", LTCSimSplitXLoc( val ), LTCSimSplitYLoc( val ) );
+		Data_Out( line , true);  
+	}
+#endif // NTL	
+	Data_Out( "\n" , false);
+	return( 0 );
+}
+
+/*---------- Code_Sub_Block ----------*/
+
+static int Code_Sub_Block( TI_PTR ti )
+{
+	TD_PTR td;
+
+	char prefix[64], ch = '\0';
+	char sim_level[64];
+
+	td = DescriptorOfInstance( ti );
+	bool fType = false;
+
+	strcpy( prefix, Get_TIA( ti, PREFIX ) );
+	strcpy( sim_level, Get_TIA( ti, SIM_LEVEL ) );
+
+
+	if ( *prefix ) ch = toupper( *prefix );
+
+	if ( PrimitiveCell( td ) && ch ) {
+		Do_Primitive( ti, prefix );
+	}
+	else 
+	{
+		/* instance of a lower level block */
+		if ( PrimitiveCell( td ) ) {
+			sprintf( line, "Missing prefix code on symbol type %s",
+				Get_TDA( td, NAME ) );
+			Error_Out( line );
+		}
+		Do_Subcircuit( ti );
+	}
+	return( 0 );
+}
+
+                      /*---------- Number_Local_Nets ----------*/
+
+static int Number_Local_Nets( TN_PTR tn )
+{
+	int abort = FALSE;
+	if ( NetLocExtGbl( tn ) == 0 ) {
+		/* only save LOCAL's */
+		CHECK_NET_MEM( num_globals + num_pins + num_locals + 1 );
+		net_tn[ num_globals + num_pins + num_locals++ ] = tn;
+	}
+	return( abort );
+}
+
+                   /*---------- Number_Externals ----------*/
+
+static int Number_Externals( TN_PTR tn ) {
+	int abort = FALSE;
+	/* number externals and if not using .GLOBAL, all globals except GND */
+	if ( NetLocExtGbl( tn ) == 1 ||                     /* its an external net */
+		( NetLocExtGbl( tn ) == 2 &&                       /* or its a global */
+		!bCmd_Use_Globals &&                  /* and we're not using .GLOBAL */
+		stricmp( NetName( tn ), "GND" ) ) )       /* & ! GND */
+	{
+		CHECK_NET_MEM( num_globals + num_pins + 1 );
+		net_tn[ num_globals + num_pins++ ] = tn;
+	}
+	return( abort );
+}
+
+                      /*---------- Number_Pins ----------*/
+
+static int Number_Pins( TP_PTR tp ) {
+  int abort = FALSE;
+  TN_PTR tn;
+  /* Number only the pins that are represented by nets */
+  tn = NetDefinedByPin( tp );
+  if ( tn ) abort = Number_Externals( tn );
+  return( abort );
+}
+
+//////////
+static int List_Instance_Pin ( TP_PTR tp ) {
+  char *szName;
+  TN_PTR tn;
+  tn = NetContainingPin( tp );
+  if (tn) {
+    szName = NetName( tn );
+  }
+  else {
+    return( FALSE );
+  }
+
+  if ( strpbrk( szName, "_" )) {
+    bool bNameAlreadyInCache = false;
+    char **UnderscoreNameCache = SubCircuits[nSubCircuitIndex];
+    
+    for (int i = 0; i < *(SubCircuitMaxIndexCount[nSubCircuitIndex]); i++) {
+      if (!stricmp(szName, UnderscoreNameCache[i])) {
+	bNameAlreadyInCache = true;
+	break;
+      }
+    }
+
+    if (!bNameAlreadyInCache) {
+      if (UnderscoreNameCache == NULL) {
+	UnderscoreNameCache = new char*[nMaxCachedItems];
+      }
+      else if (*(SubCircuitMaxIndexCount[nSubCircuitIndex]) == nMaxCachedItems) {
+	char **y = new char*[nMaxCachedItems * 2];
+	for (int i = 0; i < nMaxCachedItems; i++) {
+	  *(y + i) = *(UnderscoreNameCache + i);
+	}
+	delete UnderscoreNameCache;
+	UnderscoreNameCache = y;
+	nMaxCachedItems *= 2;				
+      }
+      SubCircuits[nSubCircuitIndex] = UnderscoreNameCache;
+      char *pszTemp = new char[strlen(szName) + 1];
+      strcpy( pszTemp, szName );
+      *(UnderscoreNameCache + *(SubCircuitMaxIndexCount[nSubCircuitIndex])) = pszTemp;
+      (*(SubCircuitMaxIndexCount[nSubCircuitIndex]))++;
+    }
+  }
+  return( FALSE );
+}
+
+static int List_Sub( TI_PTR ti )
+{
+  ForEachInstancePin( ti, List_Instance_Pin );
+  return( FALSE );
+}
+
+static int Check_Block_Net( TN_PTR tn )
+{
+  char *szName;
+  if ( NetLocExtGbl( tn ) == EXTERNAL_NET ) {
+    szName = NetName( tn );
+    if ( strpbrk( szName, "_" )) {
+      ; //No-op
+    }		
+  }
+  return( FALSE );
+}
+                      /*---------- Cache_Underscored_Names ----------*/
+static int Cache_Underscored_Names( TD_PTR td ) {
+  int abort = FALSE;
+  int i;
+  TI_PTR ti;
+  char *szName;
+  szName = Get_TDA(td, NAME);
+  
+  if (SubCircuitNames == NULL) {
+    SubCircuitNames = new char*[nMaxNumSubCircuits];
+    SubCircuitMaxIndexCount = new int*[nMaxNumSubCircuits];
+    SubCircuits = new char**[nMaxNumSubCircuits];
+    for (i = 0; i < nMaxNumSubCircuits; i++) {
+      //Ensure that pointers are NULL for this is how
+      //to tell whether or not a cache eventually needs
+      //to be created
+      SubCircuits[i] = NULL;
+    }
+  }
+  else if (nMaxSubCircuitIndexCount == nMaxNumSubCircuits) {
+    char ***x = new char**[nMaxNumSubCircuits * 2];
+    char **y = new char*[nMaxNumSubCircuits * 2];
+    int **z = new int*[nMaxNumSubCircuits * 2];
+    
+    for (i = 0; i < nMaxNumSubCircuits; i++) {
+      x[i] = SubCircuits[i];
+    }
+
+    for (i = nMaxNumSubCircuits; i < nMaxNumSubCircuits * 2; i++) {
+      //Ensure that pointers for the newly expanded array
+      //slots get set to NULL for this is how to tell 
+      //whether or not a cache eventually needs to be created
+      x[i] = NULL;
+    }
+
+    for (i = 0; i < nMaxNumSubCircuits; i++) {
+      y[i] = SubCircuitNames[i];
+    }
+
+    for (i = 0; i < nMaxNumSubCircuits; i++) {
+      z[i] = SubCircuitMaxIndexCount[i];
+    }
+    
+    delete SubCircuits;
+    delete SubCircuitNames;
+    delete SubCircuitMaxIndexCount;
+    SubCircuits = x;
+    SubCircuitNames = y;
+    SubCircuitMaxIndexCount = z;
+    nMaxNumSubCircuits *= 2;				
+  }
+  
+  char *pszTemp = new char[strlen(szName) + 1];
+  int *pszIntTemp = new int[1];
+  *pszIntTemp = 0;
+  strcpy( pszTemp, szName);
+  //nSubCircuitIndex is used to keep the current index for other routines
+  nSubCircuitIndex = nMaxSubCircuitIndexCount;
+  SubCircuitMaxIndexCount[nSubCircuitIndex] = pszIntTemp;	
+  SubCircuitNames[nSubCircuitIndex] = pszTemp;
+  //Increment count so the next subcircuit will be put in the
+  //next slot in the array
+  nMaxSubCircuitIndexCount++;
+  
+  ti = FirstInstanceOf( td );
+  if ( !ti ) ForEachBlockNet( td, Check_Block_Net );
+  ForEachSubBlock( td, List_Sub );
+  return( abort );
+}
+
+                   /*----------  Code_Block  ----------*/
+
+static int Code_Block( TD_PTR td ) {
+  int abort = FALSE;
+  TI_PTR ti;
+  long ll;
+  char *name, *val;
+  bool fType = false;
+  
+  /* This is for the definition of the block or .SUBCKT */
+  
+  num_pins = 0;       /* each pin on the block represents a net, number them */
+
+  ti = FirstInstanceOf( td );
+  /*
+    char aTemp[256];
+    int a;
+    val = Get_TIA( ti, 254);
+    strcpy( aTemp, val);
+    sprintf(line, " Value = %s\n", aTemp);
+    Data_Out( line , true);  
+    for ( a=0; a < 201; a++) {
+    val = Get_TIA( ti, a);
+    strcpy( aTemp, val);
+    sprintf(line, " %d = %s\n", a, val);
+    Data_Out( line , true);  
+    }
+  */
+  name = Get_TDA( td, NAME );
+  if (szCurrentSubCircuitName != NULL) {
+    delete szCurrentSubCircuitName;
+  }
+  szCurrentSubCircuitName = new char[strlen(name) + 1];
+  strcpy( szCurrentSubCircuitName, name );
+  
+  if ( ( bCmd_Macro && ti ) || td != Root_TD ) {
+    /* generate a macro block */
+    Data_Out( "***\n" , false);
+    sprintf( line, ".SUBCKT %s", Get_TDA( td, NAME ) );
+    Data_Out( line , false);
+
+#if defined(NTL)
+    /* APT LOCATION */
+    /*    
+	  sprintf(line, "\n");
+	  Data_Out( line , true);  
+	  for ( a=0; a < 301; a++) {
+	  val = Get_TDA( td, a);
+	  strcpy( aTemp, val);
+	  sprintf(line, " %d = %s\n", a, val);
+	  Data_Out( line , true);  
+	  }
+	  if (*(val = Get_TDA( td, 254 ))){
+	  sprintf( line, " X_LOC=%s Y_LOC=%s", LTCSimSplitXLoc( val ), LTCSimSplitYLoc( val ) );
+	  Data_Out( line , true);  
+	  }
+    */
+#endif // NTL	
+
+    /* code a list of the pin names */
+    abort = ForEachInstancePin( ti, Number_Pins );
+    if ( !abort ) {
+      /* If we don't use globals we must list them as pins on each .SUBCKT */
+      /* Requires GND (node 0) to be listed */
+      int bPrintNames = false;
+      if ( !bCmd_Use_Globals ) 
+	ll = 0;    /* list all globals */
+      else
+	ll = num_globals;
+      if (*(val = Get_TDA( td, PWR ))) {
+	strcpy( line," PWR" );
+	Data_Out( line , false);
+	if ( *(val = Get_TDA( td, RTN ))) {
+	  strcpy( line," RTN" );
+	  Data_Out( line , false);
+	}
+	fType = false;
+      }
+      else
+	fType = true;
+      if ( *(val = Get_TDA( td, GATE_BP ))) {
+#if defined(PSPICE)				
+	sprintf( line," %s", LTC_PSpice_Process_Net_Name( val ));
+#endif // PSPICE
+#if ( defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )				
+	sprintf( line," %s", val );
+#endif // HSPICE or LVS
+	Data_Out( line , false);
+      }
+      if ( *(val = Get_TDA( td, GATE_BN ))) {
+#if defined(PSPICE)				
+	sprintf( line," %s", LTC_PSpice_Process_Net_Name( val ));
+#endif // PSPICE
+#if ( defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )				
+	sprintf( line," %s", val );
+#endif // HSPICE or LVS
+	Data_Out( line , false);
+      }
+      for ( ; ll < num_globals + num_pins; ll++ ) {
+	/* skip GND if it does not exist on this block */
+	if ( ll == 0 && !FindPinWithAttribute( ti, NAME, "GND" ) );
+	else if ( bCmd_Node_Names && ( name = Get_Spice_Net_Name( net_tn[ll] ))) {
+	  sprintf( line, " %s", name );
+	  Data_Out( line , false);
+	}
+	else {
+	  sprintf( line, " %ld", ll );
+	  Data_Out( line , false);
+	  bPrintNames = true;
+	}
+      }
+
+      if ( *(val = Get_TDA( td, SPICELINE2 ) ) && *val != '*' ) {
+	/* The old code used to write SPICELINE2 on a separate line.
+	   Some users inserted a plus sign in SPICELINE2 to work around
+	   this.  So we skip a leading plus sign */
+	if ( *val == '+' ) 
+	  val++;
+#if defined(PSPICE)
+	sprintf( line, " PARAMS: %s", val );
+#endif //PSPICE
+#if (defined(HSPICE) || defined(LVS) || defined(PR)  || defined(NTL) )				
+	sprintf( line, " %s", val );
+#endif // HSPICE or LVS
+	Data_Out( line , false);
+      }
+      Data_Out( "\n" , false);
+			
+      if ( bPrintNames ) {
+	/* list the pin names as a comment */
+	In_Comment( 1 );
+	Data_Out( "* PIN NAMES" , false);
+	if ( !bCmd_Use_Globals ) 
+	  ll = 1;    /* list all globals except GND */
+	else
+	  ll = num_globals;
+	for ( ; ll < num_globals + num_pins; ll++ ) {
+	  /* skip GND if it does not exist on this block */
+	  if ( ll == 0 && !FindPinWithAttribute( ti, NAME, "GND" ) );
+	  else {
+	    sprintf( line, " %s", NetName( net_tn[ll] ) );
+	    Data_Out( line , false);
+	  }
+	}
+	In_Comment( 0 );
+	Data_Out( "\n" , false);
+      }
+    }
+  }
+  else {
+    Data_Out( "* Main network description\n" , false);
+    if ( bCmd_Macro ) {
+      sprintf( line, "Missing symbol for %s", szRootName );
+      Error_Out( line );
+    }
+    /* comment a list of the external pin numbers and names */
+    abort = ForEachBlockNet( Root_TD, Number_Externals );
+    if ( !abort ) {
+      // TODO:  Fix this to list names of globals that may be renamed
+      // even in case of bCmd_Node_Names.
+      if ( !bCmd_Node_Names && num_pins ) {
+	In_Comment( 1 );
+	Data_Out( "* EXTERNAL NAMES" , false);
+	for ( ll = num_globals; ll < num_globals + num_pins; ll++ ) {
+	  name = NetName( net_tn[ll] );
+	  sprintf( line, " %ld=%s", ll, name );
+	  Data_Out( line , false);
+	}
+	In_Comment( 0 );
+	Data_Out( "\n" , false);
+      }
+    }
+  }
+
+  if ( !abort ) {
+    num_locals = 0;
+    abort = ForEachBlockNet( td, Number_Local_Nets );
+  }
+  
+  if ( !abort ) {
+#if defined(PR) 
+    if (!(*(val = Get_TDA( td, DIGITAL_STDCELL )) == 'Y')) {
+      num_unconn = num_nets = num_globals + num_pins + num_locals;
+      /* generate the code for each sub_block */
+      ForEachSubBlock( td, Code_Sub_Block );
+    }
+#endif
+#if ( defined(HSPICE) || defined(LVS) || defined(PSPICE)  || defined(NTL) )
+    num_unconn = num_nets = num_globals + num_pins + num_locals;
+    /* generate the code for each sub_block */
+    ForEachSubBlock( td, Code_Sub_Block );
+#endif
+  }
+  if ( ( bCmd_Macro && ti ) || td != Root_TD ) {
+    /* coded this one as a SUBCKT */
+    sprintf( line, ".ENDS %s\n", Get_TDA( td, NAME ) );
+    Data_Out( line , false);
+  }
+  return( abort );
+}
+
+                 /*---------- Do_Modeled_Types ----------*/
+
+static int Do_Modeled_Types( TD_PTR td ) {
+  /* if a primitive (or block if !use primitives )
+     has a PREFIX of 'X' or SIM_PREFIX of 'N', look for a .p/.h/.l/ .a file */
+
+#if defined(PSPICE)
+  char *pVal;
+  char *dfVal;
+  char *spVal;
+
+  pVal = Get_TDA( td, PREFIX );
+  dfVal = Get_TDA( td, DIGITAL_FILE );
+  spVal = Get_TDA( td, SIM_PREFIX );
+  
+  if (!bCmd_MixedSignal) {
+    if (( !bCmd_PrimitiveLevel || PrimitiveCell( td )) && ((*pVal == 'X' ) || (*spVal == 'N' ))) {
+      if ( Merge_Macro_File( Get_TDA( td, NAME )))
+	MarkBlockDone( td );
+    }
+  } 
+  else {
+    if (( !bCmd_PrimitiveLevel || PrimitiveCell( td )) && ((*pVal == 'X' ) || (*spVal == 'N' ))) {
+      if ( Merge_Macro_File( Get_TDA( td, NAME )))
+	MarkBlockDone( td );
+    }
+    else {
+      if ( *dfVal == 'Y' ) {
+	Merge_Digital_Macro_File( Get_TDA( td, NAME ));
+	MarkBlockDone( td );
+      }
+    }
+  }	
+#endif // PSPICE
+#if defined(HSPICE)
+  if (( !bCmd_PrimitiveLevel || PrimitiveCell( td )) && ((*Get_TDA( td, PREFIX ) == 'X' ) || (*Get_TDA( td, SIM_PREFIX ) == 'N' ))) {
+    if ( Merge_Macro_File( Get_TDA( td, NAME )))
+      MarkBlockDone( td );
+  }
+#endif // HSPICE
+#if ( defined(LVS) || defined(PR))
+  if (( !bCmd_PrimitiveLevel || PrimitiveCell( td )) && ((*Get_TDA( td, PREFIX ) == 'X' ) || (*Get_TDA( td, SIM_PREFIX ) == 'N' ))) {
+    if ( Merge_Macro_File( Get_TDA( td, NAME )))
+      MarkBlockDone( td );
+    else {
+      char msg[128];
+      sprintf( msg, "Error: macro file %s.l not found",Get_TDA(td, NAME));
+      errorWithInstance( msg, td );
+    }
+  }
+#endif //LVS PR
+#if defined(NTL)
+  if (( !bCmd_PrimitiveLevel || PrimitiveCell( td )) && ((*Get_TDA( td, PREFIX ) == 'X' ) || (*Get_TDA( td, SIM_PREFIX ) == 'N' ))) {
+    if ( Merge_Macro_File( Get_TDA( td, NAME )))
+      MarkBlockDone( td );
+    else {
+      char msg[128];
+      sprintf( msg, "Error: macro file %s.a not found",Get_TDA(td, NAME));
+      errorWithInstance( msg, td );
+    }
+  }
+#endif //NTL
+  return( 0 );
+}
+
+                /*---------- Do_Global_Net ----------*/
+
+static int Do_Global_Net( const char* name ) {
+  int abort = FALSE;
+  TN_PTR tn;
+  if ( ( tn = FindNetNamed( name ) ) && tn != net_tn[0] ) {
+    CHECK_NET_MEM( num_globals + 1 );
+    net_tn[ num_globals++ ] = tn;
+  }
+  return( abort );
+}
+
+/*---------- List_Globals ----------*/
+
+static void List_Globals() {
+  long ll, first_global = 1;
+  
+  /* If bCmd_Use_Globals is TRUE the version of Spice can work with global nets.
+     In this case GND is node zero and we assign the rest of the global nets
+     numbers starting from 1.  Subsequent use of the nets will use the index
+     into net_tn as the node number.
+     If bCmd_Use_Globals is FALSE we still number GND as node zero and treat it
+     as a Global Net.  Only LVS requires GND to be listed as a net in .SUBCKT
+     definitions.  The rest of the global nets are treated as local nets
+     which are connected to pins.  This had to be done because not all blocks
+     have all possible globals and the order of the pins may not be the same
+     on all blocks. */
+  /* If user has split hierarchy he must have all the same globals in each
+     sub-hierarchy when using globals otherwise the node numbers in the main
+     netlist won't match the node numbers in the sub netlists. */
+  
+  net_tn[0] = FindNetNamed( "GND" );        /* Node zero is reserved for GND */
+  if ( net_tn[0] && NetLocExtGbl( net_tn[0] ) != 2 ) {
+    sprintf( line, "GND not defined as a GlobalNet." );
+    Error_Out( line );
+  }
+  num_globals = 1;
+  
+  if ( bCmd_Use_Globals ) {
+    ForEachGlobalNetName( Do_Global_Net );
+    
+#if defined(HSPICE)
+    Data_Out( ".GLOBAL" , false);
+#endif // HSPICE					
+#if (defined(LVS) || defined(PSPICE) || defined(PR)  || defined(NTL) )
+    Data_Out( "**.GLOBAL" , false);
+#endif // LVS or PSPICE
+    if ( net_tn[0] ) first_global = 0;
+    if ( bCmd_Node_Names ) {
+      for ( ll = first_global; ll < num_globals; ll++ ) {
+	sprintf(line, " %s", _strupr(_strdup(NetName( net_tn[ll] ))));
+	Data_Out( line, false);
+      }
+      Data_Out( "\n" , false);
+    }
+    else {
+      for ( ll = first_global; ll < num_globals; ll++ ) {
+	sprintf( line, " %ld", ll );
+	Data_Out( line , false);
+      }
+      Data_Out( "\n" , false);
+      In_Comment( 1 );
+      Data_Out( "* GLOBAL NAMES" , false);
+      for ( ll = first_global; ll < num_globals; ll++ ) {
+	sprintf( line, " %s", NetName( net_tn[ll] ) );
+	Data_Out( line , false);
+      }
+      Data_Out( "\n" , false);
+      In_Comment( 0 );
+    }
+  }
+}
+
+void FreeAllocatedMemory(void) {
+  int ii;
+  //free memory used for caching names with underscores
+  for (ii = 0; ii < nMaxNumSubCircuits; ii++) {
+    if (SubCircuits[ii] != NULL) {
+      char **UnderscoreNameCache = SubCircuits[ii];
+      for(int j = 0; j < *(SubCircuitMaxIndexCount[ii]); j++) {
+	delete UnderscoreNameCache[j];
+      }
+      delete UnderscoreNameCache;
+    }
+  }
+  //free memory used for subcircuit names
+  for (ii = 0; ii < nMaxSubCircuitIndexCount; ii++) {
+    delete SubCircuitNames[ii];
+  }
+  delete SubCircuitNames;
+  
+  //free memory used for indexing into the caches
+  /* Creates problems with a block without subblocks */
+  /*
+    for (ii = 0; ii < *(SubCircuitMaxIndexCount[ii]); ii++)
+    {
+    delete SubCircuitMaxIndexCount[ii];
+    }
+  */
+  delete SubCircuitMaxIndexCount;
+  
+  //free memory for the current subcircuit name
+  delete szCurrentSubCircuitName;
+  //free memory used to hold the new name if a clash is found
+  if (szNewName != NULL) {
+    delete szNewName;
+  }
+}
+
+void Process( int argc, char *argv[] ) {
+  int ii, abort = 0;
+  int notepad = FALSE;
+  FILE *patfile;
+  char cFileNameA[_MAX_PATH], cTimeA[64];
+#if ( defined(PSPICE) || defined(HSPICE))
+  char *cExtP = ".spi";
+#endif // PSPICE or HSPICE
+#if defined(LVS)
+  char *cExtP = ".net";
+#endif // LVS
+#if defined(PR)
+  char *cExtP = ".cdl";
+#endif // LVS
+#if defined(NTL)
+  char *cExtP = ".apt";
+#endif // NTL
+  long length;
+  
+  /* check the arguments for program options and file extension */
+  for ( ii = 1; ii < argc; ii++ ) {
+    if ( *argv[ii] == '-' ) {
+      if ( !strnicmp( argv[ii], "-ext=.", 6 )) 
+	cExtP = argv[ii] + 5;
+      if ( !strnicmp( argv[ii], "-view", 5 ))
+	notepad = TRUE;
+    }
+  }
+  
+  /* setup the parameters for the output file processing */
+  max_line_len = 78;
+  line_len = 78;
+  continue_str = "\n+";
+  comment_continue_str = "\n*";
+  begin_error_str = "*** ";
+  
+  error_count = 0;                              /* counts calls to Error_Out */
+  
+  /* open the file used by Data_Out */
+  strcpy( cFileNameA, szRootName );
+  AddExt( cFileNameA, cExtP );
+  strlwr( FileInPath( cFileNameA ) );
+  file = fopen( cFileNameA, "w" );
+  
+  char szErrFileName[_MAX_PATH];
+  strcpy(szErrFileName, szRootName);
+  AddExt(szErrFileName, ".err");
+  errorFile = fopen( szErrFileName, "w" );
+  
+  if ( file ) {
+    char szTitle[50];
+    GetProductName( szTitle, sizeof(szTitle) );
+    char szVersion[30];
+    GetProductVersion( szVersion, sizeof(szVersion) );
+#if defined(PSPICE)		
+    sprintf( line, "* LTC PSpice Netlist %s - %s Version %s\n", NETLIST_VER, szTitle, szVersion );
+    /*
+      Data_Out( line , false);
+      sprintf( line , "* Prefix:%d; Macro:%d; NodeNames:%d; Shrink:%d StdCells:%d\n", bCmd_FilterPrefix, bCmd_Node_Names, bCmd_Shrink, bCmd_StdCells);  
+      Data_Out( line , false);
+      sprintf( line , "* AreaBip:%d; CtoD:%d; Units:%d; WLBip:%d GNDto0:%d; xGNDxto0:%d\n", bCmd_AreaBip, bCmd_Units, bCmd_GNDto0, bCmd_XGNDXto0);  
+    */
+#endif // PSPICE		
+#if defined(HSPICE)		
+    sprintf( line, "* LTC HSpice Netlist %s. \n", NETLIST_VER );
+    //    sprintf( line, "* LTC HSpice Netlist %s - %s Version %s\n", NETLIST_VER, szTitle, szVersion );
+#endif // HSPICE		
+#if defined(LVS)		
+    sprintf( line, "* LTC Dracula Netlist %s.\n", NETLIST_VER );
+    //    sprintf( line, "* LTC Dracula Netlist %s - %s Version %s\n", NETLIST_VER, szTitle, szVersion );
+#endif // LVS		
+#if defined(PR)		
+    sprintf( line, "* LTC CDL for P&R Netlist %s.\n", NETLIST_VER );
+    //    sprintf( line, "* LTC CDL for P&R Netlist %s - %s Version %s\n", NETLIST_VER, szTitle, szVersion );
+#endif // PR		
+#if defined(NTL)		
+    sprintf( line, "* LTC APT netlist to generate layout %s.\n", NETLIST_VER );
+//    sprintf( line, "* LTC APT netlist to generate layout %s - %s Version %s\n", NETLIST_VER, szTitle, szVersion );
+#endif // NTL
+    Data_Out( line , false);
+    GetIntlDateTimeString( cTimeA );
+    sprintf( line, "* %s - %s\n*\n", cFileNameA, cTimeA );
+    Data_Out( line , false);
+    
+#if defined(LVS)
+    Merge_Header_File( szRootName );
+#endif // LVS
+    /* allocate memory for the max number of nets in a block */
+    if ( net_tn = (TN_PTR*)calloc( max_nets, sizeof(TN_PTR) )) {
+	List_Globals();
+	
+	SortPinsByOrder( SPICEORDER );
+	
+	//First pass - cache any names that use underscores
+	SetupBlockScan();         /* prepare for bottom up hierarchical scan */
+	/* read in .spi files for Primitives with PREFIX = 'X' */
+	ForEachDescriptor( Do_Modeled_Types );
+	
+	ForEachBlock( Cache_Underscored_Names );
+	
+	//Second pass - write netlist
+	SetupBlockScan();         /* prepare for bottom up hierarchical scan */
+	/* read in .spi files for Primitives with PREFIX = 'X' */
+	ForEachDescriptor( Do_Modeled_Types );
+			
+	interp = Tcl_CreateInterp();
+	ForEachBlock( Code_Block );
+	Tcl_DeleteInterp( interp );
+
+	fseek( file, 0L, SEEK_END );
+	length = ftell( file );
+	fclose( file );
+	fclose( errorFile);
+	if ( error_count ) {
+	  char szBadFileName[_MAX_PATH];
+	  strcpy( szBadFileName, szRootName );
+	  AddExt( szBadFileName, ".bad" );
+	  MoveFile( cFileNameA, szBadFileName );
+	  DeleteFile( cFileNameA );
+	  DisplayErrors( szErrFileName );
+	}
+	else  {
+	  /* process the users pattern file to replace names in quotes with
+	     the corresponding number.  This will only work because the last
+	     block processed is always the top level block so names get
+	     mapped properly */
+	  if ( !bCmd_Node_Names ) {
+	    sprintf( cFileNameA, "%s.spp", szRootName );
+	    strlwr( FileInPath( cFileNameA ) );
+	    if ( patfile = fopen( cFileNameA, "r" ))
+	      Process_Pattern_File( patfile );
+	  }
+	  if ( notepad ) {
+	    sprintf( cFileNameA, "%s%s", szRootName, cExtP );
+	    LaunchEditor( cFileNameA );
+	  }
+	  AddExt(cFileNameA, ".err");
+	  if (_access(cFileNameA, 00) == 0) {
+	    //err file exist?
+	    DeleteFile(cFileNameA);
+	  }
+	  AddExt(cFileNameA, ".bad");
+	  if (_access(cFileNameA, 00) == 0) {
+	    //err file exist?
+	    DeleteFile(cFileNameA);
+	  }
+	}
+	if ( net_tn ) {
+	  free( net_tn );
+	  net_tn = NULL;
+	}
+	
+	FreeAllocatedMemory();
+    }
+    else
+      MajorError( "Not enough memory to process design" );
+  }
+}

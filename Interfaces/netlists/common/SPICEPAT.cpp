@@ -1,0 +1,58 @@
+#include <stdafx.h>
+#include "pikproc.h"
+#include "dataout.h"
+
+/* external functions */
+long Find_Net_Number_Of( char *name );
+/* public functions */
+void Process_Pattern_File( FILE *patfile );
+
+                     /*----------  Do_Pattern  ----------*/
+static void Do_Pattern( char *cc )
+{
+  long num;
+  char *dd;
+  /* find any quoted strings and replace them with the Node Number */
+  dd = strchr( cc, '\"' );
+  if ( *dd ) {                                          /* found quoted string */
+    *dd++ = '\0';
+    Data_Out( cc , false);
+    cc = dd;                                        /* save pointer to name */
+    dd = strchr( cc, '\"' );
+    if ( *dd ) {                                         /* found close quote */
+      *dd++ = '\0';
+      if ( ( num = Find_Net_Number_Of( cc ) ) >= 0 )
+	sprintf( line, "%ld", num );
+      else
+	sprintf( line, cc );
+      Data_Out( line , false);
+    }
+    else
+      Error_Out( "Unmatched Quotes in Pattern file" );
+  }
+  else Data_Out( cc , false);
+  Data_Out( "\n" , false);
+}
+
+                /*----------  Process_Pattern_File  ----------*/
+
+void Process_Pattern_File( FILE* patfile )
+{
+  char *cc, buff[256], filename[_MAX_PATH];
+  
+  sprintf( filename, "%s.spc", szRootName );
+  strlwr( FileInPath( filename ) );
+  file = fopen( filename, "w" );
+  
+  if ( file ) {
+    while ( fgets( buff, sizeof(buff), patfile ) ) {            /* not yet EOF */
+      cc = strchr( buff, '\n' );                     /* find new line char */
+      if ( cc ) *cc = '\0';                         /* replace with a NULL */
+      Do_Pattern( buff );
+    }
+    fclose( file );
+  }
+  fclose( patfile );
+}
+
+

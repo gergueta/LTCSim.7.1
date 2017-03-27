@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <ADI_Utils>D:\Cohesion\Designer6\ltc\ADUtils</ADI_Utils>
+    <ADI_bin>D:\Cohesion\Designer6\bin</ADI_bin>
+    <ADI_bin_released>D:\Cohesion\Designer6\bin</ADI_bin_released>
+    <ADI_bin_debug>D:\Cohesion.debug\Designer6\bin</ADI_bin_debug>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="ADI_Utils">
+      <Value>$(ADI_Utils)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="ADI_bin">
+      <Value>$(ADI_bin)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="ADI_bin_released">
+      <Value>$(ADI_bin_released)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="ADI_bin_debug">
+      <Value>$(ADI_bin_debug)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

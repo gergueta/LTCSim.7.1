@@ -1,0 +1,60 @@
+# Microsoft Developer Studio Generated Dependency File, included by Pspicent.mak
+
+.\common\Dataout.cpp : \
+	".\common\dataout.h"\
+	".\common\STDAFX.H"\
+	".\common\unix_for_pc.h"\
+	
+
+.\pspice\PSPCSUB.cpp : \
+	"..\editors\Include\pikfuncs.h"\
+	"..\editors\Include\pikproc.h"\
+	"..\editors\Include\platform.h"\
+	".\common\attr.h"\
+	".\common\dataout.h"\
+	".\common\STDAFX.H"\
+	".\common\unix_for_pc.h"\
+	
+
+.\common\SPICDLG.cpp : \
+	"..\editors\Include\platform.h"\
+	".\common\attr.h"\
+	".\common\pikfuncs.h"\
+	".\common\pikproc.h"\
+	".\common\STDAFX.H"\
+	".\common\unix_for_pc.h"\
+	
+
+.\common\spice.cpp : \
+	"..\editors\Include\platform.h"\
+	".\common\attr.h"\
+	".\common\dataout.h"\
+	".\common\pikfuncs.h"\
+	".\common\pikproc.h"\
+	".\common\STDAFX.H"\
+	".\common\unix_for_pc.h"\
+	
+
+.\common\SPICEPAT.cpp : \
+	"..\editors\Include\platform.h"\
+	".\common\attr.h"\
+	".\common\dataout.h"\
+	".\common\pikfuncs.h"\
+	".\common\pikproc.h"\
+	".\common\STDAFX.H"\
+	".\common\unix_for_pc.h"\
+	
+
+.\common\spicprim.cpp : \
+	"..\editors\Include\platform.h"\
+	".\common\attr.h"\
+	".\common\dataout.h"\
+	".\common\pikfuncs.h"\
+	".\common\pikproc.h"\
+	".\common\STDAFX.H"\
+	".\common\unix_for_pc.h"\
+	
+
+.\pspice\PSPICENT.RC : \
+	".\resource.h"\
+	

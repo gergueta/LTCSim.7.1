@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9be625b3-36f2-43c4-87ac-2662a6a9ed81}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{d1c1a950-ee77-45d7-9673-d661a5afb258}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;fi;fd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{9b7aea1f-3dc6-4ebc-aaa7-975219db817a}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Library Files">
+      <UniqueIdentifier>{b274cb4b-8f8a-43a4-8d64-64abdd4ca420}</UniqueIdentifier>
+      <Extensions>lib</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ASYOUT.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Ascout\MAINASCO.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\editors\pwin\WinTools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editors\Include\attr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editors\include\scsdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editors\Include\spikproc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editors\include\sysdlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\editors\pwin\alert.dlg">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\utility.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\netlists\tclLib\tcl84.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\netlists\tclLib\tclstub84.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\netlists\tclLib\tk84.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\netlists\tclLib\tkstub84.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\Libraries\nttapkp.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\Libraries\scpik.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="..\..\LTCSimNetlist\Libraries\sympi.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,4 @@
+#include <windows.h>
+#include "sysdlg.h"
+#include "alert.dlg"
+

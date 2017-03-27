@@ -1,0 +1,60 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Hspicent - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\german\LOCALS~1\Temp\RSP4E.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\editors\include" /I ".\common" /I ".\tclInclude" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "HSPICE" /FR".\HSpice\Debug/" /Fp".\HSpice\Debug/Hspicent.pch" /YX /Fo".\HSpice\Debug/" /Fd".\HSpice\Debug/" /FD /c 
+"C:\Delphi\Interfaces\netlists\common\spice.cpp"
+"C:\Delphi\Interfaces\netlists\common\spicprim.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\german\LOCALS~1\Temp\RSP4E.tmp" 
+Creating temporary file "C:\DOCUME~1\german\LOCALS~1\Temp\RSP4F.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:yes /pdb:".\HSpice\Debug/LTCSimHspice.pdb" /debug /machine:I386 /nodefaultlib:"msvcrt.lib" /nodefaultlib:"libcd.lib" /out:"C:\Cohesion\Designer6\bin\LTCSimHspice.exe" /pdbtype:sept 
+.\HSpice\Debug\Dataout.obj
+.\HSpice\Debug\Hspcsub.obj
+.\HSpice\Debug\SPICDLG.obj
+.\HSpice\Debug\spice.obj
+.\HSpice\Debug\SPICEPAT.obj
+.\HSpice\Debug\spicprim.obj
+.\lib\nttapkp.lib
+.\lib\pik.lib
+.\tclLib\tkstub84.lib
+.\tclLib\tcl84.lib
+.\tclLib\tcl84d.lib
+.\tclLib\tclstub84.lib
+.\tclLib\tk84.lib
+.\tclLib\tk84d.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\german\LOCALS~1\Temp\RSP4F.tmp"
+<h3>Output Window</h3>
+Compiling...
+spice.cpp
+C:\Delphi\Interfaces\netlists\common\spice.cpp(87) : error C2143: syntax error : missing ';' before '*'
+C:\Delphi\Interfaces\netlists\common\spice.cpp(87) : error C2501: 'Tcl_Interp' : missing storage-class or type specifiers
+C:\Delphi\Interfaces\netlists\common\spice.cpp(87) : error C2501: 'interp' : missing storage-class or type specifiers
+C:\Delphi\Interfaces\netlists\common\spice.cpp(1138) : error C2065: 'Tcl_CreateInterp' : undeclared identifier
+C:\Delphi\Interfaces\netlists\common\spice.cpp(1138) : error C2440: '=' : cannot convert from 'int' to 'int *'
+        Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+C:\Delphi\Interfaces\netlists\common\spice.cpp(1140) : error C2065: 'Tcl_DeleteInterp' : undeclared identifier
+spicprim.cpp
+C:\Delphi\Interfaces\netlists\common\spicprim.cpp(50) : error C2143: syntax error : missing ';' before '*'
+C:\Delphi\Interfaces\netlists\common\spicprim.cpp(50) : error C2501: 'interp' : missing storage-class or type specifiers
+C:\Delphi\Interfaces\netlists\common\spicprim.cpp(119) : error C2065: 'Tcl_RegExpMatch' : undeclared identifier
+C:\Delphi\Interfaces\netlists\common\spicprim.cpp(133) : error C2065: 'Tcl_SetVar' : undeclared identifier
+C:\Delphi\Interfaces\netlists\common\spicprim.cpp(135) : error C2065: 'Tcl_Eval' : undeclared identifier
+C:\Delphi\Interfaces\netlists\common\spicprim.cpp(136) : error C2065: 'Tcl_GetVar' : undeclared identifier
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+LTCSimHspice.exe - 12 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

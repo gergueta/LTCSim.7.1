@@ -88,7 +88,6 @@ type
     cbLocation: TComboBox;
     cbLTspiceGND: TCheckBox;
     cbLTspiceOmitPrefix: TLMDCheckBox;
-    cbLTspiceSchematics: TCheckBox;
     cbLTspiceShrink: TCheckBox;
     cbLTspiceSubcircuit: TCheckBox;
     cbLTspiceXGNDX: TCheckBox;
@@ -371,8 +370,17 @@ type
     ActionVNCViewer: TAction;
     ActionVNCServer: TAction;
     M1: TMenuItem;
+    ToolButton3: TToolButton;
+    cbLTspiceSchematics: TCheckBox;
+    N1: TMenuItem;
+    AD1: TMenuItem;
+    Schematics2: TMenuItem;
+    ASCIItoSchem2: TMenuItem;
+    Action1: TAction;
+    Action2: TAction;
     procedure AboutLTCSimClick(Sender: TObject);
     procedure AboutProcessClick(Sender: TObject);
+    procedure ActionSchemToAsciiExecute(Sender: TObject);
     procedure ActionVNCViewerExecute(Sender: TObject);
     procedure ActionAscToSchExecute(Sender: TObject);
     procedure ActionAsyToSymExecute(Sender: TObject);
@@ -732,6 +740,53 @@ begin
     MessageDlg('Not available on this process yet!', mtInformation, [mbOK], 0);
 
   CodeSite.ExitMethod(Self, 'AboutProcessClick');
+end;
+
+procedure TMainForm.ActionSchemToAsciiExecute(Sender: TObject);
+var
+  ProjectIniFile: TIniFile;
+  I: Integer;
+  lInfo: TStringList;
+  sDirectoryPath: string;
+begin
+  CodeSite.EnterMethod(Self, 'ActionSchemToAsciiExecute');
+
+  if ValidProject() then
+  begin
+    SchemToAsciiForm.JamFileListSch.Stop;
+    SchemToAsciiForm.JamFileListSch.Clear;
+    SchemToAsciiForm.JamFileListSch.SearchOptions.Filter := '*.sch';
+    SchemToAsciiForm.JamFileListSch.SearchOptions.RecursiveSearch := False;
+    lInfo := TStringList.Create;
+    ProjectIniFile := TIniFile.Create(Project.IniFileName);
+    try
+      ProjectIniFile.ReadSection('ProjectLibraries', lInfo);
+      if (lInfo.Count > 0) then
+      begin
+        for I := 0 to (lInfo.Count - 1) do
+        begin
+          sDirectoryPath := LowerCase(Trim(lInfo.Strings[I]));
+          if (System.Pos('$(projects)', sDirectoryPath) > 0) then
+          begin
+            sDirectoryPath := SysUtils.StringReplace(sDirectoryPath,
+              '$(projects)', LowerCase(LTCSim.localProjectsDir),
+              [rfIgnoreCase, rfReplaceAll]);
+          end;
+          SchemToAsciiForm.JamFileListSch.Search(sDirectoryPath);
+        end
+      end;
+      lInfo.Clear;
+    finally
+      ProjectIniFile.Free;
+      lInfo.Free;
+    end;
+    SchemToAsciiForm.ShowModal;
+    SchemToAsciiForm.JamFileListSch.Stop;
+  end
+  else
+    MessageDlg('You need a valid project loaded first!', mtError, [mbOK], 0);
+
+  CodeSite.ExitMethod(Self, 'ActionSchemToAsciiExecute');
 end;
 
 procedure TMainForm.ActionVNCViewerExecute(Sender: TObject);
@@ -4122,7 +4177,7 @@ begin
     LibDir := IncludeTrailingPathDelimiter(Project.RevDir) + 'lib';
     SetupFile := IncludeTrailingPathDelimiter(Project.RevDir) + 'setup.ini';
     Project.XMLSetupFile6 := IncludeTrailingPathDelimiter(Project.RevDir) +
-      'project.xml';
+      'setup.xml';
     XMLSetupFile71 := IncludeTrailingPathDelimiter(Project.RevDir) +
     'setup71.xml';
     LTspiceIniFileName := IncludeTrailingPathDelimiter(Project.RevDir) +
@@ -6011,7 +6066,7 @@ begin
   begin
     Command := IncludeTrailingPathDelimiter(LTCSim.Dir) + 'HDSShell.exe';
     DefaultDir := Project.SchemDir;
-    Parameters := ' -ini ' + Project.IniFileName + ' -startdir ' + sWorkingDir;
+    Parameters := ' -ini ' + Project.IniFileName + ' -startdir ' + Project.WorkingDir;
     Execute;
     HDSShellHandle := Process;
   end;

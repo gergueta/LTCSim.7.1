@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<iasettings>
+  <projectproperties>
+    <manufacturer>german</manufacturer>
+    <productname>ADUtils</productname>
+    <productversion>1.0.0</productversion>
+    <productcode>{a80184c0-bcf3-4cdf-aa4d-22c9ead57f7b}</productcode>
+    <upgradecode>{28fce307-f0ce-4230-a2a5-193e682ef739}</upgradecode>
+    <language>0</language>
+    <languagename>English</languagename>
+  </projectproperties>
+  <summary>
+    <title>ADUtils</title>
+    <subject>ADUtils</subject>
+    <author>german</author>
+    <summarycomments>ADUtils</summarycomments>
+    <revisioncode>{bab24f45-f417-4232-a7ca-2a0bf47ce2fd}</revisioncode>
+    <uacelevation>highestAvailable</uacelevation>
+  </summary>
+  <addremove>
+    <publishername>german</publishername>
+    <contactname>german</contactname>
+    <helplink>http://www.mywebsite.com</helplink>
+    <productupdatelink>http://www.mywebsite.com</productupdatelink>
+    <addremovecomments>All Rights Reserved</addremovecomments>
+    <iconfile />
+  </addremove>
+  <codegen>
+    <generateincludefiles>1</generateincludefiles>
+    <generatefeatures>0</generatefeatures>
+    <refreshscript>0</refreshscript>
+  </codegen>
+  <compilervariables>
+    <variables />
+  </compilervariables>
+  <build>
+    <buildtype>0</buildtype>
+  </build>
+  <files>
+    <filedetails filename="D:\LTCSim\LTCSim.7.1\Interfaces\utility\ascin\Debug\ADAscin.exe" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="1" runprogram="1" installfilecommand="1" />
+    <filedetails filename="D:\LTCSim\LTCSim.7.1\Interfaces\utility\asyin\Debug\ADAsyin.exe" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="1" runprogram="1" installfilecommand="1" />
+    <filedetails filename="D:\LTCSim\LTCSim.7.1\Interfaces\utility\asyout\Debug\ADAsyout.exe" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="1" runprogram="1" installfilecommand="1" />
+    <filedetails filename="D:\LTCSim\LTCSim.7.1\Interfaces\utility\edifin\Debug\ADEdifin.exe" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="1" runprogram="1" installfilecommand="1" />
+    <filedetails filename="D:\LTCSim\LTCSim.7.1\Interfaces\utility\edifout\Debug\ADEdifout.exe" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="1" runprogram="1" installfilecommand="1" />
+    <filedetails filename="D:\LTCSim\LTCSim.7.1\Interfaces\utility\ascout\Debug\ADAscout.exe" targetlocation="$TARGETDIR$" generatenativeimage="0" registerassembly="0" runinstallerclass="0" createshortcut="1" runprogram="1" installfilecommand="1" />
+  </files>
+  <dependencies />
+  <dialogtheme>
+    <themename>Official</themename>
+  </dialogtheme>
+  <authenticode>
+    <sign>0</sign>
+    <certificatefile />
+    <keyfile />
+    <productinfourl />
+    <authpassword />
+    <timestampurl />
+  </authenticode>
+  <compression>
+    <compressiontype>6</compressiontype>
+    <encrypt>0</encrypt>
+    <compressionpassword />
+  </compression>
+  <output>
+    <outputtype>0</outputtype>
+    <location />
+    <filename />
+    <calculatefilehash>0</calculatefilehash>
+    <refreshrevisioncode>1</refreshrevisioncode>
+  </output>
+</iasettings>

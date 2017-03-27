@@ -1,0 +1,66 @@
+head	1.1;
+access;
+symbols;
+locks
+	german:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2005.03.10.15.37.22;	author german;	state Exp;
+branches;
+next	;
+
+
+desc
+@Initial
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/* $HDR$*/
+/************************************************************************/
+/* File archived using GP-Version                                       */
+/* GP-Version is Copyright 1999 by Quality Software Components Ltd      */
+/*                                                                      */
+/* For further information / comments, visit our WEB site at            */
+/* http://www.qsc.co.uk                                                 */
+/************************************************************************/
+/**/
+/* $Log:  D:\Repository4..X\Pspicent\Common\resource.h.z 
+/*
+/*   Rev 1.0    8/2/2000 10:56:51 PM  supervisor
+/* Initial Revision
+*/
+/*
+/*   Rev 1.0    7/31/2000 9:50:21 PM  german_e
+/* Initial Revision
+*/
+/**/
+//{{NO_DEPENDENCIES}}
+// Microsoft Developer Studio generated include file.
+// Used by LVSnt.RC
+//
+#define IDD_LVS                         303
+#define IDD_MACRO                       311
+#define IDD_NODE_NAMES                  312
+#define IDD_USE_GLOBALS                 313
+#define IDD_PRIM                        314
+#define IDD_GND                         1000
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NO_MFC                     1
+#define _APS_NEXT_RESOURCE_VALUE        101
+#define _APS_NEXT_COMMAND_VALUE         40001
+#define _APS_NEXT_CONTROL_VALUE         1001
+#define _APS_NEXT_SYMED_VALUE           101
+#endif
+#endif
+@

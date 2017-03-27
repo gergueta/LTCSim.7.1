@@ -1,0 +1,40 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: LTCSimSchShrink - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\german\LOCALS~1\Temp\RSP158.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /Gi /GX /ZI /Od /I "..\..\netlists\common" /I "..\..\netlists\tclInclude" /I "..\..\editors\include" /I "..\..\editors\pwin" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /Fo".\Debug/" /Fd".\Debug/" /FD /c 
+"C:\Delphi\Interfaces\utility\SchShrink\LTCSimSchShrink.CPP"
+"C:\Delphi\Interfaces\netlists\common\utilmain.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\german\LOCALS~1\Temp\RSP158.tmp" 
+Creating temporary file "C:\DOCUME~1\german\LOCALS~1\Temp\RSP159.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:yes /pdb:".\Debug/LTCSimSchShrink.pdb" /debug /machine:I386 /nodefaultlib:"libc.lib" /out:"C:\Cohesion\Designer6\bin\LTCSimSchShrink.exe" 
+.\Debug\LTCSimSchShrink.obj
+..\..\netlists\Lib\scpik.lib
+..\..\netlists\tclLib\tcl84.lib
+..\..\netlists\tclLib\tk84.lib
+.\Debug\utilmain.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\german\LOCALS~1\Temp\RSP159.tmp"
+<h3>Output Window</h3>
+Compiling...
+LTCSimSchShrink.CPP
+utilmain.cpp
+Generating Code...
+Linking...
+LINK : warning LNK4098: defaultlib "MSVCRT" conflicts with use of other libs; use /NODEFAULTLIB:library
+
+
+
+<h3>Results</h3>
+LTCSimSchShrink.exe - 0 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

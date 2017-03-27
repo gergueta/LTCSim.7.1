@@ -1,0 +1,33 @@
+head	1.1;
+access;
+symbols;
+locks
+	german:1.1; strict;
+comment	@// @;
+
+
+1.1
+date	2005.03.10.15.36.05;	author german;	state Exp;
+branches;
+next	;
+
+
+desc
+@Initial.
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@// stdafx.cpp : source file that includes just the standard includes
+// netlists.pch will be the pre-compiled header
+// stdafx.obj will contain the pre-compiled type information
+
+#include "stdafx.h"
+
+// TODO: reference any additional headers you need in STDAFX.H
+// and not in this file
+@
