@@ -15,7 +15,6 @@ uses
   SchemToAscii in 'SchemToAscii.pas' {SchemToAsciiForm},
   SymToAsy in 'SymToAsy.pas' {SymToAsyForm},
   AsyToSymbols in 'AsyToSymbols.pas' {AsyToSymForm},
-  DataModule in 'DataModule.pas' {LibraryDatabase: TDataModule},
   NewRevWithoutProcessCode in 'NewRevWithoutProcessCode.pas' {NewRevForm},
   UpdateSchematics in 'UpdateSchematics.pas' {UpdateSchemDlg},
   DisplayHideAttr in 'DisplayHideAttr.pas' {DisplayHideAttrDlg},
@@ -46,7 +45,6 @@ begin
   Application.CreateForm(TSchemToAsciiForm, SchemToAsciiForm);
   Application.CreateForm(TSymToAsyForm, SymToAsyForm);
   Application.CreateForm(TAsyToSymForm, AsyToSymForm);
-  Application.CreateForm(TLibraryDatabase, LibraryDatabase);
   Application.CreateForm(TNewRevForm, NewRevForm);
   Application.CreateForm(TUpdateSchemDlg, UpdateSchemDlg);
   Application.CreateForm(TDisplayHideAttrDlg, DisplayHideAttrDlg);

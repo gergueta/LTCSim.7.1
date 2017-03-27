@@ -10,14 +10,15 @@ uses
   // ffdb, ffdbbase, ffllcomm, fflllgcy, ffllbase,
   // ffllcomp, fflleng, ffsrintm, ffclreng,
   ADODB, Uni, MemDS, DBAccess,
-  UniProvider, PostgreSQLUniProvider;
+  UniProvider, PostgreSQLUniProvider, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.PG,
+  FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, FireDAC.Comp.Client,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  FireDAC.Comp.DataSet;
 
 type
   TLibraryDatabase = class(TDataModule)
-    DataSource: TDataSource;
-    UniConnectionLTCSim: TUniConnection;
-    UniQueryNames: TUniQuery;
-    UniQuery: TUniQuery;
   private
     { Private declarations }
   public

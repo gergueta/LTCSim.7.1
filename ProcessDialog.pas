@@ -126,7 +126,8 @@ begin
   ComboBoxProm.Clear;
   ComboBoxOption1.Clear;
   ComboBoxOption2.Clear;
-  with LibraryDatabase.UniQueryNames do
+  //with LibraryDatabase.UniQueryNames do
+  with MainForm.FDQueryNames do
   begin
     close();
     SQL.Clear;
@@ -161,25 +162,33 @@ begin
   eProcessName.Text := TRIM(DBGridProcessNames.Fields[1].AsString);
   Process.Name := TRIM(DBGridProcessNames.Fields[1].AsString);
   Process.Process_Id := DBGridProcessNames.Fields[0].AsFloat;
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with MainForm.FDQuery do
   begin
-    close;
+    Close;
     SQL.Clear;
     SQL.Add('SELECT number, display FROM rev');
     SQL.Add('WHERE process_id = ' + FloatToStr(Process.Process_Id));
     SQL.Add('ORDER BY display DESC');
-    open;
+    Open;
   end; { with }
-  if LibraryDatabase.UniQuery.RecordCount > 0 then
+  //if LibraryDatabase.UniQuery.RecordCount > 0 then
+  if MainForm.FDQuery.RecordCount > 0 then
   begin
-    while not LibraryDatabase.UniQuery.Eof do
+    //while not LibraryDatabase.UniQuery.Eof do
+    while not MainForm.FDQuery.Eof do
     begin
-      ComboBoxRev.Items.Add(LibraryDatabase.UniQuery.FieldByName('number')
+      //ComboBoxRev.Items.Add(LibraryDatabase.UniQuery.FieldByName('number')
+      //  .AsString);
+      ComboBoxRev.Items.Add(MainForm.FDQuery.FieldByName('number')
         .AsString);
-      LibraryDatabase.UniQuery.Next
+      //LibraryDatabase.UniQuery.Next
+      MainForm.FDQuery.Next
     end;
-    LibraryDatabase.UniQuery.close;
-    with LibraryDatabase.UniQuery do
+    //LibraryDatabase.UniQuery.close;
+    MainForm.FDQuery.close;
+    ////with LibraryDatabase.UniQuery do
+    with MainForm.FDQuery do
     begin
       close;
       SQL.Clear;
@@ -188,15 +197,21 @@ begin
       SQL.Add('ORDER BY prom_id');
       open;
     end;
-    if LibraryDatabase.UniQuery.RecordCount > 0 then
+    //if LibraryDatabase.UniQuery.RecordCount > 0 then
+    if MainForm.FDQuery.RecordCount > 0 then
     begin
-      while not LibraryDatabase.UniQuery.Eof do
+      //while not LibraryDatabase.UniQuery.Eof do
+      while not MainForm.FDQuery.Eof do
       begin
+      //  ComboBoxProm.Items.Add
+      //    (TRIM(LibraryDatabase.UniQuery.FieldByName('promis_name').AsString));
+      //  LibraryDatabase.UniQuery.Next
         ComboBoxProm.Items.Add
-          (TRIM(LibraryDatabase.UniQuery.FieldByName('promis_name').AsString));
-        LibraryDatabase.UniQuery.Next
+          (TRIM(MainForm.FDQuery.FieldByName('promis_name').AsString));
+        MainForm.FDQuery.Next
       end;
-      LibraryDatabase.UniQuery.close;
+      //LibraryDatabase.UniQuery.close;
+      MainForm.FDQuery.close;
     end
     else
     begin
@@ -212,13 +227,15 @@ begin
       eOption2.Text := 'N/A';
       Option1Label.Caption := 'N/A';
       Option2Label.Caption := 'N/A';
-      LibraryDatabase.UniQuery.close;
+      //LibraryDatabase.UniQuery.close;
+      MainForm.FDQuery.close;
     end
   end
   else
   begin
     ShowMessage('Problem detected with this process. Notify CAD for support.');
-    LibraryDatabase.UniQuery.close;
+    //LibraryDatabase.UniQuery.close;
+    MainForm.FDQuery.close;
   end;
 end;
 
@@ -235,7 +252,8 @@ begin
   ComboBoxOption2.Clear;
   Process.Name := TRIM(DBGridProcessNames.Fields[1].AsString);
   Process.Process_Id := DBGridProcessNames.Fields[0].AsFloat;
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with MainForm.FDQuery do
   begin
     close;
     SQL.Clear;
@@ -244,16 +262,23 @@ begin
     SQL.Add('ORDER BY number DESC');
     open;
   end; { with }
-  if LibraryDatabase.UniQuery.RecordCount > 0 then
+  //if LibraryDatabase.UniQuery.RecordCount > 0 then
+  if MainForm.FDQuery.RecordCount > 0 then
   begin
-    while not LibraryDatabase.UniQuery.Eof do
+    //while not LibraryDatabase.UniQuery.Eof do
+    while not MainForm.FDQuery.Eof do
     begin
-      ComboBoxRev.Items.Add(LibraryDatabase.UniQuery.FieldByName('number')
+      //ComboBoxRev.Items.Add(LibraryDatabase.UniQuery.FieldByName('number')
+      //  .AsString);
+      //LibraryDatabase.UniQuery.Next
+      ComboBoxRev.Items.Add(MainForm.FdQuery.FieldByName('number')
         .AsString);
-      LibraryDatabase.UniQuery.Next
+      MainForm.FDQuery.Next
     end;
-    LibraryDatabase.UniQuery.close;
-    with LibraryDatabase.UniQuery do
+    //LibraryDatabase.UniQuery.close;
+    MainForm.FDQuery.close;
+    //with LibraryDatabase.UniQuery do
+    with MainForm.FDQuery do
     begin
       close;
       SQL.Clear;
@@ -261,15 +286,21 @@ begin
       SQL.Add('WHERE (process_id = ' + FloatToStr(Process.Process_Id));
       open;
     end; { with }
-    if LibraryDatabase.UniQuery.RecordCount > 0 then
+    //if LibraryDatabase.UniQuery.RecordCount > 0 then
+    if MainForm.FDQuery.RecordCount > 0 then
     begin
-      while not LibraryDatabase.UniQuery.Eof do
+      //while not LibraryDatabase.UniQuery.Eof do
+      while not MainForm.FDQuery.Eof do
       begin
+      //  ComboBoxProm.Items.Add
+      //    (TRIM(LibraryDatabase.UniQuery.FieldByName('promis_name').AsString));
+      //  LibraryDatabase.UniQuery.Next
         ComboBoxProm.Items.Add
-          (TRIM(LibraryDatabase.UniQuery.FieldByName('promis_name').AsString));
-        LibraryDatabase.UniQuery.Next
+          (TRIM(MainForm.FDQuery.FieldByName('promis_name').AsString));
+        MainForm.FDQuery.Next
       end;
-      LibraryDatabase.UniQuery.close;
+      //LibraryDatabase.UniQuery.close;
+      MainForm.FDQuery.close;
     end
     else
     begin
@@ -285,19 +316,22 @@ begin
       eOption2.Text := 'N/A';
       Option1Label.Caption := 'N/A';
       Option2Label.Caption := 'N/A';
-      LibraryDatabase.UniQuery.close;
+      //LibraryDatabase.UniQuery.close;
+      MainForm.FDQuery.close;
     end
   end
   else
   begin
     ShowMessage('Problem detected with this process. Notify CAD for support.');
-    LibraryDatabase.UniQuery.close;
+    //LibraryDatabase.UniQuery.close;
+    MainForm.FDQuery.close;
   end;
 end;
 
 procedure TPagesDlg.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  LibraryDatabase.UniQueryNames.close;
+  //LibraryDatabase.UniQueryNames.close;
+  MainForm.FDQueryNames.Close;
   Project.Name := eProjectName.Text;
   Project.Rev := eProjectRev.Text;
   Process.Name := eProcessName.Text;
@@ -322,7 +356,8 @@ procedure TPagesDlg.ComboBoxRevChange(Sender: TObject);
 begin
   eProcessRev.Text := TRIM(ComboBoxRev.Text);
   Process.Rev := eProcessRev.Text;
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with MainForm.FDQuery do
   begin
     close;
     SQL.Clear;
@@ -330,11 +365,16 @@ begin
     SQL.Add('WHERE process_id = ' + FloatToStr(Process.Process_Id));
     open;
   end; { with }
-  LibraryDatabase.UniQuery.First;
-  eGenericRev.Text := TRIM(LibraryDatabase.UniQuery.FieldByName('generic')
+  //LibraryDatabase.UniQuery.First;
+  //eGenericRev.Text := TRIM(LibraryDatabase.UniQuery.FieldByName('generic')
+  //  .AsString);
+  //Process.GenericRev := eGenericRev.Text;
+  //LibraryDatabase.UniQuery.close
+  MainForm.FDQuery.First;
+  eGenericRev.Text := TRIM(MainForm.FDQuery.FieldByName('generic')
     .AsString);
   Process.GenericRev := eGenericRev.Text;
-  LibraryDatabase.UniQuery.close
+  MainForm.FDQuery.Close
 end;
 
 procedure TPagesDlg.ComboBoxPromChange(Sender: TObject);
@@ -354,7 +394,8 @@ begin
   Process.Promis := ComboBoxProm.Text;
   if (TRIM(Process.Promis) <> 'N/A') then
   begin
-    with LibraryDatabase.UniQuery do
+    //with LibraryDatabase.UniQuery do
+    with MainForm.FDQuery do
     begin
       close;
       SQL.Clear;
@@ -362,8 +403,10 @@ begin
       SQL.Add('WHERE promis_name =' + QuotedStr(Process.Promis));
       open;
     end;
-    LibraryDatabase.UniQuery.First;
-    sOption1 := TRIM(LibraryDatabase.UniQuery.FieldByName('option1').AsString);
+    //LibraryDatabase.UniQuery.First;
+    MainForm.FDQuery.First;
+    //sOption1 := TRIM(LibraryDatabase.UniQuery.FieldByName('option1').AsString);
+    sOption1 := TRIM(MainForm.FDQuery.FieldByName('option1').AsString);
     if (sOption1 = 'N/A') then
     begin
       Process.option1Name := sOption1;
@@ -398,7 +441,8 @@ begin
       end;
     end;
     lDetail.Clear;
-    sOption2 := TRIM(LibraryDatabase.UniQuery.FieldByName('option2').AsString);
+    //sOption2 := TRIM(LibraryDatabase.UniQuery.FieldByName('option2').AsString);
+    sOption2 := TRIM(MainForm.FDQuery.FieldByName('option2').AsString);
     if (sOption2 = 'N/A') then
     begin
       Process.option2Name := sOption2;
@@ -432,7 +476,8 @@ begin
         ComboBoxOption2.Items.Add(lDetail.Strings[i]);
       end;
     end;
-    LibraryDatabase.UniQuery.close;
+    //LibraryDatabase.UniQuery.close;
+    MainForm.FDQuery.Close;
   end
   else
   begin

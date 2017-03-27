@@ -31,7 +31,12 @@ uses
   CodeSiteLogging, AppIcons, ActiveX, AxNetwork_TLB, ZipForge,
   LMDCustomExtCombo, LMDComboBoxExt, Vcl.PlatformDefaultStyleActnCtrls,
   LMDShLink, LMDShList, LMDShTree, LMDShFolder, LMDTaskDlg, JSDialog,
-  LMDTextButton, JamSystemShellView;
+  LMDTextButton, JamSystemShellView, Vcl.Grids, Vcl.DBGrids, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys,
+  FireDAC.Phys.PG, FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, FireDAC.Comp.Client,
+  FireDAC.Comp.DataSet;
 
 type
   TMainForm = class(TForm)
@@ -378,6 +383,10 @@ type
     ASCIItoSchem2: TMenuItem;
     Action1: TAction;
     Action2: TAction;
+    FDQuery: TFDQuery;
+    DataSourceLTCSim: TDataSource;
+    FDQueryNames: TFDQuery;
+    FDConnectionLTCSim: TFDConnection;
     procedure AboutLTCSimClick(Sender: TObject);
     procedure AboutProcessClick(Sender: TObject);
     procedure ActionSchemToAsciiExecute(Sender: TObject);
@@ -917,7 +926,8 @@ begin
           StopSCSShell;
           try
             Screen.Cursor := crHourGlass;
-            if (LibraryDatabase.UniConnectionLTCSim.Connected) then
+            //if (LibraryDatabase.UniConnectionLTCSim.Connected) then
+            if (FDConnectionLTCSim.Connected) then
               InitializeLibrary
             else
               MessageDlg
@@ -952,7 +962,8 @@ begin
         StopSCSShell;
         try
           Screen.Cursor := crHourGlass;
-          if (LibraryDatabase.UniConnectionLTCSim.Connected) then
+          //if (LibraryDatabase.UniConnectionLTCSim.Connected) then
+          if (FDConnectionLTCSim.Connected) then
           begin
             PagesDlg.eProjectName.Enabled := False;
             PagesDlg.eProjectRev.Enabled := False;
@@ -1035,7 +1046,8 @@ begin
           StopSCSShell;
           try
             Screen.Cursor := crHourGlass;
-            if (LibraryDatabase.UniConnectionLTCSim.Connected) then
+            //if (LibraryDatabase.UniConnectionLTCSim.Connected) then
+            if (FDConnectionLTCSim.Connected) then
             begin
               EraseLibraryFiles;
               CreateDirectories;
@@ -1083,7 +1095,8 @@ begin
     StopSCSShell;
     try
       Screen.Cursor := crHourGlass;
-      if (LibraryDatabase.UniConnectionLTCSim.Connected) then
+      //if (LibraryDatabase.UniConnectionLTCSim.Connected) then
+      if (FDConnectionLTCSim.Connected) then
       begin
         PagesDlg.eProjectName.Enabled := true;
         PagesDlg.eProjectName.Color := clWindow;
@@ -1669,7 +1682,8 @@ begin
   CodeSite.EnterMethod(Self, 'CheckCurrrentProcessVersion');
 
   { Comparing used process version vs. exiting process version }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -1677,11 +1691,15 @@ begin
     SQL.Add('WHERE processname = ' + QuotedStr(Process.Name));
     Open;
   end; { with }
-  if LibraryDatabase.UniQuery.RecordCount > 0 then
+  //if LibraryDatabase.UniQuery.RecordCount > 0 then
+  if FDQuery.RecordCount > 0 then
   begin
-    Process.Process_Id := LibraryDatabase.UniQuery.FieldByName('process_id')
+    //Process.Process_Id := LibraryDatabase.UniQuery.FieldByName('process_id')
+    //  .AsInteger;
+    Process.Process_Id := FDQuery.FieldByName('process_id')
       .AsInteger;
-    with LibraryDatabase.UniQuery do
+    //with LibraryDatabase.UniQuery do
+    with FDQuery do
     begin
       Close;
       SQL.Clear;
@@ -1690,9 +1708,11 @@ begin
       SQL.Add('ORDER BY number');
       Open;
     end; { with }
-    LibraryDatabase.UniQuery.Last;
+    //LibraryDatabase.UniQuery.Last;
+    FDQuery.Last;
     fCurrentRevision :=
-      StrToFloat(LibraryDatabase.UniQuery.FieldByName('NUMBER').AsString);
+      //StrToFloat(LibraryDatabase.UniQuery.FieldByName('NUMBER').AsString);
+      StrToFloat(FDQuery.FieldByName('NUMBER').AsString);
     fProjectProcessRev := StrToFloat(Process.Rev);
     if (fCurrentRevision > fProjectProcessRev) then
     begin
@@ -1954,7 +1974,8 @@ begin
     with ProjectIniFile do
     begin
       WriteString('Scs', 'Version', '1.0');
-      with LibraryDatabase.UniQuery do
+      //with LibraryDatabase.UniQuery do
+      with FDQuery do
       begin
         Close;
         SQL.Clear;
@@ -1963,9 +1984,11 @@ begin
         SQL.Add('AND version = ' + Process.Rev);
         Open;
       end;
-      if (LibraryDatabase.UniQuery.RecordCount = 0) then
+      //if (LibraryDatabase.UniQuery.RecordCount = 0) then
+      if (FDQuery.RecordCount = 0) then
       begin
-        with LibraryDatabase.UniQuery do
+        //with LibraryDatabase.UniQuery do
+        with FDQuery do
         begin
           Close;
           SQL.Clear;
@@ -1974,9 +1997,11 @@ begin
           Open;
         end;
       end;
-      if (LibraryDatabase.UniQuery.RecordCount > 0) then
+      //if (LibraryDatabase.UniQuery.RecordCount > 0) then
+      if (FDQuery.RecordCount > 0) then
       begin
-        lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('nets'));
+        //lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('nets'));
+        lInfo.Assign(FDQuery.FieldByName('nets'));
 
         { Create Controls section }
         for I := 1 to lInfo.Count do
@@ -1989,7 +2014,8 @@ begin
         lInfo.Clear;
 
         { Create SymbolLibraries section }
-        lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('sym_path'));
+        //lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('sym_path'));
+        lInfo.Assign(FDQuery.FieldByName('sym_path'));
         for I := 1 to lInfo.Count do
         begin
           lDetail.Clear;
@@ -2003,7 +2029,8 @@ begin
         lInfo.Clear;
         lDetail.Clear;
         { Create ProjectLibraries section }
-        lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('sch_path'));
+        //lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('sch_path'));
+        lInfo.Assign(FDQuery.FieldByName('sch_path'));
         for I := 1 to lInfo.Count do
         begin
           lDetail.Clear;
@@ -2016,7 +2043,8 @@ begin
         end;
         lInfo.Clear;
         { Create GlobalConstants section }
-        lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('layers'));
+        //lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('layers'));
+        lInfo.Assign(FDQuery.FieldByName('layers'));
         for I := 1 to lInfo.Count do
         begin
           lDetail.Clear;
@@ -2026,8 +2054,10 @@ begin
           WriteString('GlobalConstants', sValueName, sValue)
         end;
       end;
-      LibraryDatabase.UniQuery.Close;
-      with LibraryDatabase.UniQuery do
+      //LibraryDatabase.UniQuery.Close;
+      FDQuery.Close;
+      //with LibraryDatabase.UniQuery do
+      with FDQuery do
       begin
         Close;
         SQL.Clear;
@@ -2037,9 +2067,11 @@ begin
         SQL.Add('AND version = ' + Process.Rev);
         Open;
       end;
-      if (LibraryDatabase.UniQuery.RecordCount = 0) then
+      //if (LibraryDatabase.UniQuery.RecordCount = 0) then
+      if (FDQuery.RecordCount = 0) then
       begin
-        with LibraryDatabase.UniQuery do
+        //with LibraryDatabase.UniQuery do
+        with FdQuery do
         begin
           Close;
           SQL.Clear;
@@ -2048,14 +2080,16 @@ begin
           Open;
         end;
       end;
-      if (LibraryDatabase.UniQuery.RecordCount > 0) then
+      //if (LibraryDatabase.UniQuery.RecordCount > 0) then
+      if (FDQuery.RecordCount > 0) then
       begin
         { Dealing with option 1 }
         if Process.option1 <> 'N/A' then
         begin
           lInfo.Clear;
           lDetail.Clear;
-          lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('option1_la'));
+          //lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('option1_la'));
+          lInfo.Assign(FDQuery.FieldByName('option1_la'));
           for I := 1 to lInfo.Count do
           begin
             {
@@ -2081,7 +2115,8 @@ begin
         begin
           lInfo.Clear;
           lDetail.Clear;
-          lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('option2_la'));
+          //lInfo.Assign(LibraryDatabase.UniQuery.FieldByName('option2_la'));
+          lInfo.Assign(FDQuery.FieldByName('option2_la'));
           for I := 1 to lInfo.Count do
           begin
             ExtractStrings([':'], [' '], PChar(lInfo.Strings[I - 1]), lDetail);
@@ -2098,8 +2133,10 @@ begin
           end
         end;
       end;
-      LibraryDatabase.UniQuery.Close;
-      with LibraryDatabase.UniQuery do
+      //LibraryDatabase.UniQuery.Close;
+      FDQuery.Close;
+      //with LibraryDatabase.UniQuery do
+      with FDQuery do
       begin
         Close;
         SQL.Clear;
@@ -2109,8 +2146,10 @@ begin
         Open;
       end;
       bTemp := False;
-      if (LibraryDatabase.UniQuery.RecordCount > 0) then
-        bTemp := LibraryDatabase.UniQuery.FieldByName('lt_pspice').AsVariant;
+      //if (LibraryDatabase.UniQuery.RecordCount > 0) then
+      if (FDQuery.RecordCount > 0) then
+        //bTemp := LibraryDatabase.UniQuery.FieldByName('lt_pspice').AsVariant;
+        bTemp := FDQuery.FieldByName('lt_pspice').AsVariant;
       if bTemp then
         RadioGroupLTspiceSyntax.ItemIndex := 0
       else
@@ -3008,6 +3047,14 @@ begin
   if NetworkAvailable then
   begin
     try
+      FDConnectionLTCSim.Close;
+      FDConnectionLTCSim.DriverName := 'PG';
+      FDConnectionLTCSim.Params.UserName := 'ltcsimuser';
+      FDConnectionLTCSim.Params.Password := 'LTCSim';
+      FDConnectionLTCSim.Params.Database := 'LTCSim';
+      FDConnectionLTCSim.Open();
+      Result := True;
+      {
       LibraryDatabase.UniConnectionLTCSim.Close;
       LibraryDatabase.UniConnectionLTCSim.ProviderName := 'PostgreSQL';
       LibraryDatabase.UniConnectionLTCSim.Username := 'ltcsimuser';
@@ -3016,8 +3063,10 @@ begin
       LibraryDatabase.UniConnectionLTCSim.Server := 'LTCSimDB';
       LibraryDatabase.UniConnectionLTCSim.Open;
       Result := true;
+      }
     except
-      LibraryDatabase.UniConnectionLTCSim.Disconnect;
+      //LibraryDatabase.UniConnectionLTCSim.Disconnect;
+      FDConnectionLTCSim.Close;
       Result := False;
     end;
   end
@@ -6326,7 +6375,8 @@ begin
   // Transfer analog primitive symbols, analog symbols with schematics,
   // and analog symbols with netlist. Exclude symbols with Gate atribute }
   lDetail := TStringList.Create;
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6365,7 +6415,8 @@ begin
   end;
   // Transfer optional analog primitive symbols, analog symbols with schematics
   // and analog symbols with netlist. Excludes symbols with Gate attribute }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6383,7 +6434,8 @@ begin
       sDestination := IncludeTrailingPathDelimiter(Project.Dir) +
         IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\analog\symbols';
       JamFileOperation.Destination := sDestination;
-      while not LibraryDatabase.UniQuery.Eof do
+      //while not LibraryDatabase.UniQuery.Eof do
+      while not FDQuery.Eof do
       begin
         sDevice := Trim(FieldByName('name').AsString);
         sTemp := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -6400,7 +6452,8 @@ begin
     Close;
   end; { with }
   { Transfer schematics for analog symbols with subcircuit }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6419,7 +6472,8 @@ begin
       sDestination := IncludeTrailingPathDelimiter(Project.Dir) +
         IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\analog\schematics';
       JamFileOperation.Destination := sDestination;
-      while not LibraryDatabase.UniQuery.Eof do
+      //while not LibraryDatabase.UniQuery.Eof do
+      while not FDQuery.Eof do
       begin
         sDevice := Trim(FieldByName('name').AsString);
         sTemp := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -6436,7 +6490,8 @@ begin
     Close;
   end; { with }
   { Transfer optional schematics for analog symbols with subcircuit }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6456,7 +6511,8 @@ begin
       sDestination := IncludeTrailingPathDelimiter(Project.Dir) +
         IncludeTrailingPathDelimiter(Project.Rev) + 'lib\ecs\analog\schematics';
       JamFileOperation.Destination := sDestination;
-      while not LibraryDatabase.UniQuery.Eof do
+      //while not LibraryDatabase.UniQuery.Eof do
+      while not FDQuery.Eof do
       begin
         sDevice := Trim(FieldByName('name').AsString);
         sTemp := IncludeTrailingPathDelimiter(LTCSim.libraryDir) +
@@ -6473,7 +6529,8 @@ begin
     Close;
   end; { with }
   { Transfer netlists for analog symbols }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6519,7 +6576,8 @@ begin
     Close;
   end; { with }
   { Transfer optional netlists for analog symbols }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6563,7 +6621,8 @@ begin
     Close;
   end; { with }
   { Transfer gate symbols }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6599,7 +6658,8 @@ begin
     Close;
   end; { with }
   { Transfer optional gate symbols }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6636,7 +6696,8 @@ begin
     Close;
   end; { with }
   { Transfer gate schematics }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6673,7 +6734,8 @@ begin
   end; { with }
 
   { Transfer optional gate schematics }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6709,7 +6771,8 @@ begin
     Close;
   end;
   { Transfer digital netlist files }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
@@ -6747,7 +6810,8 @@ begin
     Close;
   end; { with }
   { Transfer optional digital files }
-  with LibraryDatabase.UniQuery do
+  //with LibraryDatabase.UniQuery do
+  with FDQuery do
   begin
     Close;
     SQL.Clear;
